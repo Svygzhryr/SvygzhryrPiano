@@ -1,9 +1,12 @@
 import './css/reset.css'
+import './css/app.scss'
+import Piano from './components/Piano';
 
 function App() {
   return (
     <div className="App">
-
+      <div>писоеш</div>
+        <Piano/>
     </div>
   );
 }

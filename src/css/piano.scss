@@ -1,0 +1,85 @@
+@import './variables';
+
+.piano_wrapper {
+    background-color: $primary_background;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 100%;
+}
+
+.button {
+    width: 7rem;
+    height: 25rem;
+    background-color: $primary_button;
+    border: none;
+    border-radius: 0 0 1rem 1rem;
+
+    &:first-child {
+        border-radius: 2.5rem 0 1rem 1rem;
+    }
+    &:last-child {
+        border-radius: 0 2.5rem 1rem 1rem;
+    }
+}
+
+.button_sharp {
+    background-color: $primary_sharp;
+    border: none;
+    width: 5rem;
+    height: 15rem;  
+    z-index: 100;
+    border-radius: 0 0 1rem 1rem;
+}
+
+.upper_keyboard {
+    position: relative;
+
+    .upper_sharps {
+        width: 100%;
+        position: absolute;
+        display: grid;
+        justify-content: space-around;
+        grid-template-columns: (8, 1fr); 
+        grid-template-rows: 1fr; 
+        grid-template-areas: ". . . . . . . . . . . .";
+    }
+
+    .upper_buttons {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: (12, 1fr); 
+        grid-template-rows: 1fr; 
+        gap: 1rem; 
+        grid-template-areas: 
+          ". . . . . . . . . . . ."; 
+    }
+}
+
+
+
+
+
+.lower_keyboard {
+
+    position: relative;
+    margin-top: 2rem;
+    
+
+    .lower_sharps {
+        position: absolute;
+    }
+
+    .lower_buttons {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: (10, 1fr); 
+        grid-template-rows: 1fr; 
+        gap: 1rem; 
+        grid-template-areas: 
+          ". . . . . . . . . . . ."; 
+    }
+
+}
