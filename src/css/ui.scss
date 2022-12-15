@@ -5,6 +5,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+
 }
 
 .slider_wrapper {
@@ -16,6 +17,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 100rem;
+    z-index: 2;
 }
 
 input[type=range].range {   
@@ -41,8 +43,9 @@ input[type=range].range::-moz-range-progress {
     border-radius: 100rem;
 }
 
-.theme_wrapper {
+.themes {
     margin: 0 1rem;
+    z-index: 2;
 }
 
 .theme_selector {
@@ -54,37 +57,28 @@ input[type=range].range::-moz-range-progress {
     border: none;
     display: flex;
 
-    transition: all .2s;
+    transition: all .2s ease;
+
+    &:hover {
+        cursor: pointer;
+        transform: rotate(180deg);
+    }
 }
 
 .theme_1 {
     background: linear-gradient(90deg, $primary_button 50%, $primary_sharp 50%);
 
-    &:hover {
-        background: linear-gradient(90deg, $primary_sharp 50%, $primary_button 50%);
-    }
 }
 
 .theme_2 {
     background: linear-gradient(90deg, $purplish_button_active 50%, $purplish_sharp 50%);
-    
-    &:hover {
-        background: linear-gradient(90deg, $purplish_sharp 50%, $purplish_button_active 50%);
-    }
+
 }
 
 .theme_3 {
     background: linear-gradient(90deg, $reddish_button_active 50%, $reddish_sharp 50%);
-    
-    &:hover {
-        background: linear-gradient(90deg, $reddish_sharp 50%, $reddish_button_active 50%);
-    }
 }
 
 .theme_4 {
     background: linear-gradient(90deg, $bluish_button_active 50%, $bluish_sharp 50%);
-    
-    &:hover {
-        background: linear-gradient(90deg, $bluish_sharp 50%, $bluish_button_active 50%);
-    }
 }

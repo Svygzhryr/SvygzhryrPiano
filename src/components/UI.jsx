@@ -7,7 +7,7 @@ export default function UI() {
         <div className='slider_wrapper'>
             <input className='range' type='range'/>
         </div>
-        <div className='theme_wrapper'>
+        <div className='themes'>
           <button className="theme_selector theme_1"></button>
           <button className="theme_selector theme_2"></button>
           <button className="theme_selector theme_3"></button>
