@@ -6,58 +6,48 @@ export default function Piano() {
     <div className='piano'>
         <div className='piano_wrapper'>
             <div className='upper_keyboard'>
-                <div className='upper_sharps'>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-
-                </div>
                 <div className='upper_buttons'>
                     <button className='button'></button>
+                    <button className='button_sharp'></button>
+                    <button className='button'></button>
+                    <button className='button_sharp'></button>
                     <button className='button'></button>
                     <button className='button'></button>
+                    <button className='button_sharp'></button>
+                    <button className='button'></button>
+                    <button className='button_sharp'></button>
+                    <button className='button'></button>
+                    <button className='button_sharp'></button>
                     <button className='button'></button>
                     <button className='button'></button>
+                    <button className='button_sharp'></button>
+                    <button className='button'></button>
+                    <button className='button_sharp'></button>
                     <button className='button'></button>
                     <button className='button'></button>
-                    <button className='button'></button>
-                    <button className='button'></button>
-                    <button className='button'></button>
-                    <button className='button'></button>
+                    <button className='button_sharp'></button>
                     <button className='button'></button>
                 </div>
             </div>
             <div className='lower_keyboard'>
-            <div className="lower_sharps">
-            <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-                    <button className='button_sharp'></button>
-            </div>
-            <div className='lower_buttons'>
-                    <button className='button'></button>
-                    <button className='button'></button>
-                    <button className='button'></button>
-                    <button className='button'></button>
-                    <button className='button'></button>
-                    <button className='button'></button>
-                    <button className='button'></button>
-                    <button className='button'></button>
-                    <button className='button'></button>
-                    <button className='button'></button>
+                <div className='lower_buttons'>
+                        <button className='button'></button>
+                        <button className='button_sharp'></button>
+                        <button className='button'></button>
+                        <button className='button_sharp'></button>
+                        <button className='button'></button>
+                        <button className='button'></button>
+                        <button className='button_sharp'></button>
+                        <button className='button'></button>
+                        <button className='button_sharp'></button>
+                        <button className='button'></button>
+                        <button className='button'></button>
+                        <button className='button_sharp'></button>
+                        <button className='button'></button>
+                        <button className='button_sharp'></button>
+                        <button className='button'></button>
+                        <button className='button_sharp'></button>
+                        <button className='button'></button>
                 </div>
             </div>
 

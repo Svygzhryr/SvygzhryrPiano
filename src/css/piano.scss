@@ -6,7 +6,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     width: 100%;
 }
 
@@ -14,16 +13,17 @@
     width: 7rem;
     height: 25rem;
     background-color: $primary_button;
-    border: none;
+    border: 4px solid $primary_background;
+    border-top: none;
     border-radius: 0 0 1rem 1rem;
+    box-sizing: border-box;
 
-    &:first-child {
-        border-radius: 2.5rem 0 1rem 1rem;
+    &:hover {
+        cursor: pointer;
     }
-    &:last-child {
-        border-radius: 0 2.5rem 1rem 1rem;
-    }
+
 }
+
 
 .button_sharp {
     background-color: $primary_sharp;
@@ -32,54 +32,39 @@
     height: 15rem;  
     z-index: 100;
     border-radius: 0 0 1rem 1rem;
+    margin-left: -2.5rem;
+    margin-right: -2.5rem;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
+
+.upper_buttons>.button:first-child, 
+.lower_buttons>.button:first-child {
+    border-radius: 2.5rem 0 1rem 1rem;
+}
+
+.upper_buttons>.button:last-child, 
+.lower_buttons>.button:last-child {
+    border-radius: 0 2.5rem 1rem 1rem;
+}
+
+
 
 .upper_keyboard {
-    position: relative;
-
-    .upper_sharps {
-        width: 100%;
-        position: absolute;
-        display: grid;
-        justify-content: space-around;
-        grid-template-columns: (8, 1fr); 
-        grid-template-rows: 1fr; 
-        grid-template-areas: ". . . . . . . . . . . .";
-    }
-
+    display: flex;
+    justify-content: center;
     .upper_buttons {
-        display: grid;
-        justify-content: center;
-        grid-template-columns: (12, 1fr); 
-        grid-template-rows: 1fr; 
-        gap: 1rem; 
-        grid-template-areas: 
-          ". . . . . . . . . . . ."; 
+        display: flex;
     }
 }
 
-
-
-
-
 .lower_keyboard {
-
-    position: relative;
-    margin-top: 2rem;
-    
-
-    .lower_sharps {
-        position: absolute;
-    }
-
+    margin-top: 4rem;
+    display: flex;
+    justify-content: center;
     .lower_buttons {
-        display: grid;
-        justify-content: center;
-        grid-template-columns: (10, 1fr); 
-        grid-template-rows: 1fr; 
-        gap: 1rem; 
-        grid-template-areas: 
-          ". . . . . . . . . . . ."; 
+        display: flex;
     }
-
 }
