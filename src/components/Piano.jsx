@@ -1,10 +1,13 @@
-import React from 'react'
+import {React, useState, useEffect, useRef} from 'react'
 import '../css/piano.scss'
 import Soundbank from './Soundbank'
 
+import C3 from '../keybank/C3.mp3'
+
+
 export default function Piano() {
 
-    function playSound() {
+    function playAudio() {
 
     }
 
@@ -14,7 +17,7 @@ export default function Piano() {
         <div className='piano_wrapper'>
             <div className='upper_keyboard'>
                 <div className='upper_buttons'>
-                    <button onClick={playSound()} className='button'>q</button>
+                    <button className='button'>q</button>
                     <button className='button_sharp'>2</button>
                     <button className='button'>w</button>
                     <button className='button_sharp'>3</button>
@@ -60,7 +63,9 @@ export default function Piano() {
 
         </div>
         
-        <Soundbank/>
+    
+        <audio src={C3}></audio>
+
     </div>
   )
 }
