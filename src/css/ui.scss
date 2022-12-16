@@ -29,7 +29,8 @@ input[type=range].range {
 
 }
 
-input[type=range].range::-moz-range-thumb {
+input[type=range].range::-moz-range-thumb,
+input[type=range].range::-webkit-slider-thumb{
     background-color: $primary_sharp;
     border: none;
     width: 2rem;
@@ -37,7 +38,8 @@ input[type=range].range::-moz-range-thumb {
     border-radius: 100rem;
 }
 
-input[type=range].range::-moz-range-progress {
+input[type=range].range::-moz-range-progress,
+input[type=range].range::-webkit-slider-runnable-track {
     background: $primary_background;
     height: 100%;
     border-radius: 100rem;
