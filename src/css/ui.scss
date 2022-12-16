@@ -61,7 +61,7 @@ input[type=range].range::-webkit-slider-runnable-track {
 
     transition: all .2s ease;
 
-    &:hover {
+    &:hover:not(:last-child) {
         cursor: pointer;
         transform: rotate(180deg);
     }
@@ -83,4 +83,24 @@ input[type=range].range::-webkit-slider-runnable-track {
 
 .theme_4 {
     background: linear-gradient(90deg, $bluish_button_active 50%, $bluish_sharp 50%);
+}
+
+.toggle_text {
+    background-color: $primary_button;
+    color: $primary_sharp;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: 500;
+    font-size: 2rem;
+    font-family: 'EB Garamond', serif;
+
+    transition: all .5s ease-in-out;
+
+    &:hover {
+        cursor: pointer;
+        background-color: $primary_sharp;
+        border: 3px solid $primary_button;
+    }
 }

@@ -12,6 +12,7 @@ export default function UI() {
           <button className="theme_selector theme_2"></button>
           <button className="theme_selector theme_3"></button>
           <button className="theme_selector theme_4"></button>
+          <button className="theme_selector toggle_text">A</button>
         </div>
     </div>
   )

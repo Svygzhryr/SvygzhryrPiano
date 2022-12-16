@@ -7,8 +7,17 @@ import C3 from '../keybank/C3.mp3'
 
 export default function Piano() {
 
-    function playAudio() {
 
+    const audio = new Audio(C3);
+    const [active, setActive] = useState(false);
+    function playAudio(e) {
+        setActive(true);
+        audio.currentTime = 0;
+        audio.play();
+    }
+
+    function removeActive() {
+       setActive(false);
     }
 
 
@@ -17,7 +26,11 @@ export default function Piano() {
         <div className='piano_wrapper'>
             <div className='upper_keyboard'>
                 <div className='upper_buttons'>
-                    <button className='button'>q</button>
+                    <button 
+                    onMouseDown={(e) => {playAudio(e)}} 
+                    onMouseUp={removeActive}
+                    className={`button ${active ? 'button_active' : null}`}>q
+                    </button>
                     <button className='button_sharp'>2</button>
                     <button className='button'>w</button>
                     <button className='button_sharp'>3</button>

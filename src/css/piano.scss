@@ -38,6 +38,14 @@
 
 }
 
+.button_active {
+    background-color: $primary_button_active;
+    color: $primary_button_active;
+}
+
+.button_text_hidden {
+    color: $primary_button;
+}
 
 .button_sharp {
     background-color: $primary_sharp;
@@ -63,6 +71,15 @@
     &:hover {
         cursor: pointer;
     }
+}
+
+.button_sharp_active {
+    background-color: $primary_sharp_active;
+    color: $primary_sharp_active;
+}
+
+.button_sharp_hidden {
+    color: $primary_sharp;
 }
 
 .upper_buttons>.button:first-child, 
