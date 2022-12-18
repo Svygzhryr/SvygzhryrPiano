@@ -13,5 +13,5 @@ The goal of this project is to create a simple piano app that have following fea
 <img  height='300px' src='https://i.imgur.com/tm02xSA.png'/>
 <br>
 
-Created using react
+Created using react for the cause of practice and self improvement!
 
