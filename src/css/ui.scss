@@ -18,6 +18,13 @@
     align-items: center;
     border-radius: 100rem;
     z-index: 2;
+    opacity: 0.5;
+
+    transition: all .2s;
+
+    &:hover {
+        opacity: 1;
+    }
 }
 
 input[type=range].range {   
@@ -58,12 +65,14 @@ input[type=range].range::-webkit-slider-runnable-track {
     height: 4rem;
     border: none;
     display: flex;
+    opacity: 0.5;
 
     transition: all .2s ease;
 
     &:hover:not(:last-child) {
         cursor: pointer;
         transform: rotate(180deg);
+        opacity: 1;
     }
 }
 
@@ -102,5 +111,6 @@ input[type=range].range::-webkit-slider-runnable-track {
         cursor: pointer;
         background-color: $primary_sharp;
         border: 3px solid $primary_button;
+        opacity: 1;
     }
 }

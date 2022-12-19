@@ -1,46 +1,70 @@
 import {React, useState, useEffect, useRef} from 'react'
 import '../css/piano.scss'
-import Soundbank from './Soundbank'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS } from '../global/constants'
-
-import C3 from '../keybank/C3.mp3'
 
 
 export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
-    const didMount = useEffect(() => {
+
+    let keyClassName = '';
+    // вешаем события
+    useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
     }, [])
 
+    // нажатие клавиши
     function handleKeyDown(e) {
         if (e.repeat) {
             return;
         }
         const key = e.key;
+
         const updatePressedKeys = [setPressedKeys(pressedKeys)]
         if (!updatePressedKeys.includes(key) && VALID_KEYS.includes(key)) {
+            updatePressedKeys.push(key)
+        }
 
+        setPressedKeys(updatePressedKeys);
+        playNote(KEY_TO_NOTE[key]);
+    }
+
+    // отпиускание клавиши
+    function handleKeyUp(e) {
+        const index = pressedKeys.indexOf(e.key);
+        if (index < -1) {
+            setPressedKeys(pressedKeys.splice(index, 1));
         }
     }
 
-    function handleKeyUp(e) {
-        
-    }
-
     
+    // применение стилей
     function keyIsPressed(note, pressedKeys) {
+        return pressedKeys.includes(pressedKeys, NOTE_TO_KEY[note]);
+    }
 
+    if (keyIsPressed) {
+        keyClassName =+ 'active';
+    }
+
+    // проигрыш звука
+    function playNote(note) {
+        if (pressedKeys.isEmpty(note)) {
+            const noteAudio = new Audio(document.getElementById(note).src)
+            noteAudio.play();   
+        }
     }
 
 
+    // генерируем массив клавиш
     const upperKeys = UPPER_NOTES.map((note, index) => {
+        // наигениальнейшая проверка на диез и бемоль
+        if (note.length > 2 ? keyClassName = 'button_sharp' : keyClassName = 'button')
         return (
             <button 
             key={index} 
             note={note} 
-            // наигениальнейшая проверка на диез и бемоль
-            className={note.length > 2 ? 'button_sharp' : 'button' } 
+            className={keyClassName} 
             pressedkey={pressedKeys}
             >
             </button>
@@ -48,14 +72,37 @@ export default function Piano() {
     })
 
     const lowerKeys = LOWER_NOTES.map((note, index) => {
+        if (note.length > 2 ? keyClassName = 'button_sharp' : keyClassName = 'button')
         return (
             <button 
             key={index} 
             note={note} 
-            className={note.length > 2 ? 'button_sharp' : 'button' }
+            className={keyClassName}
             pressedkey={pressedKeys}
-            >
-            </button>
+            />
+        )
+    })
+    
+
+    // генерируем массив звуков
+    const audioFilesUpper = UPPER_NOTES.map((note, index) => {
+        return (
+            <audio 
+            id={note}
+            key={index}
+            src={`../keybank/upperNotes/${note}.mp3`}
+            />
+        )
+    })
+
+    const audioFilesLower = LOWER_NOTES.map((note, index) => {
+        return (
+            <audio 
+            id={note}
+            key={index}
+            src={`../keybank/lowerNotes/${note}.mp3`}
+            
+            />
         )
     })
 
@@ -75,9 +122,10 @@ export default function Piano() {
             </div>
 
         </div>
-        
-        <audio src={`../keybank/C3`}></audio>
 
+        {audioFilesUpper}
+        {audioFilesLower}
+        
     </div>
   )
 }
