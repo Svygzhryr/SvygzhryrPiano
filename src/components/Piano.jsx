@@ -74,7 +74,7 @@ export default function Piano() {
             key={index} 
             note={note} 
             className={keyClassName} 
-            pressedkey={pressedKeys}
+            pressedkeys={pressedKeys}
             >
             </button>
         )  

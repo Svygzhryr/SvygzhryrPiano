@@ -11,7 +11,7 @@ import A3 from '../keybank/A3.mp3';
 import As3 from '../keybank/As3.mp3';
 import B3 from '../keybank/B3.mp3';
 
-import C4 from '../keybank/C3.mp3';
+import C4 from '../keybank/C4.mp3';
 import Cs4 from '../keybank/Cs4.mp3'
 import D4 from '../keybank/D4.mp3';
 import Ds4 from '../keybank/Ds4.mp3';
