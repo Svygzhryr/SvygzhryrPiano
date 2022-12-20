@@ -1,6 +1,8 @@
 import {React, useState, useEffect, useRef} from 'react'
 import '../css/piano.scss'
-import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS, AUDIO_FILES } from '../global/constants'
+import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS} from '../global/constants'
+import { AUDIO } from '../global/soundBank';
+
 
 
 export default function Piano() {
@@ -40,7 +42,7 @@ export default function Piano() {
     
     // применение стилей
     function keyIsPressed(note, pressedKeys) {
-        return pressedKeys.includes(NOTE_TO_KEY[note]);
+        return setPressedKeys(pressedKeys.includes(NOTE_TO_KEY[note]))
     }
 
     if (keyIsPressed) {
@@ -49,13 +51,13 @@ export default function Piano() {
 
     // проигрыш звука
     function playNote(note) {
-        if (note !== undefined) {
-            console.log(note)
-            const noteAudio = new Audio(AUDIO_FILES[note])
-            noteAudio.play();   
-        } else return null
+        if (note === undefined) {
+            return null
+        }  
+        console.log(note)
+        const noteAudio = new Audio(AUDIO[note]);
+        noteAudio.play();   
     }
-
 
     // генерируем массив клавиш
     const upperKeys = UPPER_NOTES.map((note, index) => {
@@ -76,42 +78,16 @@ export default function Piano() {
         if (note.length > 2 ? keyClassName = 'button_sharp' : keyClassName = 'button')
         return (
             <button 
-            key={index} 
+            key={index}     
             note={note} 
             className={keyClassName}
             pressedkey={pressedKeys}
             />
         )
     })
-    
-
-    // генерируем массив звуков
-    const audioFilesUpper = UPPER_NOTES.map((note, index) => {
-        return (
-            <audio 
-            id={note}
-            key={index}
-            src={`../keybank/upperNotes/${note}.mp3`}
-            />
-        )
-    })
-
-    const audioFilesLower = LOWER_NOTES.map((note, index) => {
-        return (
-            <audio 
-            id={note}
-            key={index}
-            src={`../keybank/lowerNotes/${note}.mp3`}
-            
-            />
-        )
-    })
-
-
 
   return (
     <div className='piano'>
-        <audio src={AUDIO_FILES[0]}/>
         <div className='piano_wrapper'>
             <div className='upper_keyboard'>
                 <div className='upper_buttons'>
@@ -125,9 +101,6 @@ export default function Piano() {
             </div>
 
         </div>
-
-        {audioFilesUpper}
-        {audioFilesLower}   
         
     </div>
   )
