@@ -1,3 +1,7 @@
+import C3 from '../keybank/upperNotes/C3.mp3';
+
+const AUDIO_FILES = [C3];
+
 const UPPER_NOTES = [
     'C3', 'C#3', 'D3', 'D#3', 'E3', 'F3', 'F#3', 'G3', 'G#3', 'A3', 'A#3', 'B3', 
     'C4', 'C#4', 'D4', 'D#4', 'E4', 'F4', 'F#4', 'G4', 
@@ -95,5 +99,5 @@ const VALID_KEYS = ['q','2','w','3','e','r','5',
 '=',']','z','s','x','d','c','v','g','b','h','n',
 'm','k',',','l','.',';','/']
 
-export {UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS};
+export {UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS, AUDIO_FILES};
     
