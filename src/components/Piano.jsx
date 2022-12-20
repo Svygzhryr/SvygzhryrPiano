@@ -13,6 +13,10 @@ export default function Piano() {
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
+        return () => {
+            window.addEventListener('keydown', handleKeyDown);
+            window.addEventListener('keyup', handleKeyUp);
+        }
     }, [])
 
     // нажатие клавиши
@@ -42,11 +46,13 @@ export default function Piano() {
     
     // применение стилей
     function keyIsPressed(note, pressedKeys) {
-        return setPressedKeys(pressedKeys.includes(NOTE_TO_KEY[note]))
+        if (pressedKeys.includes(NOTE_TO_KEY[note])) {
+            return true
+        } return false
     }
 
     if (keyIsPressed) {
-        keyClassName =+ 'button_active';
+        keyClassName += 'button_active';
     }
 
     // проигрыш звука
