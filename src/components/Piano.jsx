@@ -7,8 +7,9 @@ import { AUDIO } from '../global/soundBank';
 
 export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
+    let keyClassName;
 
-    let keyClassName = '';
+
     // вешаем события
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
@@ -24,10 +25,13 @@ export default function Piano() {
         if (e.repeat) {
             return;
         }
-        const key = e.key;
 
+        // вводим соответствие между нажаотй клавишей и клавишей в коде
+        const key = e.key.toLowerCase();
+        // вкидываем нажатую клавишу в массив
         const updatePressedKeys = [setPressedKeys(pressedKeys)]
-        if (!updatePressedKeys.includes(key) && VALID_KEYS.includes(key)) {
+        // проверяем правильная ли вкинутая в массив клавиша
+        if (!updatePressedKeys.includes(key.toLowerCase()) && VALID_KEYS.includes(key.toLowerCase)) {
             updatePressedKeys.push(key)
         }
 
@@ -43,6 +47,8 @@ export default function Piano() {
         }
     }
 
+
+
     
     // применение стилей
     function keyIsPressed(note, pressedKeys) {
@@ -51,23 +57,24 @@ export default function Piano() {
         } return false
     }
 
-    if (keyIsPressed) {
-        keyClassName += 'button_active';
-    }
+
 
     // проигрыш звука
     function playNote(note) {
         if (note === undefined) {
             return null
         }  
-        console.log(note)
         const noteAudio = new Audio(AUDIO[note]);
         noteAudio.play();   
     }
 
+    console.log(pressedKeys, setPressedKeys)
+
+
     // генерируем массив клавиш
     const upperKeys = UPPER_NOTES.map((note, index) => {
         // наигениальнейшая проверка на диез и бемоль
+        console.log(note)
         if (note.length > 2 ? keyClassName = 'button_sharp' : keyClassName = 'button')
         return (
             <button 
@@ -105,6 +112,8 @@ export default function Piano() {
                     {lowerKeys}
                 </div>
             </div>
+
+            {/* продам гараж */}
 
         </div>
         
