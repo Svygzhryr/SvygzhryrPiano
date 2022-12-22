@@ -1,15 +1,16 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import '../css/ui.scss'
 
-export default function UI() {
+export default function UI(changeVolume) {
 
-  const [volume, setVolume] = useState(0.5);
+  const [volume, setVolume] = useState(50);
+  const passVolume = useRef(null);
 
   return (
     <div className='controls'>
         <div className='slider_wrapper'>
-            <input  className='range' type='range'/>
+            <input ref={passVolume}  className='range' type='range'/>
         </div>
         <div className='themes'>
           <button className="theme_selector theme_1"></button>

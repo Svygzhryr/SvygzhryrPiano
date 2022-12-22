@@ -8,7 +8,6 @@ function App() {
     <div className="App">
       <div>писоеш</div>
         <Piano/>
-        <UI/>
     </div>
   );
 }

@@ -2,13 +2,14 @@ import {React, useState, useEffect, useRef} from 'react'
 import '../css/piano.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS} from '../global/constants'
 import { AUDIO } from '../global/soundBank';
+import UI from './UI';
 
 
 
 export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
+    const [volume, setVolume] = useState(0.5);
     let keyClassName;
-
 
     // вешаем события
     useEffect(() => {
@@ -31,6 +32,7 @@ export default function Piano() {
         // вкидываем нажатую клавишу в массив
         const updatePressedKeys = [setPressedKeys(pressedKeys)]
         // проверяем правильная ли вкинутая в массив клавиша
+        console.log(pressedKeys)
         if (!updatePressedKeys.includes(key.toLowerCase()) && VALID_KEYS.includes(key.toLowerCase)) {
             updatePressedKeys.push(key)
         }
@@ -47,9 +49,6 @@ export default function Piano() {
         }
     }
 
-
-
-    
     // применение стилей
     function keyIsPressed(note, pressedKeys) {
         if (pressedKeys.includes(NOTE_TO_KEY[note])) {
@@ -57,24 +56,21 @@ export default function Piano() {
         } return false
     }
 
-
-
     // проигрыш звука
     function playNote(note) {
         if (note === undefined) {
             return null
         }  
         const noteAudio = new Audio(AUDIO[note]);
+        noteAudio.volume = volume;
         noteAudio.play();   
     }
 
-    console.log(pressedKeys, setPressedKeys)
 
 
     // генерируем массив клавиш
     const upperKeys = UPPER_NOTES.map((note, index) => {
         // наигениальнейшая проверка на диез и бемоль
-        console.log(note)
         if (note.length > 2 ? keyClassName = 'button_sharp' : keyClassName = 'button')
         return (
             <button 
@@ -99,8 +95,13 @@ export default function Piano() {
         )
     })
 
+    function changeVolume() {
+        setVolume(volume);
+    }
+
   return (
     <div className='piano'>
+        <UI changeVolume={changeVolume} />
         <div className='piano_wrapper'>
             <div className='upper_keyboard'>
                 <div className='upper_buttons'>
