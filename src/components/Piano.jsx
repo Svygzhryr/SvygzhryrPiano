@@ -8,8 +8,14 @@ import UI from './UI';
 
 export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
-    const [volume, setVolume] = useState(0.5);
+    const [volume, setVolume] = useState(0.3);
     let keyClassName;
+
+    function changeVolume(volume) {
+        setVolume(volume);
+    }
+
+
 
     // вешаем события
     useEffect(() => {
@@ -32,13 +38,12 @@ export default function Piano() {
         // вкидываем нажатую клавишу в массив
         const updatePressedKeys = [setPressedKeys(pressedKeys)]
         // проверяем правильная ли вкинутая в массив клавиша
-        console.log(pressedKeys)
         if (!updatePressedKeys.includes(key.toLowerCase()) && VALID_KEYS.includes(key.toLowerCase)) {
             updatePressedKeys.push(key)
         }
 
         setPressedKeys(updatePressedKeys);
-        playNote(KEY_TO_NOTE[key]);
+        playNote(KEY_TO_NOTE[key], volume);
     }
 
     // отпускание клавиши
@@ -57,12 +62,13 @@ export default function Piano() {
     }
 
     // проигрыш звука
-    function playNote(note) {
+    function playNote(note, volume) {
         if (note === undefined) {
             return null
         }  
         const noteAudio = new Audio(AUDIO[note]);
-        noteAudio.volume = volume;
+        console.log((volume/100).toFixed(2))
+        noteAudio.volume = 0.1;
         noteAudio.play();   
     }
 
@@ -78,6 +84,7 @@ export default function Piano() {
             note={note} 
             className={keyClassName} 
             pressedkeys={pressedKeys}
+            volume={volume}
             >
             </button>
         )  
@@ -91,17 +98,14 @@ export default function Piano() {
             note={note} 
             className={keyClassName}
             pressedkey={pressedKeys}
+            volume={volume}
             />
         )
     })
 
-    function changeVolume() {
-        setVolume(volume);
-    }
-
   return (
     <div className='piano'>
-        <UI changeVolume={changeVolume} />
+        <UI volume={volume} changeVolume={changeVolume} />
         <div className='piano_wrapper'>
             <div className='upper_keyboard'>
                 <div className='upper_buttons'>
