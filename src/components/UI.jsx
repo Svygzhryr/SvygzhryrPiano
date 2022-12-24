@@ -3,10 +3,11 @@ import { useState, useRef } from 'react';
 import '../css/ui.scss'
 
 export default function UI({changeVolume, volume}) {
+  console.log(volume)
   return (
     <div className='controls'>
         <div className='slider_wrapper'>
-            <input value={volume} onChange={(e) => {changeVolume(e.target.value)}} className='range' type='range'/>
+            <input step={0.01} min={0} max={1} value={volume} onChange={(e) => {changeVolume(e.target.value)}} className='range' type='range'/>
         </div>
         <div className='themes'>
           <button className="theme_selector theme_1"></button>

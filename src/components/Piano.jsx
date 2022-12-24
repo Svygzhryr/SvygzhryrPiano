@@ -8,7 +8,7 @@ import UI from './UI';
 
 export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
-    const [volume, setVolume] = useState(0.3);
+    const [volume, setVolume] = useState(0.5);
     let keyClassName;
 
     function changeVolume(volume) {
@@ -20,12 +20,12 @@ export default function Piano() {
     // вешаем события
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
-        window.addEventListener('keyup', handleKeyUp);
+        // window.addEventListener('keyup', handleKeyUp);
         return () => {
-            window.addEventListener('keydown', handleKeyDown);
-            window.addEventListener('keyup', handleKeyUp);
+            window.removeEventListener('keydown', handleKeyDown);
+            // window.removeEventListener('keyup', handleKeyUp);
         }
-    }, [])
+    }, [handleKeyDown])
 
     // нажатие клавиши
     function handleKeyDown(e) {
@@ -35,24 +35,13 @@ export default function Piano() {
 
         // вводим соответствие между нажаотй клавишей и клавишей в коде
         const key = e.key.toLowerCase();
-        // вкидываем нажатую клавишу в массив
-        const updatePressedKeys = [setPressedKeys(pressedKeys)]
-        // проверяем правильная ли вкинутая в массив клавиша
-        if (!updatePressedKeys.includes(key.toLowerCase()) && VALID_KEYS.includes(key.toLowerCase)) {
-            updatePressedKeys.push(key)
-        }
-
-        setPressedKeys(updatePressedKeys);
-        playNote(KEY_TO_NOTE[key], volume);
+        playNote(KEY_TO_NOTE[key]);
     }
 
     // отпускание клавиши
-    function handleKeyUp(e) {
-        const index = pressedKeys.indexOf(e.key);
-        if (index < -1) {
-            setPressedKeys(pressedKeys.splice(index, 1));
-        }
-    }
+    // function handleKeyUp(e) {
+
+    // }
 
     // применение стилей
     function keyIsPressed(note, pressedKeys) {
@@ -62,13 +51,13 @@ export default function Piano() {
     }
 
     // проигрыш звука
-    function playNote(note, volume) {
+    function playNote(note) {
         if (note === undefined) {
-            return null
+            return
         }  
         const noteAudio = new Audio(AUDIO[note]);
-        console.log((volume/100).toFixed(2))
-        noteAudio.volume = 0.1;
+        // noteAudio.volume = (+volume/100).toFixed(2);
+        noteAudio.volume = +volume;
         noteAudio.play();   
     }
 
