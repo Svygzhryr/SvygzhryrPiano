@@ -3,7 +3,6 @@ import { useState, useRef } from 'react';
 import '../css/ui.scss'
 
 export default function UI({changeVolume, volume}) {
-  console.log(volume)
   return (
     <div className='controls'>
         <div className='slider_wrapper'>

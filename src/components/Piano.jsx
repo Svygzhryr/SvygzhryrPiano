@@ -20,10 +20,10 @@ export default function Piano() {
     // вешаем события
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
-        // window.addEventListener('keyup', handleKeyUp);
+        window.addEventListener('keyup', handleKeyUp);
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
-            // window.removeEventListener('keyup', handleKeyUp);
+            window.removeEventListener('keyup', handleKeyUp);
         }
     }, [handleKeyDown])
 
@@ -35,13 +35,31 @@ export default function Piano() {
 
         // вводим соответствие между нажаотй клавишей и клавишей в коде
         const key = e.key.toLowerCase();
+        const button = document.querySelector(`[note=${KEY_TO_NOTE[key]}]`);
+        try {
+            button.classList.contains('button') ? 
+            button.classList.add('button_active') :
+            button.classList.add('button_sharp_active');
+
+        } catch {
+           return null
+        }
         playNote(KEY_TO_NOTE[key]);
     }
 
     // отпускание клавиши
-    // function handleKeyUp(e) {
-
-    // }
+        function handleKeyUp(e) {
+            const key = e.key.toLowerCase();
+            const button = document.querySelector(`[note=${KEY_TO_NOTE[key]}]`);
+            try {
+                button.classList.contains('button_active') ? 
+                button.classList.remove('button_active') :
+                button.classList.remove('button_sharp_active');
+    
+            } catch {
+               return null
+            }
+        }
 
     // применение стилей
     function keyIsPressed(note, pressedKeys) {
@@ -56,7 +74,6 @@ export default function Piano() {
             return
         }  
         const noteAudio = new Audio(AUDIO[note]);
-        // noteAudio.volume = (+volume/100).toFixed(2);
         noteAudio.volume = +volume;
         noteAudio.play();   
     }
