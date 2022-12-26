@@ -9,6 +9,7 @@ import UI from './UI';
 export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
     const [volume, setVolume] = useState(0.2);
+    const [showText, setShowText] = useState(true);
     let keyClassName;
 
     function changeVolume(volume) {
@@ -19,7 +20,7 @@ export default function Piano() {
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
-        return () => {
+        return (handleKeyDown, handleKeyUp) => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         }
@@ -90,6 +91,7 @@ export default function Piano() {
             pressedkeys={pressedKeys}
             volume={volume}
             >
+            {showText ? NOTE_TO_KEY[note] : null}
             </button>
         )  
     })
@@ -103,13 +105,22 @@ export default function Piano() {
             className={keyClassName}
             pressedkey={pressedKeys}
             volume={volume}
-            />
+            >
+                {showText ? NOTE_TO_KEY[note] : null}
+            </button>
         )
     })
 
   return (
     <div className='piano'>
-        <UI volume={volume} changeVolume={changeVolume} />
+
+        <UI 
+        volume={volume} 
+        changeVolume={changeVolume} 
+        showText={showText}
+        setShowText={setShowText}
+        />
+
         <div className='piano_wrapper'>
             <div className='upper_keyboard'>
                 <div className='upper_buttons'>

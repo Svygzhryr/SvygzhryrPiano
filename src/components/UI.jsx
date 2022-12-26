@@ -2,7 +2,13 @@ import React from 'react'
 import { useState, useRef } from 'react';
 import '../css/ui.scss'
 
-export default function UI({changeVolume, volume}) {
+export default function UI({changeVolume, volume, showText, setShowText}) {
+
+  function handleShowText() {
+   return setShowText(!showText)
+
+  }
+
   return (
     <div className='controls'>
         <div className='slider_wrapper'>
@@ -13,7 +19,7 @@ export default function UI({changeVolume, volume}) {
           <button className="theme_selector theme_2"></button>
           <button className="theme_selector theme_3"></button>
           <button className="theme_selector theme_4"></button>
-          <button className="theme_selector toggle_text">A</button>
+          <button onClick={handleShowText} className="theme_selector toggle_text">A</button>
         </div>
     </div>
   )
