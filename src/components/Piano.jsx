@@ -20,7 +20,7 @@ export default function Piano() {
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
-        return (handleKeyDown, handleKeyUp) => {
+        return () => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         }
