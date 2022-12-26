@@ -8,15 +8,13 @@ import UI from './UI';
 
 export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
-    const [volume, setVolume] = useState(0.5);
+    const [volume, setVolume] = useState(0.2);
     let keyClassName;
 
     function changeVolume(volume) {
         setVolume(volume);
     }
-
-
-
+    
     // вешаем события
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
@@ -25,7 +23,7 @@ export default function Piano() {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         }
-    }, [handleKeyDown])
+    }, [handleKeyDown, handleKeyUp])
 
     // нажатие клавиши
     function handleKeyDown(e) {
