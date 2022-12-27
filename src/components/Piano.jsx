@@ -1,6 +1,6 @@
 import {React, useState, useEffect, useRef} from 'react'
 import '../css/piano.scss'
-import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS} from '../global/constants'
+import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS, COLORS} from '../global/constants'
 import { AUDIO } from '../global/soundBank';
 import UI from './UI';
 
@@ -111,13 +111,50 @@ export default function Piano() {
         )
     })
 
-    const themeChange = () => {
+    const themeChange = (e) => {
         const root = document.querySelector(':root');
-        let rs = getComputedStyle(root);
-        console.log(rs.getPropertyValue('--primary_background'));
-    }
+        let rootStyles = getComputedStyle(root);
+        const button = e.target;
+        switch (true) {
+            default: return null;
+            case button.classList.contains('theme_1'): {
+                root.style.setProperty('--primary_background', COLORS.black_background)
+                root.style.setProperty('--primary_button', COLORS.black_button)
+                root.style.setProperty('--primary_sharp', COLORS.black_sharp)
+                root.style.setProperty('--primary_button_active', COLORS.black_button_active)
+                root.style.setProperty('--primary_sharp_active', COLORS.black_sharp_active)
+                break
+            }
 
-    themeChange()
+            case button.classList.contains('theme_2'): {
+                root.style.setProperty('--primary_background', COLORS.purplish_background)
+                root.style.setProperty('--primary_button', COLORS.purplish_button)
+                root.style.setProperty('--primary_sharp', COLORS.purplish_sharp)
+                root.style.setProperty('--primary_button_active', COLORS.purplish_button_active)
+                root.style.setProperty('--primary_sharp_active', COLORS.purplish_sharp_active)
+                break
+            }
+
+            case button.classList.contains('theme_3'): {
+                root.style.setProperty('--primary_background', COLORS.reddish_background)
+                root.style.setProperty('--primary_button', COLORS.reddish_button)
+                root.style.setProperty('--primary_sharp', COLORS.reddish_sharp)
+                root.style.setProperty('--primary_button_active', COLORS.reddish_button_active)
+                root.style.setProperty('--primary_sharp_active', COLORS.reddish_sharp_active)
+                break
+            }
+
+            case button.classList.contains('theme_4'): {
+                root.style.setProperty('--primary_background', COLORS.bluish_background)
+                root.style.setProperty('--primary_button', COLORS.bluish_button)
+                root.style.setProperty('--primary_sharp', COLORS.bluish_sharp)
+                root.style.setProperty('--primary_button_active', COLORS.bluish_button_active)
+                root.style.setProperty('--primary_sharp_active', COLORS.bluish_sharp_active)
+                break
+            }
+        }
+
+    }
 
   return (
     <div className='piano'>
@@ -127,6 +164,7 @@ export default function Piano() {
         changeVolume={changeVolume} 
         showText={showText}
         setShowText={setShowText}
+        themeChange={themeChange}
         />
 
         <div className='piano_wrapper'>

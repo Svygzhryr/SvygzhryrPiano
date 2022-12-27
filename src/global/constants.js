@@ -89,7 +89,33 @@ const NOTE_TO_KEY = {
 const VALID_KEYS = ['q','2','w','3','e','r','5',
 't','6','y','7','u','i','9','o','0','p','[',
 '=',']','z','s','x','d','c','v','g','b','h','n',
-'m','k',',','l','.',';','/']
+'m','k',',','l','.',';','/'];
 
-export {UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS};
+const COLORS = {
+    black_background: '#1E1E1E',
+    black_button: '#F2F2F2',
+    black_sharp: '#171717',
+    black_button_active: '#9D9D9D',
+    black_sharp_active: '#2D2D2D',
+
+    bluish_background: '#0C002D',    
+    bluish_button: '#C2C1EF',
+    bluish_sharp: '#04001E',
+    bluish_button_active: '#5F52AE',
+    bluish_sharp_active: '#0C0054',
+
+    reddish_background: '#430800',
+    reddish_button: '#EEBBB7',
+    reddish_sharp: '#290000',
+    reddish_button_active: '#F25E5E',
+    reddish_sharp_active: '#880000',
+
+    purplish_background: '#2F003A',
+    purplish_button: '#E8CAF2',
+    purplish_sharp: '#17001D',
+    purplish_button_active: '#D8B330',   
+    purplish_sharp_active: '#3C2000',
+}
+
+export {UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS, COLORS};
     
