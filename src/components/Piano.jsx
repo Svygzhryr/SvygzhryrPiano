@@ -2,7 +2,7 @@ import {React, useState, useEffect, useRef} from 'react'
 import '../css/piano.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS, COLORS} from '../global/constants'
 import { AUDIO } from '../global/soundBank';
-import UI from './UI';
+import UI from '../UI';
 
 
 
