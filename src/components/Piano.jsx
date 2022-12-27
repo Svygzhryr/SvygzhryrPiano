@@ -8,7 +8,7 @@ import UI from './UI';
 
 export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
-    const [volume, setVolume] = useState(0.2);
+    const [volume, setVolume] = useState(0.3);
     const [showText, setShowText] = useState(true);
     let keyClassName;
 
