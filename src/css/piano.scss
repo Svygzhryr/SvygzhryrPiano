@@ -1,8 +1,14 @@
 @import './variables';
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&display=swap');
 
+// классы для смены темы
+.theme-background {
+    background-color: #fff;
+}
+//---------------------
+
 .piano_wrapper {
-    background-color: $primary_background;
+    background-color: var(--primary_background);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -14,8 +20,8 @@
 .button {
     width: 7rem;
     height: 25rem;
-    background-color: $primary_button;
-    border: 4px solid $primary_background;
+    background-color: var(--primary_button);
+    border: 4px solid var(--primary_background);
     border-top: none;
     border-radius: 0 0 1rem 1rem;
     box-sizing: border-box;
@@ -31,7 +37,7 @@
     font-family: 'EB Garamond', serif;
     
 
-    color: $primary_background;
+    color: var(--primary_background);
     &:hover {
         cursor: pointer;
     }
@@ -39,15 +45,15 @@
 }
 
 .button_active {
-    background-color: $primary_button_active;
+    background-color: var(--primary_button_active);
 }
 
 .button_text_hidden {
-    color: $primary_button;
+    color: var(--primary_button);
 }
 
 .button_sharp {
-    background-color: $primary_sharp;
+    background-color: var(--primary_sharp);
     border: none;
     width: 5rem;
     height: 15rem;  
@@ -61,7 +67,7 @@
     align-items: flex-end;
     padding-bottom: 3rem;
 
-    color: $primary_button;
+    color: var(--primary_button);
 
     font-weight: 500;
     font-size: 2rem;
@@ -73,11 +79,11 @@
 }
 
 .button_sharp_active {
-    background-color: $primary_sharp_active;
+    background-color: var(--primary_sharp_active);
 }
 
 .button_sharp_hidden {
-    color: $primary_sharp;
+    color: var(--primary_sharp);
 }
 
 .upper_buttons>.button:first-child, 

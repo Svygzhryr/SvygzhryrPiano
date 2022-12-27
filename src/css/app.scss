@@ -1,13 +1,13 @@
 @import './variables';
 
 .App {
-    background-color: $primary_background;
+    background-color: var(--primary_background);
     width: 100vw;
     height: 100vh;
 }
 
 .wrapper {
-    background-color: $primary_background;
+    background-color: var(--primary_background);
     
 
 }

@@ -1,5 +1,6 @@
 @import './variables';
 
+
 .controls {
     position: absolute;
     display: flex;
@@ -9,7 +10,7 @@
 }
 
 .slider_wrapper {
-    background-color: $primary_button;
+    background-color: var(--primary_button);
     transform: rotate(-90deg) translate(-40%, -125%);
     width: 20rem;
     height: 5rem;
@@ -32,13 +33,13 @@ input[type=range].range {
      height: 1rem;
      -webkit-appearance: none;
      border-radius: 100rem;
-     background-color: $primary_button_active;
+     background-color: var(--primary_button_active);
 
 }
 
 input[type=range].range::-moz-range-thumb,
 input[type=range].range::-webkit-slider-thumb{
-    background-color: $primary_sharp;
+    background-color: var(--primary_sharp);
     border: none;
     width: 2rem;
     height: 2rem;
@@ -47,7 +48,7 @@ input[type=range].range::-webkit-slider-thumb{
 
 input[type=range].range::-moz-range-progress,
 input[type=range].range::-webkit-slider-runnable-track {
-    background: $primary_background;
+    background: var(--primary_background);
     height: 100%;
     border-radius: 100rem;
 }
@@ -77,26 +78,26 @@ input[type=range].range::-webkit-slider-runnable-track {
 }
 
 .theme_1 {
-    background: linear-gradient(90deg, $primary_button 50%, $primary_sharp 50%);
+    background: linear-gradient(90deg, var(--primary_button) 50%, var(--primary_sharp) 50%);
 
 }
 
 .theme_2 {
-    background: linear-gradient(90deg, $purplish_button_active 50%, $purplish_sharp 50%);
+    background: linear-gradient(90deg, var(--purplish_button_active) 50%, var(--purplish_sharp) 50%);
 
 }
 
 .theme_3 {
-    background: linear-gradient(90deg, $reddish_button_active 50%, $reddish_sharp 50%);
+    background: linear-gradient(90deg, var(--reddish_button_active) 50%, var(--reddish_sharp) 50%);
 }
 
 .theme_4 {
-    background: linear-gradient(90deg, $bluish_button_active 50%, $bluish_sharp 50%);
+    background: linear-gradient(90deg, var(--bluish_button_active) 50%, var(--bluish_sharp) 50%);
 }
 
 .toggle_text {
-    background-color: $primary_button;
-    color: $primary_sharp;
+    background-color: var(--primary_button);
+    color: var(--primary_sharp);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -109,8 +110,8 @@ input[type=range].range::-webkit-slider-runnable-track {
 
     &:hover {
         cursor: pointer;
-        background-color: $primary_sharp;
-        border: 3px solid $primary_button;
+        background-color: var(--primary_sharp);
+        border: 3px solid var(--primary_button);
         opacity: 1;
     }
 }

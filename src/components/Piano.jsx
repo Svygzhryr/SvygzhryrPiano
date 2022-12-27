@@ -111,6 +111,14 @@ export default function Piano() {
         )
     })
 
+    const themeChange = () => {
+        const root = document.querySelector(':root');
+        let rs = getComputedStyle(root);
+        console.log(rs.getPropertyValue('--primary_background'));
+    }
+
+    themeChange()
+
   return (
     <div className='piano'>
 
