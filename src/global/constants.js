@@ -114,7 +114,7 @@ const COLORS = {
     purplish_button: '#E8CAF2',
     purplish_sharp: '#17001D',
     purplish_button_active: '#D8B330',   
-    purplish_sharp_active: '#3C2000',
+    purplish_sharp_active: '#5c4501',
 }
 
 export {UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS, COLORS};

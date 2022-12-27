@@ -1,6 +1,28 @@
 @import './variables';
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&display=swap');
 
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: 10px;
+    scrollbar-color: var(--button_active);
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 24px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: var(--button_sharp);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--button_active);;
+    border-radius: 10px;
+    border: 3px solid var(--button_active);;
+  }
+
 // классы для смены темы
 .theme-background {
     background-color: #fff;
