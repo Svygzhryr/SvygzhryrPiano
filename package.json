@@ -1,5 +1,5 @@
 {
-  "name": "hookstutorial",
+  "name": "piano",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://github.com/Svygzhryr/SvygzhryrPiano",
@@ -19,7 +19,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "master -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
