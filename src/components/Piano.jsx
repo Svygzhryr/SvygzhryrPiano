@@ -15,8 +15,8 @@ export default function Piano() {
     function changeVolume(volume) {
         setVolume(volume);
     }
-    
-    // вешаем события
+        
+        // вешаем события
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
@@ -26,39 +26,39 @@ export default function Piano() {
         }
     }, [handleKeyDown, handleKeyUp])
 
-    // нажатие клавиши
+        // нажатие клавиши
     function handleKeyDown(e) {
         if (e.repeat) {
             return;
         }
 
-        // вводим соответствие между нажаотй клавишей и клавишей в коде
+    // вводим соответствие между нажаотй клавишей и клавишей в коде
+    const key = e.key.toLowerCase();
+    const button = document.querySelector(`[note=${KEY_TO_NOTE[key]}]`);
+    try {
+        button.classList.contains('button') ? 
+        button.classList.add('button_active') :
+        button.classList.add('button_sharp_active');
+
+    } catch {
+        return null
+    }
+    playNote(KEY_TO_NOTE[key]);
+    }
+
+        // отпускание клавиши
+    function handleKeyUp(e) {
         const key = e.key.toLowerCase();
         const button = document.querySelector(`[note=${KEY_TO_NOTE[key]}]`);
         try {
-            button.classList.contains('button') ? 
-            button.classList.add('button_active') :
-            button.classList.add('button_sharp_active');
+            button.classList.contains('button_active') ? 
+            button.classList.remove('button_active') :
+            button.classList.remove('button_sharp_active');
 
         } catch {
-           return null
+            return null
         }
-        playNote(KEY_TO_NOTE[key]);
     }
-
-    // отпускание клавиши
-        function handleKeyUp(e) {
-            const key = e.key.toLowerCase();
-            const button = document.querySelector(`[note=${KEY_TO_NOTE[key]}]`);
-            try {
-                button.classList.contains('button_active') ? 
-                button.classList.remove('button_active') :
-                button.classList.remove('button_sharp_active');
-    
-            } catch {
-               return null
-            }
-        }
 
     // применение стилей
     function keyIsPressed(note, pressedKeys) {
@@ -68,7 +68,7 @@ export default function Piano() {
     }
 
     // проигрыш звука
-   async function playNote(note) {
+    async function playNote(note) {
         if (note === undefined) {
             return
         }  
@@ -79,7 +79,7 @@ export default function Piano() {
 
 
 
-    // генерируем массив клавиш
+        // генерируем массив клавиш
     const upperKeys = UPPER_NOTES.map((note, index) => {
         // наигениальнейшая проверка на диез и бемоль
         if (note.length > 2 ? keyClassName = 'button_sharp' : keyClassName = 'button')
