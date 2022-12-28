@@ -68,7 +68,7 @@ export default function Piano() {
     }
 
     // проигрыш звука
-    function playNote(note) {
+   async function playNote(note) {
         if (note === undefined) {
             return
         }  
