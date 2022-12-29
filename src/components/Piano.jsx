@@ -1,4 +1,5 @@
 import {React, useState, useEffect, useRef, useMemo} from 'react'
+import useScript from '../hooks/useScript';
 import '../css/piano.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS, COLORS} from '../global/constants'
 import { AUDIO, AUDIO_ARRAY, AUDIO_TO_INDEX } from '../global/soundBank';
@@ -11,6 +12,7 @@ export default function Piano() {
     const [volume, setVolume] = useState(0.3);
     const [showText, setShowText] = useState(true);
     let keyClassName;
+    
 
     function changeVolume(volume) {
         setVolume(volume);
