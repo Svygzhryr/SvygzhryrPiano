@@ -37,6 +37,9 @@ import A5 from '../keybank/A5.mp3';
 import As5 from '../keybank/As5.mp3';
 import B5 from '../keybank/B5.mp3';
 
+const AUDIO_ARRAY = [C3, Cs3, D3, Ds3, E3, F3, Fs3, G3, Gs3, A3, As3, B3, C4, Cs4,
+D4, Ds4, E4, F4, Fs4, G4, Gs4, A4, As4, B4, C5, Cs5, D5, E5, F5, Fs5, G5, Gs5, A5, As5, B5]
+
 const AUDIO = {
      'C3': C3,
     'Cs3': Cs3,
@@ -77,4 +80,43 @@ const AUDIO = {
 
 };
 
-export {AUDIO}
+const AUDIO_TO_INDEX = {
+     'C3': 0,
+     'Cs3': 1,
+      'D3': 2,
+     'Ds3': 3,
+      'E3': 4,
+      'F3': 5,
+     'Fs3': 6,
+      'G3': 7,
+     'Gs3': 8,
+      'A3': 9,
+     'As3': 10,
+      'B3': 11,
+      'C4': 12,
+     'Cs4': 13,
+      'D4': 14,
+     'Ds4': 15,
+      'E4': 16,
+      'F4': 17,
+     'Fs4': 18,
+      'G4': 19, 
+     'Gs4': 20,
+      'A4': 21,
+     'As4': 22,
+      'B4': 23,
+      'C5': 24,
+     'Cs5': 25,
+      'D5': 26,
+     'Ds5': 27,
+      'E5': 28,
+      'F5': 29,
+     'Fs5': 30,
+      'G5': 31,
+     'Gs5': 32,
+      'A5': 33,
+     'As5': 34,
+      'B5': 35,
+}
+
+export {AUDIO, AUDIO_ARRAY, AUDIO_TO_INDEX}

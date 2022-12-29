@@ -1,7 +1,7 @@
 import {React, useState, useEffect, useRef} from 'react'
 import '../css/piano.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS, COLORS} from '../global/constants'
-import { AUDIO } from '../global/soundBank';
+import { AUDIO, AUDIO_ARRAY, AUDIO_TO_INDEX } from '../global/soundBank';
 import UI from './UI';
 
 
@@ -27,6 +27,7 @@ export default function Piano() {
     }, [handleKeyDown, handleKeyUp])
 
         // нажатие клавиши
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     function handleKeyDown(e) {
         if (e.repeat) {
             return;
@@ -47,7 +48,9 @@ export default function Piano() {
     }
 
         // отпускание клавиши
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     function handleKeyUp(e) {
+
         const key = e.key.toLowerCase();
         const button = document.querySelector(`[note=${KEY_TO_NOTE[key]}]`);
         try {
@@ -72,44 +75,20 @@ export default function Piano() {
         if (note === undefined) {
             return
         }  
-        const noteAudio = new Audio(AUDIO[note]);
-        noteAudio.volume = +volume;
-        noteAudio.play();   
+        console.log(note);
+
+        // 'медленная' подгрузка, но без прерывания
+        // const noteAudio = new Audio(AUDIO[note]);
+        // noteAudio.volume = +volume;
+        // noteAudio.play();   
+
+        // 'быстрая подгрузка, но с прерыванием'
+        let sound = audioFiles[AUDIO_TO_INDEX[note]];
+        sound.volume = +volume;
+        sound.currentTime = 0;  
+        sound.play();
+
     }
-
-
-
-        // генерируем массив клавиш
-    const upperKeys = UPPER_NOTES.map((note, index) => {
-        // наигениальнейшая проверка на диез и бемоль
-        if (note.length > 2 ? keyClassName = 'button_sharp' : keyClassName = 'button')
-        return (
-            <button 
-            key={index} 
-            note={note} 
-            className={keyClassName} 
-            pressedkeys={pressedKeys}
-            volume={volume}
-            >
-            {showText ? NOTE_TO_KEY[note] : null}
-            </button>
-        )  
-    })
-
-    const lowerKeys = LOWER_NOTES.map((note, index) => {
-        if (note.length > 2 ? keyClassName = 'button_sharp' : keyClassName = 'button')
-        return (
-            <button 
-            key={index}     
-            note={note} 
-            className={keyClassName}
-            pressedkey={pressedKeys}
-            volume={volume}
-            >
-                {showText ? NOTE_TO_KEY[note] : null}
-            </button>
-        )
-    })
 
     const themeChange = (e) => {
         const root = document.querySelector(':root');
@@ -156,6 +135,45 @@ export default function Piano() {
 
     }
 
+        // генерируем массив клавиш
+    const upperKeys = UPPER_NOTES.map((note, index) => {
+        // наигениальнейшая проверка на диез и бемоль
+        if (note.length > 2 ? keyClassName = 'button_sharp' : keyClassName = 'button')
+        return (
+            <button 
+            key={index} 
+            note={note} 
+            className={keyClassName} 
+            pressedkeys={pressedKeys}
+            volume={volume}
+            >
+            {showText ? NOTE_TO_KEY[note] : null}
+            </button>
+        )  
+    })
+
+    const lowerKeys = LOWER_NOTES.map((note, index) => {
+        if (note.length > 2 ? keyClassName = 'button_sharp' : keyClassName = 'button')
+        return (
+            <button 
+            key={index}     
+            note={note} 
+            className={keyClassName}
+            pressedkey={pressedKeys}
+            volume={volume}
+            >
+                {showText ? NOTE_TO_KEY[note] : null}
+            </button>
+        )
+    })
+
+    let audioFiles = [];
+    Object.keys(AUDIO).forEach(s => {
+        let e = new Audio(AUDIO[s]);
+        e.preload = 'auto';
+        audioFiles.push(e)
+    })
+
   return (
     <div className='piano'>
 
@@ -178,8 +196,6 @@ export default function Piano() {
                     {lowerKeys}
                 </div>
             </div>
-
-            {/* продам гараж */}
 
         </div>
         
