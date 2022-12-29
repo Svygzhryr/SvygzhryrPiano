@@ -15,6 +15,7 @@
     "react-scripts": "5.0.1",
     "sass": "^1.56.2",
     "styled-components": "^5.3.6",
+    "tone": "^14.7.77",
     "web-vitals": "^2.1.4",
     "webfontloader": "^1.6.28"
   },

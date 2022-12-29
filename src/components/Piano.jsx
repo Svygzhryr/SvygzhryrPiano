@@ -1,5 +1,6 @@
 import {React, useState, useEffect, useRef, useMemo} from 'react'
 import useScript from '../hooks/useScript';
+import * as Tone from 'tone'
 import '../css/piano.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS, COLORS} from '../global/constants'
 import { AUDIO, AUDIO_ARRAY, AUDIO_TO_INDEX } from '../global/soundBank';
@@ -11,6 +12,7 @@ export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
     const [volume, setVolume] = useState(0.3);
     const [showText, setShowText] = useState(true);
+    const synth = new Tone.Synth().toDestination();
     let keyClassName;
     
 
@@ -35,10 +37,11 @@ export default function Piano() {
 
     // вводим соответствие между нажаотй клавишей и клавишей в коде
     const key = e.key.toLowerCase();
+    console.log(KEY_TO_NOTE[key])
     const button = document.querySelector(`[note=${KEY_TO_NOTE[key]}]`);
     try {
         button.classList.contains('button') ? 
-        button.classList.add('button_active') :
+        button.classList.add('button_active') : 
         button.classList.add('button_sharp_active');
 
     } catch {
@@ -76,10 +79,12 @@ export default function Piano() {
         // noteAudio.play();   
 
         // 'быстрая подгрузка, но с прерыванием'
-        let sound = audioFiles[AUDIO_TO_INDEX[note]];
-        sound.volume = +volume;
-        sound.currentTime = 0;
-        sound.play();
+        synth.triggerAttackRelease('C3' , '8n')
+
+        // let sound = audioFiles[AUDIO_TO_INDEX[note]];
+        // sound.volume = +volume;
+        // sound.currentTime = 0;
+        // sound.play();
 
     }
 
@@ -158,13 +163,6 @@ export default function Piano() {
                 {showText ? NOTE_TO_KEY[note] : null}
             </button>
         )
-    })
-
-    let audioFiles = [];
-    Object.keys(AUDIO).forEach(s => {
-        let e = new Audio(AUDIO[s]);
-        e.preload = 'auto';
-        audioFiles.push(e)
     })
 
   return (
