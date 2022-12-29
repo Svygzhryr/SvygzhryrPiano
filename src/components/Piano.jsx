@@ -1,4 +1,4 @@
-import {React, useState, useEffect, useRef} from 'react'
+import {React, useState, useEffect, useRef, useMemo} from 'react'
 import '../css/piano.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS, COLORS} from '../global/constants'
 import { AUDIO, AUDIO_ARRAY, AUDIO_TO_INDEX } from '../global/soundBank';
@@ -29,9 +29,7 @@ export default function Piano() {
         // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
     function handleKeyDown(e) {
-        if (e.repeat) {
-            return;
-        }
+        if (e.repeat) return
 
     // вводим соответствие между нажаотй клавишей и клавишей в коде
     const key = e.key.toLowerCase();
@@ -63,13 +61,6 @@ export default function Piano() {
         }
     }
 
-    // применение стилей
-    function keyIsPressed(note, pressedKeys) {
-        if (pressedKeys.includes(NOTE_TO_KEY[note])) {
-            return true
-        } return false
-    }
-
     // проигрыш звука
     async function playNote(note) {
         if (note === undefined) {
@@ -85,7 +76,7 @@ export default function Piano() {
         // 'быстрая подгрузка, но с прерыванием'
         let sound = audioFiles[AUDIO_TO_INDEX[note]];
         sound.volume = +volume;
-        sound.currentTime = 0;  
+        sound.currentTime = 0;
         sound.play();
 
     }
