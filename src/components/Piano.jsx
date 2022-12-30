@@ -9,10 +9,16 @@ import UI from './UI';
 
 export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
-    const [volume, setVolume] = useState(0);
+    const [volume, setVolume] = useState(10);
     const [showText, setShowText] = useState(true);
-    const vol = new Tone.Volume(volume).toDestination();
-    const synth = new Tone.Synth().connect(vol);
+
+    const synth = new Tone.PolySynth().toDestination();
+    synth.set({
+        envelope: {
+            attack: 0.1
+        }
+    })
+
     let keyClassName;
     
 
@@ -33,24 +39,24 @@ export default function Piano() {
         // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
     function handleKeyDown(e) {
-    if (e.repeat) return
+        if (e.repeat) return
 
-    // вводим соответствие между нажатой клавишей и клавишей в коде
-    const key = e.key.toLowerCase();
-    const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
-    const button = document.querySelector(`[note=${shittySharp}]`);
-    try {
-        button.classList.contains('button') ? 
-        button.classList.add('button_active') : 
-        button.classList.add('button_sharp_active');
+        // вводим соответствие между нажатой клавишей и клавишей в коде
+        const key = e.key.toLowerCase();
+        const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
+        const button = document.querySelector(`[note=${shittySharp}]`);
+        try {
+            button.classList.contains('button') ? 
+            button.classList.add('button_active') : 
+            button.classList.add('button_sharp_active');
 
-    } catch {
-        return null
+        } catch {
+            return null
+        }
+        playNote(KEY_TO_NOTE[key]);
     }
-    playNote(KEY_TO_NOTE[key]);
-    }
 
-        // отпускание клавиши
+    // отпускание клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
     function handleKeyUp(e) {
 
@@ -65,6 +71,7 @@ export default function Piano() {
         } catch {
             return null
         }
+        synth.triggerRelease(KEY_TO_NOTE[key]);
     }
 
     // проигрыш звука
@@ -72,19 +79,8 @@ export default function Piano() {
         if (note === undefined) {
             return
         }  
-        // 'медленная' подгрузка, но без прерывания
-        // const noteAudio = new Audio(AUDIO[note]);
-        // noteAudio.volume = +volume;
-        // noteAudio.play();   
-
-        // 'быстрая подгрузка, но с прерыванием'
-        synth.triggerAttackRelease(note , '8n')
-
-        // let sound = audioFiles[AUDIO_TO_INDEX[note]];
-        // sound.volume = +volume;
-        // sound.currentTime = 0;
-        // sound.play();
-
+        synth.volume.value = volume;
+        synth.triggerAttack(note);
     }
 
     const themeChange = (e) => {
