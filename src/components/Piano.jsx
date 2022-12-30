@@ -9,9 +9,10 @@ import UI from './UI';
 
 export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
-    const [volume, setVolume] = useState(-20);
+    const [volume, setVolume] = useState(0);
     const [showText, setShowText] = useState(true);
-    const synth = new Tone.Synth().toDestination();
+    const vol = new Tone.Volume(volume).toDestination();
+    const synth = new Tone.Synth().connect(vol);
     let keyClassName;
     
 
@@ -27,7 +28,7 @@ export default function Piano() {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         }
-    }, [handleKeyDown, handleKeyUp])
+    }, [handleKeyDown, handleKeyUp,])
 
         // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
