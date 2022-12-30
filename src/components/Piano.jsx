@@ -3,14 +3,13 @@ import useScript from '../hooks/useScript';
 import * as Tone from 'tone'
 import '../css/piano.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS, COLORS} from '../global/constants'
-import { AUDIO, AUDIO_ARRAY, AUDIO_TO_INDEX } from '../global/soundBank';
 import UI from './UI';
 
 
 
 export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
-    const [volume, setVolume] = useState(0.3);
+    const [volume, setVolume] = useState(-20);
     const [showText, setShowText] = useState(true);
     const synth = new Tone.Synth().toDestination();
     let keyClassName;
@@ -33,12 +32,12 @@ export default function Piano() {
         // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
     function handleKeyDown(e) {
-        if (e.repeat) return
+    if (e.repeat) return
 
-    // вводим соответствие между нажаотй клавишей и клавишей в коде
+    // вводим соответствие между нажатой клавишей и клавишей в коде
     const key = e.key.toLowerCase();
-    console.log(KEY_TO_NOTE[key])
-    const button = document.querySelector(`[note=${KEY_TO_NOTE[key]}]`);
+    const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
+    const button = document.querySelector(`[note=${shittySharp}]`);
     try {
         button.classList.contains('button') ? 
         button.classList.add('button_active') : 
@@ -55,7 +54,8 @@ export default function Piano() {
     function handleKeyUp(e) {
 
         const key = e.key.toLowerCase();
-        const button = document.querySelector(`[note=${KEY_TO_NOTE[key]}]`);
+        const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
+        const button = document.querySelector(`[note=${shittySharp}]`);
         try {
             button.classList.contains('button_active') ? 
             button.classList.remove('button_active') :
@@ -71,15 +71,13 @@ export default function Piano() {
         if (note === undefined) {
             return
         }  
-        console.log(note);
-
         // 'медленная' подгрузка, но без прерывания
         // const noteAudio = new Audio(AUDIO[note]);
         // noteAudio.volume = +volume;
         // noteAudio.play();   
 
         // 'быстрая подгрузка, но с прерыванием'
-        synth.triggerAttackRelease('C3' , '8n')
+        synth.triggerAttackRelease(note , '8n')
 
         // let sound = audioFiles[AUDIO_TO_INDEX[note]];
         // sound.volume = +volume;
@@ -164,6 +162,7 @@ export default function Piano() {
             </button>
         )
     })
+
 
   return (
     <div className='piano'>
