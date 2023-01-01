@@ -15,7 +15,7 @@ export default function Piano() {
     const synth = new Tone.PolySynth().toDestination();
     synth.set({
         envelope: {
-            attack: 0.1
+            attack: 0.001
         }
     })
 
