@@ -11,9 +11,9 @@
 
 .slider_wrapper {
     background-color: var(--primary_button);
-    transform: rotate(-90deg) translate(-40%, -125%);
-    width: 20rem;
-    height: 5rem;
+    transform: rotate(-90deg) translate(-40%, -110%);
+    width: 25rem;
+    height: 7rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,7 +29,7 @@
 }
 
 input[type=range].range {   
-     width: 15rem;       
+     width: 18rem;       
      height: 1rem;
      -webkit-appearance: none;
      border-radius: 100rem;
@@ -38,11 +38,12 @@ input[type=range].range {
 }
 
 input[type=range].range::-moz-range-thumb,
-input[type=range].range::-webkit-slider-thumb{
-    background-color: var(--primary_sharp);
+input[type='range']::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    background: var(--primary_sharp);
     border: none;
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 100rem;
 }
 
@@ -61,9 +62,9 @@ input[type=range].range::-webkit-slider-runnable-track {
 .theme_selector {
     padding: 0;
     border-radius: 50%;
-    width: 4rem;
+    width: 6rem;
     margin: 1rem 0;
-    height: 4rem;
+    height: 6rem;
     border: none;
     display: flex;
     opacity: 0.5;
@@ -102,8 +103,8 @@ input[type=range].range::-webkit-slider-runnable-track {
     justify-content: center;
     align-items: center;
 
-    font-weight: 500;
-    font-size: 2rem;
+    font-weight: 700;
+    font-size: 3rem;
     font-family: 'EB Garamond', serif;
 
     transition: all .5s ease-in-out;

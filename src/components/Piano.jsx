@@ -9,7 +9,7 @@ import UI from './UI';
 
 export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
-    const [volume, setVolume] = useState(10);
+    const [volume, setVolume] = useState(0);
     const [showText, setShowText] = useState(true);
 
     const synth = new Tone.PolySynth().toDestination();
