@@ -19,7 +19,7 @@ export default function UI({...props}) {
           <button onClick={props.themeChange} className="theme_selector theme_2"></button>
           <button onClick={props.themeChange} className="theme_selector theme_3"></button>
           <button onClick={props.themeChange} className="theme_selector theme_4"></button>
-          <button onClick={handleShowText} className="theme_selector toggle_text">A</button>
+          <button onClick={handleShowText} className="theme_selector toggle_text">T</button>
         </div>
     </div>
   )
