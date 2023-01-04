@@ -13,15 +13,36 @@ export default function Piano() {
     const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
     const [showText, setShowText] = useState(true);
     const [instrument, setInstrument] = useState('')
+
+    // всё это должно быть декомпозировано
+    // фильтры и эффекты
+    // const FXchorus = new Tone.Chorus(5, 2.5, 1).toDestination().start();
+    // const FXreverb = new Tone.Reverb(0.1).toDestination();
+    // const FXautoFilter = new Tone.AutoFilter("8n").toDestination().start();
+    // const FXautoWah = new Tone.AutoWah(50, 6, -30).toDestination();
+    // const FXcrusher = new Tone.BitCrusher(4).toDestination();
+    // const FXcheby = new Tone.Chebyshev(50).toDestination();
+    // const FXdist = new Tone.Distortion(0.8).toDestination();
+    // const FXdelay = new Tone.FeedbackDelay("8n", 0.6).toDestination();
+    // const FXfreeverb = new Tone.Freeverb().toDestination();
+    // const FXJCreverb = new Tone.JCReverb(0.4).toDestination();
+    // const FXphaser = new Tone.Phaser({
+    //     frequency: 15,
+    //     octaves: 5,
+    //     baseFrequency: 300
+    // }).toDestination();
+    // const FXpingPong = new Tone.PingPongDelay("6n", 0.2).toDestination();
+    // FXfreeverb.dampening = 2000;
+    // FXautoWah.Q.value = 2;
     // не знаю надо ли это сувать в эффект (по идее установка синтезатора)
-    const synth = new Tone.PolySynth(Tone.FMSynth, 8).toDestination();
+    const synth = new Tone.PolySynth(Tone.AMSynth, 2).toDestination();
     synth.set({
-        detune: +1200,
+        detune: +1200,  
         // portamento: Seconds;
         // onsilence: onSilenceCallback;
         
         envelope: {
-            atatck: 0,
+            atatck: 0.25,
             // в теории здесь можно бахнуть интерфейс с настройками кривой
             // decay: Time;
             // sustain: NormalRange;
