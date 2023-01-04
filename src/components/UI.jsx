@@ -5,8 +5,8 @@ import '../css/ui.scss'
 export default function UI({...props}) {
 
   function handleShowText() {
-   return props.setShowText(!props.showText)
-
+    localStorage.setItem('text', !props.showText)
+    return props.setShowText(!props.showText)
   }
 
   return (

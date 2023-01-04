@@ -8,25 +8,38 @@ import UI from './UI';
 
 
 export default function Piano() {
+    let keyClassName;
     const [pressedKeys, setPressedKeys] = useState([]);
-    const [volume, setVolume] = useState(0);
+    const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
     const [showText, setShowText] = useState(true);
-
-    const synth = new Tone.PolySynth().toDestination();
+    const [instrument, setInstrument] = useState('')
+    // не знаю надо ли это сувать в эффект (по идее установка синтезатора)
+    const synth = new Tone.PolySynth(Tone.FMSynth, 8).toDestination();
     synth.set({
+        detune: +1200,
+        // portamento: Seconds;
+        // onsilence: onSilenceCallback;
+        
         envelope: {
-            attack: 0.001
+            atatck: 0,
+            // в теории здесь можно бахнуть интерфейс с настройками кривой
+            // decay: Time;
+            // sustain: NormalRange;
+            // release: Time;
+            // attackCurve: EnvelopeCurve;
+            // releaseCurve: EnvelopeCurve;
+            // decayCurve: BasicEnvelopeCurve;
         }
     })
 
-    let keyClassName;
     
 
     function changeVolume(volume) {
         setVolume(volume);
+        localStorage.setItem('volume', volume);
     }
         
-        // вешаем события
+    // вешаем события
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
@@ -36,7 +49,7 @@ export default function Piano() {
         }
     }, [handleKeyDown, handleKeyUp,])
 
-        // нажатие клавиши
+    // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
     function handleKeyDown(e) {
         if (e.repeat) return
@@ -54,6 +67,15 @@ export default function Piano() {
             return null
         }
         playNote(KEY_TO_NOTE[key]);
+    }
+
+    // проигрыш звука
+    async function playNote(note) {
+        if (note === undefined) {
+            return
+        }  
+        synth.volume.value = volume;
+        synth.triggerAttack(note);
     }
 
     // отпускание клавиши
@@ -74,14 +96,7 @@ export default function Piano() {
         synth.triggerRelease(KEY_TO_NOTE[key]);
     }
 
-    // проигрыш звука
-    async function playNote(note) {
-        if (note === undefined) {
-            return
-        }  
-        synth.volume.value = volume;
-        synth.triggerAttack(note);
-    }
+
 
     const themeChange = (e) => {
         const root = document.querySelector(':root');
