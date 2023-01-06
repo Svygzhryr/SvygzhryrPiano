@@ -11,13 +11,13 @@ export default function Piano() {
     let keyClassName;
     const [pressedKeys, setPressedKeys] = useState([]);
     const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
-    const [showText, setShowText] = useState(true);
+    const [showText, setShowText] = useState(localStorage.getItem('text'));
     const [instrument, setInstrument] = useState('')
 
     // всё это должно быть декомпозировано
     // фильтры и эффекты
     // const FXchorus = new Tone.Chorus(5, 2.5, 1).toDestination().start();
-    // const FXreverb = new Tone.Reverb(0.1).toDestination();
+    const FXreverb = new Tone.Reverb(5).toDestination();
     // const FXautoFilter = new Tone.AutoFilter("8n").toDestination().start();
     // const FXautoWah = new Tone.AutoWah(50, 6, -30).toDestination();
     // const FXcrusher = new Tone.BitCrusher(4).toDestination();
@@ -35,14 +35,14 @@ export default function Piano() {
     // FXfreeverb.dampening = 2000;
     // FXautoWah.Q.value = 2;
     // не знаю надо ли это сувать в эффект (по идее установка синтезатора)
-    const synth = new Tone.PolySynth(Tone.AMSynth, 2).toDestination();
+    const synth = new Tone.PolySynth(Tone.Synth, 2).connect(FXreverb).toDestination();
     synth.set({
         detune: +1200,  
         // portamento: Seconds;
         // onsilence: onSilenceCallback;
         
         envelope: {
-            atatck: 0.25,
+            atatck: 0,
             // в теории здесь можно бахнуть интерфейс с настройками кривой
             // decay: Time;
             // sustain: NormalRange;
@@ -164,6 +164,10 @@ export default function Piano() {
 
     }
 
+    function generateText(note) {
+       return showText ? NOTE_TO_KEY[note] : null
+    }
+
         // генерируем массив клавиш
     const upperKeys = UPPER_NOTES.map((note, index) => {
         // наигениальнейшая проверка на диез и бемоль
@@ -176,7 +180,7 @@ export default function Piano() {
             pressedkeys={pressedKeys}
             volume={volume}
             >
-            {showText ? NOTE_TO_KEY[note] : null}
+            {generateText(note)}
             </button>
         )  
     })
@@ -191,7 +195,7 @@ export default function Piano() {
             pressedkey={pressedKeys}
             volume={volume}
             >
-                {showText ? NOTE_TO_KEY[note] : null}
+                {generateText(note)}
             </button>
         )
     })
