@@ -61,16 +61,6 @@ export default function Piano() {
     }
 
     const optiVolume = useMemo(() => changeVolume(volume), [volume]);
-        
-    // вешаем события
-    useEffect(() => {
-        window.addEventListener('keydown', handleKeyDown);
-        window.addEventListener('keyup', handleKeyUp);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-            window.removeEventListener('keyup', handleKeyUp);
-        }
-    }, [handleKeyDown, handleKeyUp,])
 
     // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,6 +109,15 @@ export default function Piano() {
         synth.triggerRelease(KEY_TO_NOTE[key]);
     }
 
+    // вешаем события
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keyup', handleKeyUp);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('keyup', handleKeyUp);
+        }
+    }, [handleKeyDown, handleKeyUp,])
 
 
     const themeChange = (e) => {
