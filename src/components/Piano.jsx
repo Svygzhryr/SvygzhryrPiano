@@ -13,6 +13,7 @@ export default function Piano() {
     const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
     const [showText, setShowText] = useState(localStorage.getItem('text'));
     const [instrument, setInstrument] = useState('');
+
     console.log(volume);
 
     // всё это должно быть декомпозировано
@@ -36,9 +37,17 @@ export default function Piano() {
     // FXfreeverb.dampening = 2000;
     // FXautoWah.Q.value = 2;
     // не знаю надо ли это сувать в эффект (по идее установка синтезатора)
-    const synth = new Tone.PolySynth(Tone.Synth, 2).connect(FXreverb).toDestination();
+    // const synth = new Tone.PolySynth(Tone.AMSynth, 2).connect(FXreverb).toDestination();
+    const synth = new Tone.Sampler({
+        urls: {
+            A1: "A1.mp3",
+            A2: "A2.mp3",
+        },
+        baseUrl: "https://tonejs.github.io/audio/casio/",
+    }).connect(FXreverb).toDestination();
+    
     synth.set({
-        detune: +1200,  
+        detune: -1200,  
         // portamento: Seconds;
         // onsilence: onSilenceCallback;
         
@@ -54,7 +63,6 @@ export default function Piano() {
         }
     })
 
-    
 
     const changeVolume = (volume) => {
         setVolume(volume);
@@ -111,11 +119,12 @@ export default function Piano() {
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
+        console.clear();
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         }
-    }, [handleKeyDown, handleKeyUp, changeVolume])
+    }, [handleKeyDown, handleKeyUp])
 
 
     const themeChange = (e) => {
