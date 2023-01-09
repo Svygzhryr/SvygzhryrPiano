@@ -12,7 +12,8 @@ export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
     const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
     const [showText, setShowText] = useState(localStorage.getItem('text'));
-    const [instrument, setInstrument] = useState('')
+    const [instrument, setInstrument] = useState('');
+    console.log(volume);
 
     // всё это должно быть декомпозировано
     // фильтры и эффекты
@@ -59,9 +60,6 @@ export default function Piano() {
         setVolume(volume);
         localStorage.setItem('volume', volume);
     }
-
-    const optiVolume = useMemo(() => changeVolume(volume), [volume]);
-
     // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleKeyDown = (e) => {
@@ -117,7 +115,7 @@ export default function Piano() {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         }
-    }, [handleKeyDown, handleKeyUp,])
+    }, [handleKeyDown, handleKeyUp, changeVolume])
 
 
     const themeChange = (e) => {
@@ -207,7 +205,7 @@ export default function Piano() {
 
         <UI 
         volume={volume} 
-        optiVolume={changeVolume} 
+        changeVolume={changeVolume} 
         showText={showText}
         setShowText={setShowText}
         themeChange={themeChange}
