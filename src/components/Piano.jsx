@@ -55,10 +55,12 @@ export default function Piano() {
 
     
 
-    function changeVolume(volume) {
+    const changeVolume = (volume) => {
         setVolume(volume);
         localStorage.setItem('volume', volume);
     }
+
+    const optiVolume = useMemo(() => changeVolume(volume), [volume]);
         
     // вешаем события
     useEffect(() => {
@@ -72,7 +74,7 @@ export default function Piano() {
 
     // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    function handleKeyDown(e) {
+    const handleKeyDown = (e) => {
         if (e.repeat) return
 
         // вводим соответствие между нажатой клавишей и клавишей в коде
@@ -101,7 +103,7 @@ export default function Piano() {
 
     // отпускание клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    function handleKeyUp(e) {
+    const handleKeyUp = (e) => {
 
         const key = e.key.toLowerCase();
         const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
@@ -164,7 +166,7 @@ export default function Piano() {
 
     }
 
-    function generateText(note) {
+    const generateText = (note) => {
        return showText ? NOTE_TO_KEY[note] : null
     }
 
@@ -195,7 +197,7 @@ export default function Piano() {
             pressedkey={pressedKeys}
             volume={volume}
             >
-                {generateText(note)}
+            {generateText(note)}
             </button>
         )
     })
@@ -206,7 +208,7 @@ export default function Piano() {
 
         <UI 
         volume={volume} 
-        changeVolume={changeVolume} 
+        optiVolume={changeVolume} 
         showText={showText}
         setShowText={setShowText}
         themeChange={themeChange}
