@@ -40,10 +40,9 @@ export default function Piano() {
     // const synth = new Tone.PolySynth(Tone.AMSynth, 2).connect(FXreverb).toDestination();
     const synth = new Tone.Sampler({
         urls: {
-            A1: "A1.mp3",
-            A2: "A2.mp3",
+            'E#1': "musicBox.mp3",
         },
-        baseUrl: "https://tonejs.github.io/audio/casio/",
+        baseUrl: "",
     }).connect(FXreverb).toDestination();
     
     synth.set({
