@@ -1,4 +1,4 @@
-import {React, useState, useEffect, useRef, useMemo} from 'react'
+import {React, useState, useEffect, useRef, useMemo, useCallback} from 'react'
 import useScript from '../hooks/useScript';
 import * as Tone from 'tone'
 import '../css/piano.scss'
@@ -8,6 +8,7 @@ import UI from './UI';
 
 
 export default function Piano() {
+    
     let keyClassName;
     const [pressedKeys, setPressedKeys] = useState([]);
     const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
@@ -16,10 +17,46 @@ export default function Piano() {
 
     console.log(volume);
 
+
+    const FXreverb = new Tone.Reverb(0.1).toDestination();
+    const synth = new Tone.Sampler({
+        
+        urls: {
+            "C4": "C4.mp3",
+            "D#4": "Ds4.mp3",
+            "F#4": "Fs4.mp3",
+            "A4": "A4.mp3",
+        },
+        baseUrl: "https://tonejs.github.io/audio/salamander/",
+
+    }).connect(FXreverb).toDestination();
+    synth.set({
+        detune: -1200,  
+        // portamento: Seconds;
+        // onsilence: onSilenceCallback;
+        
+        envelope: {
+            atatck: 0.25,
+            // в теории здесь можно бахнуть интерфейс с настройками кривой
+            // decay: Time;
+            // sustain: NormalRange;
+            // release: Time;
+            // attackCurve: EnvelopeCurve;
+            // releaseCurve: EnvelopeCurve;
+            // decayCurve: BasicEnvelopeCurve;
+        }
+    })
+
+    // здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
+    // начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
+    Tone.context.lookAhead = 0.02;
+
+    
+
     // всё это должно быть декомпозировано
     // фильтры и эффекты
     // const FXchorus = new Tone.Chorus(5, 2.5, 1).toDestination().start();
-    const FXreverb = new Tone.Reverb(5).toDestination();
+
     // const FXautoFilter = new Tone.AutoFilter("8n").toDestination().start();
     // const FXautoWah = new Tone.AutoWah(50, 6, -30).toDestination();
     // const FXcrusher = new Tone.BitCrusher(4).toDestination();
@@ -38,35 +75,13 @@ export default function Piano() {
     // FXautoWah.Q.value = 2;
     // не знаю надо ли это сувать в эффект (по идее установка синтезатора)
     // const synth = new Tone.PolySynth(Tone.AMSynth, 2).connect(FXreverb).toDestination();
-    const synth = new Tone.Sampler({
-        urls: {
-            'E#1': "musicBox.mp3",
-        },
-        baseUrl: "",
-    }).connect(FXreverb).toDestination();
     
-    synth.set({
-        detune: -1200,  
-        // portamento: Seconds;
-        // onsilence: onSilenceCallback;
-        
-        envelope: {
-            atatck: 0,
-            // в теории здесь можно бахнуть интерфейс с настройками кривой
-            // decay: Time;
-            // sustain: NormalRange;
-            // release: Time;
-            // attackCurve: EnvelopeCurve;
-            // releaseCurve: EnvelopeCurve;
-            // decayCurve: BasicEnvelopeCurve;
-        }
-    })
-
-
+    // смена громкости
     const changeVolume = (volume) => {
         setVolume(volume);
         localStorage.setItem('volume', volume);
     }
+
     // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleKeyDown = (e) => {
@@ -118,14 +133,13 @@ export default function Piano() {
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
-        console.clear();
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         }
     }, [handleKeyDown, handleKeyUp])
 
-
+    // смена цветовой схемы
     const themeChange = (e) => {
         const root = document.querySelector(':root');
         let rootStyles = getComputedStyle(root);
@@ -171,6 +185,7 @@ export default function Piano() {
 
     }
 
+    // тугл текста
     const generateText = (note) => {
        return showText ? NOTE_TO_KEY[note] : null
     }
