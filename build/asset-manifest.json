@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/SvygzhryrPiano/static/css/main.45be7323.css",
-    "main.js": "/SvygzhryrPiano/static/js/main.408ee80c.js",
+    "main.css": "/SvygzhryrPiano/static/css/main.eae316c9.css",
+    "main.js": "/SvygzhryrPiano/static/js/main.f542a980.js",
     "index.html": "/SvygzhryrPiano/index.html",
-    "main.45be7323.css.map": "/SvygzhryrPiano/static/css/main.45be7323.css.map",
-    "main.408ee80c.js.map": "/SvygzhryrPiano/static/js/main.408ee80c.js.map"
+    "main.eae316c9.css.map": "/SvygzhryrPiano/static/css/main.eae316c9.css.map",
+    "main.f542a980.js.map": "/SvygzhryrPiano/static/js/main.f542a980.js.map"
   },
   "entrypoints": [
-    "static/css/main.45be7323.css",
-    "static/js/main.408ee80c.js"
+    "static/css/main.eae316c9.css",
+    "static/js/main.f542a980.js"
   ]
 }
