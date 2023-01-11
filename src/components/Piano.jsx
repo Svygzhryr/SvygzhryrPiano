@@ -2,32 +2,28 @@ import {React, useState, useEffect, useRef, useMemo, useCallback} from 'react'
 import useScript from '../hooks/useScript';
 import * as Tone from 'tone'
 import '../css/piano.scss'
-import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, VALID_KEYS, COLORS} from '../global/constants'
+import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS} from '../global/constants'
 import UI from './UI';
 
 
 
 export default function Piano() {
-    
+    console.log('render1')
     let keyClassName;
     const [pressedKeys, setPressedKeys] = useState([]);
-    const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
+    const [volume, setVolume] = useState(localStorage.getItem('volume') || 10);
     const [showText, setShowText] = useState(localStorage.getItem('text'));
     const [instrument, setInstrument] = useState('');
 
     console.log(volume);
 
-
-    const FXreverb = new Tone.Reverb(0.1).toDestination();
+    const FXreverb = new Tone.Reverb(5).toDestination();
     const synth = new Tone.Sampler({
         
         urls: {
-            "C4": "C4.mp3",
-            "D#4": "Ds4.mp3",
-            "F#4": "Fs4.mp3",
-            "A4": "A4.mp3",
+            A1: "A1.mp3"
         },
-        baseUrl: "https://tonejs.github.io/audio/salamander/",
+        baseUrl: "https://tonejs.github.io/audio/casio/",
 
     }).connect(FXreverb).toDestination();
     synth.set({
@@ -133,9 +129,11 @@ export default function Piano() {
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
+        console.log('uef1')
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
+        console.log('uef2')
         }
     }, [handleKeyDown, handleKeyUp])
 
@@ -224,8 +222,9 @@ export default function Piano() {
 
 
   return (
-    <div className='piano'>
 
+    <div className='piano'>
+        {console.log('render2')}
         <UI 
         volume={volume} 
         changeVolume={changeVolume} 
