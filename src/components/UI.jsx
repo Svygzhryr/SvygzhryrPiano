@@ -12,7 +12,7 @@ export default function UI({...props}) {
   return (
     <div className='controls'>
         <div className='slider_wrapper'>
-            <input step={5} min={-30} max={25} value={props.volume} onChange={(e) => {props.changeVolume(e.target.value)}} className='range' type='range'/>
+            <input step={1} min={-30} max={20} value={props.volume} onChange={(e) => {props.changeVolume(e.target.value)}} className='range' type='range'/>
         </div>
         <div className='themes'>
           <button onClick={props.themeChange} className="theme_selector theme_1"></button>

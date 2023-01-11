@@ -5,49 +5,37 @@ import '../css/piano.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS} from '../global/constants'
 import UI from './UI';
 
-
-
-export default function Piano() {
-    console.log('render1')
-    let keyClassName;
-    const [pressedKeys, setPressedKeys] = useState([]);
-    const [volume, setVolume] = useState(localStorage.getItem('volume') || 10);
-    const [showText, setShowText] = useState(localStorage.getItem('text'));
-    const [instrument, setInstrument] = useState('');
-
-    console.log(volume);
-
-    const FXreverb = new Tone.Reverb(5).toDestination();
-    const synth = new Tone.Sampler({
-        
-        urls: {
-            A1: "A1.mp3"
-        },
-        baseUrl: "https://tonejs.github.io/audio/casio/",
-
-    }).connect(FXreverb).toDestination();
-    synth.set({
-        detune: -1200,  
-        // portamento: Seconds;
-        // onsilence: onSilenceCallback;
-        
-        envelope: {
-            atatck: 0.25,
-            // в теории здесь можно бахнуть интерфейс с настройками кривой
-            // decay: Time;
-            // sustain: NormalRange;
-            // release: Time;
-            // attackCurve: EnvelopeCurve;
-            // releaseCurve: EnvelopeCurve;
-            // decayCurve: BasicEnvelopeCurve;
-        }
-    })
-
-    // здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
-    // начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
-    Tone.context.lookAhead = 0.02;
-
+// инициализация синтезатора и его эффектов
+const FXreverb = new Tone.Reverb(5).toDestination();
+const synth = new Tone.Sampler({
     
+    urls: {
+        A1: "A1.mp3"
+    },
+    baseUrl: "https://tonejs.github.io/audio/casio/",
+
+}).connect(FXreverb).toDestination();
+synth.set({
+    detune: -1200,  
+    // portamento: Seconds;
+    // onsilence: onSilenceCallback;
+    
+    envelope: {
+        atatck: 0.25,
+        // в теории здесь можно бахнуть интерфейс с настройками кривой
+        // decay: Time;
+        // sustain: NormalRange;
+        // release: Time;
+        // attackCurve: EnvelopeCurve;
+        // releaseCurve: EnvelopeCurve;
+        // decayCurve: BasicEnvelopeCurve;
+    }
+})
+
+// здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
+// начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
+Tone.context.lookAhead = 0.02;
+
 
     // всё это должно быть декомпозировано
     // фильтры и эффекты
@@ -71,7 +59,18 @@ export default function Piano() {
     // FXautoWah.Q.value = 2;
     // не знаю надо ли это сувать в эффект (по идее установка синтезатора)
     // const synth = new Tone.PolySynth(Tone.AMSynth, 2).connect(FXreverb).toDestination();
-    
+
+
+export default function Piano() {
+    console.log('render1')
+    let keyClassName;
+    const [pressedKeys, setPressedKeys] = useState([]);
+    const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
+    const [showText, setShowText] = useState(localStorage.getItem('text'));
+    const [instrument, setInstrument] = useState('');
+
+    console.log(volume);
+
     // смена громкости
     const changeVolume = (volume) => {
         setVolume(volume);
