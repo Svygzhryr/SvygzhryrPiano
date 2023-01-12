@@ -38,21 +38,31 @@ input[type=range].range {
     background-color: var(--primary_button_active);
 }
 
-input[type=range].range::-moz-range-thumb,
-input[type='range']::-webkit-slider-thumb{
-    background-color: var(--primary_sharp);
+input[type=range].range::-moz-range-thumb {
+    -webkit-appearance: none;
+    background: var(--primary_sharp);
     border: none;
     width: 2rem;
     height: 2rem;
     border-radius: 100rem;
 }
 
-input[type=range].range::-moz-range-progress,
-input[type=range].range::-webkit-slider-runnable-track {
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: var(--primary_sharp);
+    border: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 100rem;
+}
+
+input[type=range].range::-moz-range-progress {
     background: var(--primary_background);
     height: 100%;
     border-radius: 100rem;
 }
+
+
 
 .themes {
     margin: 0 1rem;
