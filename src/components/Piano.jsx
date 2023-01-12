@@ -2,6 +2,7 @@ import {React, useState, useEffect, useRef, useMemo, useCallback} from 'react'
 import useScript from '../hooks/useScript';
 import * as Tone from 'tone'
 import '../css/piano.scss'
+import { CSSTransition } from 'react-transition-group';
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS} from '../global/constants'
 import UI from './UI';
 
@@ -62,14 +63,13 @@ Tone.context.lookAhead = 0.02;
 
 
 export default function Piano() {
-    console.log('render1')
     let keyClassName;
     const [pressedKeys, setPressedKeys] = useState([]);
     const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
     const [showText, setShowText] = useState(localStorage.getItem('text'));
     const [instrument, setInstrument] = useState('');
+    console.log(showText)
 
-    console.log(volume);
 
     // смена громкости
     const changeVolume = (volume) => {
@@ -109,7 +109,7 @@ export default function Piano() {
     // отпускание клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleKeyUp = (e) => {
-
+        
         const key = e.key.toLowerCase();
         const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
         const button = document.querySelector(`[note=${shittySharp}]`);
@@ -128,11 +128,9 @@ export default function Piano() {
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
-        console.log('uef1')
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
-        console.log('uef2')
         }
     }, [handleKeyDown, handleKeyUp])
 
@@ -223,7 +221,6 @@ export default function Piano() {
   return (
 
     <div className='piano'>
-        {console.log('render2')}
         <UI 
         volume={volume} 
         changeVolume={changeVolume} 
