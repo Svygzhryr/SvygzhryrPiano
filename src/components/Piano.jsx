@@ -66,7 +66,7 @@ export default function Piano() {
     let keyClassName;
     const [pressedKeys, setPressedKeys] = useState([]);
     const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
-    const [showText, setShowText] = useState(true);
+    const [showText, setShowText] = useState(false);
     const [instrument, setInstrument] = useState('');
 
     // смена громкости
