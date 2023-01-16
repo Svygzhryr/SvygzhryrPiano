@@ -66,10 +66,8 @@ export default function Piano() {
     let keyClassName;
     const [pressedKeys, setPressedKeys] = useState([]);
     const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
-    const [showText, setShowText] = useState(localStorage.getItem('text') ?? true);
+    const [showText, setShowText] = useState(true);
     const [instrument, setInstrument] = useState('');
-    console.log(showText)
-
 
     // смена громкости
     const changeVolume = (volume) => {
@@ -128,6 +126,7 @@ export default function Piano() {
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
+        setShowText(JSON.parse(localStorage.getItem('text')))
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
@@ -182,9 +181,7 @@ export default function Piano() {
 
     // тугл текста
     const generateText = (note) => {
-        if (localStorage.getItem('text') == 'true') {
-            return showText ? NOTE_TO_KEY[note] : null 
-        } return null;
+        return showText ? NOTE_TO_KEY[note] : null 
     }
 
         // генерируем массив клавиш
