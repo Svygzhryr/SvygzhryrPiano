@@ -66,7 +66,7 @@ export default function Piano() {
     let keyClassName;
     const [pressedKeys, setPressedKeys] = useState([]);
     const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
-    const [showText, setShowText] = useState(localStorage.getItem('text'));
+    const [showText, setShowText] = useState(localStorage.getItem('text') ?? true);
     const [instrument, setInstrument] = useState('');
     console.log(showText)
 
@@ -182,7 +182,9 @@ export default function Piano() {
 
     // тугл текста
     const generateText = (note) => {
-       return showText ? NOTE_TO_KEY[note] : null
+        if (localStorage.getItem('text') == 'true') {
+            return showText ? NOTE_TO_KEY[note] : null 
+        } return null;
     }
 
         // генерируем массив клавиш
