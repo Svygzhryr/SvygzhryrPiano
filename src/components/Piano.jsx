@@ -1,7 +1,7 @@
 import {React, useState, useEffect, useRef, useMemo, useCallback} from 'react'
 import useScript from '../hooks/useScript';
 import * as Tone from 'tone'
-import '../css/piano.scss'
+import styles from '../css/piano.module.scss'
 import { CSSTransition } from 'react-transition-group';
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS} from '../global/constants'
 import UI from './UI';
@@ -85,9 +85,9 @@ export default function Piano() {
         const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
         const button = document.querySelector(`[note=${shittySharp}]`);
         try {
-            button.classList.contains('button') ? 
-            button.classList.add('button_active') : 
-            button.classList.add('button_sharp_active');
+            button.classList.contains(styles.button) ? 
+            button.classList.add(styles.button_active) : 
+            button.classList.add(styles.button_sharp_active);
 
         } catch {
             return null
@@ -112,9 +112,9 @@ export default function Piano() {
         const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
         const button = document.querySelector(`[note=${shittySharp}]`);
         try {
-            button.classList.contains('button_active') ? 
-            button.classList.remove('button_active') :
-            button.classList.remove('button_sharp_active');
+            button.classList.contains(styles.button_active) ? 
+            button.classList.remove(styles.button_active) :
+            button.classList.remove(styles.button_sharp_active);
 
         } catch {
             return null
@@ -187,7 +187,7 @@ export default function Piano() {
         // генерируем массив клавиш
     const upperKeys = UPPER_NOTES.map((note, index) => {
         // наигениальнейшая проверка на диез и бемоль
-        if (note.length > 2 ? keyClassName = 'button_sharp' : keyClassName = 'button')
+        if (note.length > 2 ? keyClassName = styles.button_sharp : keyClassName = styles.button)
         return (
             <button 
             key={index} 
@@ -202,7 +202,7 @@ export default function Piano() {
     })
 
     const lowerKeys = LOWER_NOTES.map((note, index) => {
-        if (note.length > 2 ? keyClassName = 'button_sharp' : keyClassName = 'button')
+        if (note.length > 2 ? keyClassName = styles.button_sharp : keyClassName = styles.button)
         return (
             <button 
             key={index}     
@@ -219,7 +219,7 @@ export default function Piano() {
 
   return (
 
-    <div className='piano'>
+    <div className={styles.piano}>
         <UI 
         volume={volume} 
         changeVolume={changeVolume} 
@@ -228,14 +228,14 @@ export default function Piano() {
         themeChange={themeChange}
         />
 
-        <div className='piano_wrapper'>
-            <div className='upper_keyboard'>
-                <div className='upper_buttons'>
+        <div className={styles.piano_wrapper}>
+            <div className={styles.upper_keyboard}>
+                <div className={styles.upper_buttons}>
                     {upperKeys}
                 </div>
             </div>
-            <div className='lower_keyboard'>
-                <div className='lower_buttons'>
+            <div className={styles.lower_keyboard}>
+                <div className={styles.lower_buttons}>
                     {lowerKeys}
                 </div>
             </div>
