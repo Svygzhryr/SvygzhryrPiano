@@ -6,7 +6,7 @@ import { CSSTransition } from 'react-transition-group';
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS} from '../global/constants'
 import UI from './UI';
 
-// инициализация синтезатора и его эффектов
+// инициализация синтезатора(-ов) и его эффектов
 const FXreverb = new Tone.Reverb(5).toDestination();
 const synth = new Tone.Sampler({
     
@@ -32,6 +32,9 @@ synth.set({
         // decayCurve: BasicEnvelopeCurve;
     }
 })
+
+// после фикса  первостепенных проблем планируется добавить инициализацию нескольких инструментов
+// и возможность выбора оных последством нажатия кнопок 
 
 // здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
 // начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
@@ -95,6 +98,7 @@ export default function Piano() {
         playNote(KEY_TO_NOTE[key]);
     }
 
+    // activeInstrument function
     // проигрыш звука
     async function playNote(note) {
         if (note === undefined) {
@@ -132,52 +136,6 @@ export default function Piano() {
             window.removeEventListener('keyup', handleKeyUp);
         }
     }, [handleKeyDown, handleKeyUp])
-
-    // смена цветовой схемы
-    const themeChange = (e) => {
-        const root = document.querySelector(':root');
-        let rootStyles = getComputedStyle(root);
-        const button = e.target;
-        switch (true) {
-            default: return null;
-            case button.classList.contains('theme_1'): {
-                root.style.setProperty('--primary_background', COLORS.black_background)
-                root.style.setProperty('--primary_button', COLORS.black_button)
-                root.style.setProperty('--primary_sharp', COLORS.black_sharp)
-                root.style.setProperty('--primary_button_active', COLORS.black_button_active)
-                root.style.setProperty('--primary_sharp_active', COLORS.black_sharp_active)
-                break
-            }
-
-            case button.classList.contains('theme_2'): {
-                root.style.setProperty('--primary_background', COLORS.purplish_background)
-                root.style.setProperty('--primary_button', COLORS.purplish_button)
-                root.style.setProperty('--primary_sharp', COLORS.purplish_sharp)
-                root.style.setProperty('--primary_button_active', COLORS.purplish_button_active)
-                root.style.setProperty('--primary_sharp_active', COLORS.purplish_sharp_active)
-                break
-            }
-
-            case button.classList.contains('theme_3'): {
-                root.style.setProperty('--primary_background', COLORS.reddish_background)
-                root.style.setProperty('--primary_button', COLORS.reddish_button)
-                root.style.setProperty('--primary_sharp', COLORS.reddish_sharp)
-                root.style.setProperty('--primary_button_active', COLORS.reddish_button_active)
-                root.style.setProperty('--primary_sharp_active', COLORS.reddish_sharp_active)
-                break
-            }
-
-            case button.classList.contains('theme_4'): {
-                root.style.setProperty('--primary_background', COLORS.bluish_background)
-                root.style.setProperty('--primary_button', COLORS.bluish_button)
-                root.style.setProperty('--primary_sharp', COLORS.bluish_sharp)
-                root.style.setProperty('--primary_button_active', COLORS.bluish_button_active)
-                root.style.setProperty('--primary_sharp_active', COLORS.bluish_sharp_active)
-                break
-            }
-        }
-
-    }
 
     // тугл текста
     const generateText = (note) => {
@@ -225,7 +183,6 @@ export default function Piano() {
         changeVolume={changeVolume} 
         showText={showText}
         setShowText={setShowText}
-        themeChange={themeChange}
         />
 
         <div className={styles.piano_wrapper}>
