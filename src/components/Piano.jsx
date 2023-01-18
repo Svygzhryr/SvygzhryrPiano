@@ -92,6 +92,13 @@ export default function Piano() {
         localStorage.setItem('volume', volume);
     }
 
+    const changeReverb = (reverb) => {
+        setReverb(reverb);
+        FXreverb.decay = reverb;
+        synth.connect(FXreverb);
+        console.log(reverb)
+    }
+
     // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleKeyDown = (e) => {
@@ -156,6 +163,8 @@ export default function Piano() {
         return showText ? NOTE_TO_KEY[note] : null 
     }
 
+
+
         // генерируем массив клавиш
     const upperKeys = UPPER_NOTES.map((note, index) => {
         // наигениальнейшая проверка на диез и бемоль
@@ -197,6 +206,8 @@ export default function Piano() {
         changeVolume={changeVolume} 
         showText={showText}
         setShowText={setShowText}
+        reverb={reverb}
+        changeReverb={changeReverb}
         />
 
         <div className={styles.piano_wrapper}>

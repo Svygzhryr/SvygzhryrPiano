@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import '../css/ui.scss'
 import styles from '../css/piano.module.scss'
 import Input from './subcomponents/Input';
+import CircularSlider from 'react-circular-slider';
 
 export default function UI({...props}) {
 
@@ -48,20 +49,27 @@ export default function UI({...props}) {
         }
     }
 
-    const changeReverb = () => {
-        
-    }
+
 
 }
   return (
     <div className='controls'>
-        <Input volume={props.volume} changeVolume={props.changeVolume}/>
-        <div className='themes'>
-          <button onClick={themeChange} className="theme_selector theme_1"></button>
-          <button onClick={themeChange} className="theme_selector theme_2"></button>
-          <button onClick={themeChange} className="theme_selector theme_3"></button>
-          <button onClick={themeChange} className="theme_selector theme_4"></button>
-          <button onClick={handleShowText} className="theme_selector toggle_text">T</button>
+        <div className="main-controls">
+          <div className="slider_wrapper">
+            <input  step={1} min={-30} max={20} value={props.volume} onChange={(e) => {props.changeVolume(e.target.value)}} className='range' type='range'/>
+          </div>
+          <div className='themes'>
+            <button onClick={themeChange} className="theme_selector theme_1"></button>
+            <button onClick={themeChange} className="theme_selector theme_2"></button>
+            <button onClick={themeChange} className="theme_selector theme_3"></button>
+            <button onClick={themeChange} className="theme_selector theme_4"></button>
+            <button onClick={handleShowText} className="theme_selector toggle_text">T</button>
+          </div>
+        </div>
+        <div className="extra-controls">
+          <div className="reverb-slider">
+            <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
+          </div>
         </div>
     </div>
   )

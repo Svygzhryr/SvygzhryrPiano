@@ -1,12 +1,21 @@
 @import './variables';
 
 
-.controls {
+.main-controls {
     position: absolute;
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
 
+.extra-controls {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    top: 50%;
+
+    background-color: var(--primary_button)
 }
 
 .slider_wrapper {
@@ -60,6 +69,45 @@ input[type=range].range::-moz-range-progress {
     background: var(--primary_background);
     height: 100%;
     border-radius: 100rem;
+}
+
+.reverb-slider {
+    background-color: var(--primary_sharp);
+    width: 10rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100rem;
+    z-index: 2;
+
+    transition: all .2s;
+
+    border: var(--primary_button) 3px solid;
+
+    input[type=range].range {   
+        width: 7rem;       
+        height: 1rem;
+        -webkit-appearance: none;
+        border-radius: 100rem;
+        background-color: var(--primary_button_active);
+    }
+
+    input[type=range].range::-moz-range-thumb,
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        background: var(--primary_button);
+        border: none;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 100rem;
+    }
+
+    input[type=range].range::-moz-range-progress {
+        background: var(--primary_sharp_active);
+        height: 100%;
+        border-radius: 100rem;
+    }
 }
 
 
@@ -125,6 +173,10 @@ input[type=range].range::-moz-range-progress {
         border: 3px solid var(--primary_button);
         opacity: 1;
     }
+}
+
+.effects {
+    background-color: var(--primary_button)
 }
 
 @import './adaptive.scss'
