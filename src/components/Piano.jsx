@@ -7,13 +7,22 @@ import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS} from '../gl
 import UI from './UI';
 
 // инициализация синтезатора(-ов) и его эффектов
-const FXreverb = new Tone.Reverb(5).toDestination();
-const synth = new Tone.Sampler({
-    
-    urls: {
-        A1: "A1.mp3"
-    },
-    baseUrl: "https://tonejs.github.io/audio/casio/",
+let FXreverb = new Tone.Reverb(5).toDestination();
+let synth = new Tone.Sampler({
+
+	urls: {
+		"C4": "C4.mp3",
+		"D#4": "Ds4.mp3",
+		"F#4": "Fs4.mp3",
+		"A4": "A4.mp3",
+	},
+	release: 1,
+	baseUrl: "https://tonejs.github.io/audio/salamander/",
+
+    // urls: {
+    //     A1: "A1.mp3"
+    // },
+    // baseUrl: "https://tonejs.github.io/audio/casio/",
 
 }).connect(FXreverb).toDestination();
 synth.set({
@@ -32,6 +41,9 @@ synth.set({
         // decayCurve: BasicEnvelopeCurve;
     }
 })
+
+// const synth = new Tone.PolySynth(Tone.AMSynth, 2).connect(FXreverb).toDestination();
+
 
 // после фикса  первостепенных проблем планируется добавить инициализацию нескольких инструментов
 // и возможность выбора оных последством нажатия кнопок 
@@ -57,12 +69,11 @@ Tone.context.lookAhead = 0.02;
     //     frequency: 15,
     //     octaves: 5,
     //     baseFrequency: 300
-    // }).toDestination();
+    // }).toDestination();      
     // const FXpingPong = new Tone.PingPongDelay("6n", 0.2).toDestination();
     // FXfreeverb.dampening = 2000;
     // FXautoWah.Q.value = 2;
     // не знаю надо ли это сувать в эффект (по идее установка синтезатора)
-    // const synth = new Tone.PolySynth(Tone.AMSynth, 2).connect(FXreverb).toDestination();
 
 
 export default function Piano() {
@@ -71,6 +82,9 @@ export default function Piano() {
     const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
     const [showText, setShowText] = useState(false);
     const [instrument, setInstrument] = useState('');
+    const [reverb, setReverb] = useState(0);
+
+
 
     // смена громкости
     const changeVolume = (volume) => {
