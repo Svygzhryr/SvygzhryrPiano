@@ -3,6 +3,7 @@ import { COLORS } from '../global/constants';
 import { useState, useRef } from 'react';
 import '../css/ui.scss'
 import styles from '../css/piano.module.scss'
+import Input from './subcomponents/Input';
 
 export default function UI({...props}) {
 
@@ -47,12 +48,14 @@ export default function UI({...props}) {
         }
     }
 
+    const changeReverb = () => {
+        
+    }
+
 }
   return (
     <div className='controls'>
-        <div className='slider_wrapper'>
-            <input step={1} min={-30} max={20} value={props.volume} onChange={(e) => {props.changeVolume(e.target.value)}} className='range' type='range'/>
-        </div>
+        <Input volume={props.volume} changeVolume={props.changeVolume}/>
         <div className='themes'>
           <button onClick={themeChange} className="theme_selector theme_1"></button>
           <button onClick={themeChange} className="theme_selector theme_2"></button>
