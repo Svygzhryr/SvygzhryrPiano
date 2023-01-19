@@ -17,15 +17,31 @@
     height: auto;
     top: 60%;
     padding: 1rem;
-    border-radius: 1rem;
+    border-radius: 0 1rem 1rem 0;
 
     background-color: var(--primary_button);
 
     z-index: 3;
 
-    transition: all .2s linear;
-
+    transition: all .7s cubic-bezier(.26,1.21,1,.94);
+    opacity: 0.5;
     transform: translateX(-100%);
+
+
+    .show-controls-arrow {
+    transition: all .7s cubic-bezier(.26,1.21,1,.94);
+    }
+
+    &:hover {
+        transform: translateX(0%);
+        opacity: 1;
+
+        .show-controls-arrow {
+            transform: rotateZ(180deg);
+            border-radius: 1rem 0rem 0rem 1rem;
+
+        }
+    }
 
     .show-controls {
         background-color: var(--primary_button);
@@ -33,7 +49,7 @@
         position: absolute;
         top: 50%;
         left: 100%;
-        transform: translate(0, -50%);
+        transform: translate(-10%, -50%);
         padding: 1rem 0;
         padding-top: 1.3rem;
         overflow: hidden;
@@ -41,7 +57,7 @@
         border-radius: 0rem 1rem 1rem 0rem;
         font-size: 3rem;
     
-    
+        transition: all .7s cubic-bezier(.26,1.21,1,.94);
     }
 }
 
@@ -100,7 +116,7 @@ input[type=range].range::-moz-range-progress {
     border-radius: 100rem;
 }
 
-.reverb-slider {
+.effect-slider {
     background-color: var(--primary_sharp);
     width: 10rem;
     height: 3rem;
@@ -111,7 +127,7 @@ input[type=range].range::-moz-range-progress {
     z-index: 2;
     transition: all .2s;
     
-
+    font-size: 1.6rem;
     border: var(--primary_button) 3px solid;
 
     input[type=range].range {   
@@ -206,6 +222,46 @@ input[type=range].range::-moz-range-progress {
 
 .effects {
     background-color: var(--primary_button)
+}
+
+.reverb {
+    margin-top: 1rem;
+    position: relative;
+
+    &::before {
+        content: 'reverb';
+        font-weight: 700;
+        position: absolute;
+        color: var(--primary_sharp);
+        top: -70%;
+    }
+}
+
+.delay-duration {
+    margin-top: 1.5rem;
+    &::before {
+        content: 'delay';
+        font-weight: 700;
+        position: absolute;
+        color: var(--primary_sharp);
+        top: 27%;
+    }
+}
+
+.delay-feedback {
+
+}
+
+.detune {
+    margin-top: 1.5rem;
+    &::before {
+        content: 'detune';
+        font-weight: 700;
+        position: absolute;
+        color: var(--primary_sharp);
+        top: 70%;
+    }
+
 }
 
 @import './adaptive.scss'

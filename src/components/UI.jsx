@@ -68,19 +68,19 @@ export default function UI({...props}) {
           </div>
         </div>
         <div className="extra-controls">
-          <div className="reverb-slider">
+          <div className="effect-slider reverb">
             <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
           </div>
-          <div className="reverb-slider">
-            <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
+          <div className="effect-slider delay-duration">
+            <input  step={1} min={0.001} max={51}  className='range' type='range'/>
           </div>
-          <div className="reverb-slider">
-            <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
+          <div className="effect-slider delay-feedback">
+            <input  step={1} min={0.001} max={51}  className='range' type='range'/>
           </div>
-          <div className="reverb-slider">
-            <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
+          <div className="effect-slider detune">
+            <input  step={1} min={0.001} max={51}  className='range' type='range'/>
           </div>
-          <div className="show-controls"><AiOutlineRight/></div>
+          <div className="show-controls"><AiOutlineRight className='show-controls-arrow'/></div>
         </div>
     </div>
   )

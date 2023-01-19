@@ -73,7 +73,6 @@ Tone.context.lookAhead = 0.02;
     // const FXpingPong = new Tone.PingPongDelay("6n", 0.2).toDestination();
     // FXfreeverb.dampening = 2000;
     // FXautoWah.Q.value = 2;
-    // не знаю надо ли это сувать в эффект (по идее установка синтезатора)
 
 
 export default function Piano() {
