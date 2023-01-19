@@ -11,12 +11,41 @@
 .extra-controls {
     position: absolute;
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    top: 50%;
+    flex-direction: column;
 
-    background-color: var(--primary_button)
+    width: auto;
+    height: auto;
+    top: 60%;
+    padding: 1rem;
+    border-radius: 1rem;
+
+    background-color: var(--primary_button);
+
+    z-index: 3;
+
+    transition: all .2s linear;
+
+    transform: translateX(-100%);
+
+    .show-controls {
+        background-color: var(--primary_button);
+        color: var(--primary_sharp);
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        transform: translate(0, -50%);
+        padding: 1rem 0;
+        padding-top: 1.3rem;
+        overflow: hidden;
+    
+        border-radius: 0rem 1rem 1rem 0rem;
+        font-size: 3rem;
+    
+    
+    }
 }
+
+
 
 .slider_wrapper {
     background-color: var(--primary_button);
@@ -80,8 +109,8 @@ input[type=range].range::-moz-range-progress {
     align-items: center;
     border-radius: 100rem;
     z-index: 2;
-
     transition: all .2s;
+    
 
     border: var(--primary_button) 3px solid;
 

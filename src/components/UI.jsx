@@ -5,6 +5,7 @@ import '../css/ui.scss'
 import styles from '../css/piano.module.scss'
 import Input from './subcomponents/Input';
 import CircularSlider from 'react-circular-slider';
+import {AiOutlineRight} from 'react-icons/ai'
 
 export default function UI({...props}) {
 
@@ -70,6 +71,16 @@ export default function UI({...props}) {
           <div className="reverb-slider">
             <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
           </div>
+          <div className="reverb-slider">
+            <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
+          </div>
+          <div className="reverb-slider">
+            <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
+          </div>
+          <div className="reverb-slider">
+            <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
+          </div>
+          <div className="show-controls"><AiOutlineRight/></div>
         </div>
     </div>
   )
