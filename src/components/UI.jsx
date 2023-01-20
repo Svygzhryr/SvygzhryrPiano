@@ -72,13 +72,17 @@ export default function UI({...props}) {
             <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
           </div>
           <div className="effect-slider delay-duration">
-            <input  step={1} min={0.001} max={51}  className='range' type='range'/>
+            <input  step={1} min={1} max={24} value={props.delayDuration} onChange={(e) => {props.changeDelayDuration(e.target.value)}}  className='range' type='range'/>
           </div>
           <div className="effect-slider delay-feedback">
-            <input  step={1} min={0.001} max={51}  className='range' type='range'/>
+            <input  step={0.1} min={0} max={1} value={props.delayFeedback} onChange={(e) => {props.changeDelayFeedBack(e.target.value)}}  className='range' type='range'/>
           </div>
-          <div className="effect-slider detune">
-            <input  step={1} min={0.001} max={51}  className='range' type='range'/>
+          <div className="octave">
+            <button onClick={props.substractOctave} className="octave-down">-</button>
+            <h1 className="detune-number">
+              {(props.detune/1200)}
+            </h1>
+            <button onClick={props.addOctave} className="octave-up">+</button>
           </div>
           <div className="show-controls"><AiOutlineRight className='show-controls-arrow'/></div>
         </div>
