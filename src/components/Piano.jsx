@@ -3,7 +3,6 @@ import {React, useState, useEffect, useRef, useMemo, useCallback} from 'react'
 import useScript from '../hooks/useScript';
 import * as Tone from 'tone'
 import styles from '../css/piano.module.scss'
-import { CSSTransition } from 'react-transition-group';
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS} from '../global/constants'
 import UI from './UI';
 
@@ -93,10 +92,6 @@ export default function Piano() {
         FXdelay.feedback = delayFeedback;
         synth.connect(FXdelay);
     }
-
-
-
-
 
     // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -209,7 +204,7 @@ export default function Piano() {
         delayFeedback,
         changeDelayFeedBack,
         detune,
-        setDetune
+        setDetune,
     }
 
 

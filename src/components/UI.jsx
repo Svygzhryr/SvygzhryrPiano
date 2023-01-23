@@ -50,8 +50,6 @@ export default function UI({...props}) {
         }
     }
 
-
-
 }
   return (
     <div className='controls'>
