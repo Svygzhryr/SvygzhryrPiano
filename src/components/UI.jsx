@@ -78,11 +78,11 @@ export default function UI({...props}) {
             <input  step={0.1} min={0} max={1} value={props.delayFeedback} onChange={(e) => {props.changeDelayFeedBack(e.target.value)}}  className='range' type='range'/>
           </div>
           <div className="octave">
-            <button onClick={props.substractOctave} className="octave-down">-</button>
+            <button onClick={() => {props.setDetune(props.detune < -1200 ? props.detune : props.detune - 1200)}} className="octave-down">-</button>
             <h1 className="detune-number">
               {(props.detune/1200)}
             </h1>
-            <button onClick={props.addOctave} className="octave-up">+</button>
+            <button onClick={() => {props.setDetune(props.detune > 2400 ? props.detune : props.detune + 1200)}} className="octave-up">+</button>
           </div>
           <div className="show-controls"><AiOutlineRight className='show-controls-arrow'/></div>
         </div>

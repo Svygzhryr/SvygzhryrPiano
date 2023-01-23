@@ -31,12 +31,18 @@ let detune;
 // })
 let synth = new Tone.PolySynth(Tone.Synth).connect(FXreverb).toDestination();
 synth.set({
+    oscillator: {
+        type: 'sine',
+    },
     detune: 1200,  
     // portamento: Seconds;
     // onsilence: onSilenceCallback;
     
     envelope: {
         atatck: 0.01,
+        sustain: 0.5,
+        decay: 0.5,
+        release: 0.5,
         // в теории здесь можно бахнуть интерфейс с настройками кривой
         // decay: Time;
         // sustain: NormalRange;
@@ -60,7 +66,7 @@ export default function Piano() {
     const [reverb, setReverb] = useState(0);
     const [delayDuration, setDelayDuration] = useState(0);
     const [delayFeedback, setDelayFeedback] = useState(0);
-    const [detune, setDetune] = useState(0);
+    const [detune, setDetune] = useState(1200);
 
     // смена громкости
     const changeVolume = (volume) => {
@@ -88,17 +94,9 @@ export default function Piano() {
         synth.connect(FXdelay);
     }
 
-    const addOctave = () => {
-        detune > 3200 ? null : setDetune(detune + 1200)
-        synth.set({detune: detune})
-    }
 
-    const substractOctave = () => {
-        detune < -1200 ? null : setDetune(detune - 1200)
-        synth.set({detune: detune})
-    }
 
-    console.log(detune)
+
 
     // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -153,11 +151,12 @@ export default function Piano() {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
         setShowText(JSON.parse(localStorage.getItem('text')))
+        synth.set({detune: detune})
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         }
-    }, [handleKeyDown, handleKeyUp])
+    }, [handleKeyDown, handleKeyUp, detune])
 
     // тугл текста
     const generateText = (note) => {
@@ -210,8 +209,7 @@ export default function Piano() {
         delayFeedback,
         changeDelayFeedBack,
         detune,
-        addOctave, 
-        substractOctave
+        setDetune
     }
 
 
