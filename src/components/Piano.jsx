@@ -5,10 +5,11 @@ import * as Tone from 'tone'
 import styles from '../css/piano.module.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS} from '../global/constants'
 import UI from './UI';
+import { delay } from 'lodash';
 
 // инициализация синтезатора(-ов) и его эффектов
 let FXreverb = new Tone.Reverb(0.1).toDestination();
-let FXdelay = new Tone.PingPongDelay('16n', 0.1).toDestination();
+let FXdelay = new Tone.FeedbackDelay('6n', 0.2).toDestination();
 let detune;
 
 // let synth = new Tone.Sampler({
@@ -28,7 +29,7 @@ let detune;
 //     // baseUrl: "https://tonejs.github.io/audio/casio/",
 
 // })
-let synth = new Tone.PolySynth(Tone.Synth).connect(FXreverb).toDestination();
+let synth = new Tone.PolySynth(Tone.Synth).connect(FXreverb, FXdelay).toDestination();
 synth.set({
     oscillator: {
         type: 'sine',
@@ -73,6 +74,8 @@ export default function Piano() {
         localStorage.setItem('volume', volume);
     }
 
+
+
     const changeReverb = (reverb) => {
         setReverb(reverb);
         FXreverb.decay = reverb;
@@ -80,16 +83,23 @@ export default function Piano() {
         console.log(reverb)
     }
 
+
+
+
+     FXdelay.delayTime = '8n';
+     synth.connect(FXdelay);
+
+
     const changeDelayDuration = () => {
         setDelayDuration(delayDuration);
         console.log(delayDuration + 'n');
-        FXdelay.delayTime = delayDuration + 'n';
+        FXdelay.delayTime = 1;
         synth.connect(FXdelay);
     }
 
     const changeDelayFeedBack = () => {
         setDelayFeedback(delayFeedback);
-        FXdelay.feedback = delayFeedback;
+        FXdelay.feedback = 1;
         synth.connect(FXdelay);
     }
 
