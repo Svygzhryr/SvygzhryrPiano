@@ -218,12 +218,22 @@ export default function Piano() {
             {...UIprops}
         />
 
+        <div className={styles.instruments}>
+            <button className={`${styles.instrument_item} ${styles.instrument_synth} ${styles.instruments_active}`}>Synth</button>
+            <button className={`${styles.instrument_item} ${styles.instrument_monosynth} ${styles.instruments_active}`}>MonoSynth</button>
+            <button className={`${styles.instrument_item} ${styles.instrument_fmsynth} ${styles.instruments_active}`}>FMSynth</button>
+            <button className={`${styles.instrument_item} ${styles.instrument_amsynth} ${styles.instruments_active}`}>AMSynth</button>
+            <button className={`${styles.instrument_item} ${styles.instrument_polysynth} ${styles.instruments_active}`}>PolySynth</button>
+            <button className={`${styles.instrument_item} ${styles.instrument_sample} ${styles.instruments_active} ${styles.disabled}`}>Sample</button>
+        </div>
+
         <div className={styles.piano_wrapper}>
             <div className={styles.upper_keyboard}>
                 <div className={styles.upper_buttons}>
                     {upperKeys}
                 </div>
             </div>
+
             <div className={styles.lower_keyboard}>
                 <div className={styles.lower_buttons}>
                     {lowerKeys}

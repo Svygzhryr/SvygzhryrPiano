@@ -6,6 +6,8 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    transition: background-color .2s linear;
+
 }
 
 .extra-controls {
@@ -301,7 +303,10 @@ input[type=range].range::-moz-range-progress {
         top: 48%;
         font-size: 1.7rem;
     }
+}
 
+.instruments {
+    
 }
 
 @import './adaptive.scss'

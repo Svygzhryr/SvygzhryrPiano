@@ -3,7 +3,7 @@ import { COLORS } from '../global/constants';
 import { useState, useRef } from 'react';
 import '../css/ui.scss'
 import styles from '../css/piano.module.scss'
-import Input from './subcomponents/Input';
+import Knob from './subcomponents/Knob';
 import CircularSlider from 'react-circular-slider';
 import {AiOutlineRight} from 'react-icons/ai'
 
@@ -66,6 +66,8 @@ export default function UI({...props}) {
           </div>
         </div>
         <div className="extra-controls">
+          <div className="controls-envelope"></div>
+          <div className="controls-fx">
           <div className="effect-slider reverb">
             <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
           </div>
@@ -81,6 +83,7 @@ export default function UI({...props}) {
               {(props.detune/1200)}
             </h1>
             <button onClick={() => {props.setDetune(props.detune > 2400 ? props.detune : props.detune + 1200)}} className="octave-up">+</button>
+          </div>
           </div>
           <div className="show-controls"><AiOutlineRight className='show-controls-arrow'/></div>
         </div>

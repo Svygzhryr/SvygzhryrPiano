@@ -3,6 +3,8 @@
 
 body {
     overflow: hidden;
+    transition: background-color .2s linear;
+
 }
 
 /* ===== Scrollbar CSS ===== */
@@ -41,6 +43,10 @@ body {
     transform: translate(-50%, -50%);
     width: 100%;
     z-index: 1;
+
+    transition: background-color .2s linear;
+
+
 }
 
 .button {
@@ -64,6 +70,8 @@ body {
     
 
     color: var(--primary_background);
+
+    transition: none;
     &:hover {
         cursor: pointer;
     }
@@ -138,6 +146,48 @@ body {
     justify-content: center;
     .lower_buttons {
         display: flex;
+    }
+}
+
+.instruments {
+
+    display: grid;
+    grid-template: 1fr 1fr / 1fr 1fr 1fr; 
+    background-color: var(--primary_background);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    gap: 2rem;
+
+    display: none;
+
+
+    .instrument_item {
+        font-size: 2.4rem;
+        border-radius: 1rem;
+        padding: 2rem 4rem;
+        border: none;
+        background: var(--primary_button);
+        color: var(--primary_background);
+        font-weight: 500;
+
+        transition: all .2s ease-in-out; 
+
+        &:hover {
+            background-color: var(--primary_sharp);
+            color: var(--primary_button);
+            cursor: pointer;
+        }
+    }
+
+    .instrument_active {
+
+    }
+
+    .disabled {
+
     }
 }
 
