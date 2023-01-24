@@ -69,12 +69,12 @@ export default function UI({...props}) {
           <div className="effect-slider reverb">
             <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
           </div>
-          <div className="effect-slider delay-duration">
+          {/* <div className="effect-slider delay-duration">
             <input  step={1} min={1} max={24} value={props.delayDuration} onChange={(e) => {props.changeDelayDuration(e.target.value)}}  className='range' type='range'/>
           </div>
           <div className="effect-slider delay-feedback">
             <input  step={0.1} min={0} max={1} value={props.delayFeedback} onChange={(e) => {props.changeDelayFeedBack(e.target.value)}}  className='range' type='range'/>
-          </div>
+          </div> */}
           <div className="octave">
             <button onClick={() => {props.setDetune(props.detune < -1200 ? props.detune : props.detune - 1200)}} className="octave-down">-</button>
             <h1 className="detune-number">

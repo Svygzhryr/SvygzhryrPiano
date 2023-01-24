@@ -10,6 +10,7 @@ import { delay } from 'lodash';
 // инициализация синтезатора(-ов) и его эффектов
 let FXreverb = new Tone.Reverb(0.1).toDestination();
 let FXdelay = new Tone.FeedbackDelay('6n', 0.2).toDestination();
+let FXtremolo = new Tone.Vibrato(0.2, 0.8).toDestination();
 let detune;
 
 // let synth = new Tone.Sampler({
@@ -29,7 +30,7 @@ let detune;
 //     // baseUrl: "https://tonejs.github.io/audio/casio/",
 
 // })
-let synth = new Tone.PolySynth(Tone.Synth).connect(FXreverb, FXdelay).toDestination();
+let synth = new Tone.PolySynth(Tone.Synth).connect(FXreverb, FXtremolo).toDestination();
 synth.set({
     oscillator: {
         type: 'sine',
@@ -83,14 +84,7 @@ export default function Piano() {
         console.log(reverb)
     }
 
-
-
-
-     FXdelay.delayTime = '8n';
-     synth.connect(FXdelay);
-
-
-    const changeDelayDuration = () => {
+    const changeDistortion= () => {
         setDelayDuration(delayDuration);
         console.log(delayDuration + 'n');
         FXdelay.delayTime = 1;
@@ -210,7 +204,6 @@ export default function Piano() {
         reverb,
         changeReverb,
         delayDuration,
-        changeDelayDuration,
         delayFeedback,
         changeDelayFeedBack,
         detune,

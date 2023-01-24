@@ -240,7 +240,7 @@ input[type=range].range::-moz-range-progress {
 .delay-duration {
     margin-top: 1.5rem;
     &::before {
-        content: 'delay';
+        content: 'tremolo';
         font-weight: 700;
         position: absolute;
         color: var(--primary_sharp);
@@ -298,7 +298,7 @@ input[type=range].range::-moz-range-progress {
         font-weight: 700;
         position: absolute;
         color: var(--primary_sharp);
-        top: 70%;
+        top: 48%;
         font-size: 1.7rem;
     }
 
