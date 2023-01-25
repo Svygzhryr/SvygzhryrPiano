@@ -3,7 +3,6 @@
 
 body {
     overflow: hidden;
-    transition: background-color .2s linear;
 
 }
 
@@ -44,7 +43,6 @@ body {
     width: 100%;
     z-index: 1;
 
-    transition: background-color .2s linear;
 
 
 }
@@ -68,10 +66,12 @@ body {
     font-size: 4rem;
     font-family: 'EB Garamond', serif;
     
+    
 
     color: var(--primary_background);
 
-    transition: none;
+    transition: background-color .5s;
+
     &:hover {
         cursor: pointer;
     }
@@ -80,6 +80,7 @@ body {
 
 .button_active {
     background-color: var(--primary_button_active);
+    transition: all 0s;
 }
 
 .button_text_hidden {
@@ -107,6 +108,9 @@ body {
     font-size: 2rem;
     font-family: 'EB Garamond', serif;
 
+    transition: background-color .3s;
+
+
     &:hover {
         cursor: pointer;
     }
@@ -114,6 +118,8 @@ body {
 
 .button_sharp_active {
     background-color: var(--primary_sharp_active);
+    transition: all 0s;
+
 }
 
 .button_sharp_hidden {
@@ -161,8 +167,6 @@ body {
     z-index: 5;
     gap: 2rem;
 
-    display: none;
-
 
     .instrument_item {
         font-size: 2.4rem;
@@ -175,20 +179,35 @@ body {
 
         transition: all .2s ease-in-out; 
 
+        p {
+            font-size: 1rem;
+        }
+
         &:hover {
-            background-color: var(--primary_sharp);
+            background-color: var(--primary_button_active);
             color: var(--primary_button);
             cursor: pointer;
         }
     }
 
     .instrument_active {
+        background-color: var(--primary_button_active);
+        color: var(--primary_button);
 
+        &:hover {
+            cursor: unset;
+        }
     }
 
     .disabled {
-
+        pointer-events: none;
+        color: var(--primary_background);
+        opacity: 0.5;
     }
+}
+
+.inactive {
+    display: none;
 }
 
 @import './adaptive.scss'

@@ -63,11 +63,11 @@ export default function Piano() {
     const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
     const [showText, setShowText] = useState(false);
 
-    const [instrument, setInstrument] = useState('');
     const [reverb, setReverb] = useState(0);
     const [delayDuration, setDelayDuration] = useState(0);
     const [delayFeedback, setDelayFeedback] = useState(0);
     const [detune, setDetune] = useState(1200);
+    const [instrument, setInstrument] = useState(false);
 
     // смена громкости
     const changeVolume = (volume) => {
@@ -162,8 +162,6 @@ export default function Piano() {
         return showText ? NOTE_TO_KEY[note] : null 
     }
 
-
-
         // генерируем массив клавиш
     const upperKeys = UPPER_NOTES.map((note, index) => {
         // наигениальнейшая проверка на диез и бемоль
@@ -208,6 +206,8 @@ export default function Piano() {
         changeDelayFeedBack,
         detune,
         setDetune,
+        instrument,
+        setInstrument,
     }
 
 
@@ -218,16 +218,16 @@ export default function Piano() {
             {...UIprops}
         />
 
-        <div className={styles.instruments}>
-            <button className={`${styles.instrument_item} ${styles.instrument_synth} ${styles.instruments_active}`}>Synth</button>
-            <button className={`${styles.instrument_item} ${styles.instrument_monosynth} ${styles.instruments_active}`}>MonoSynth</button>
-            <button className={`${styles.instrument_item} ${styles.instrument_fmsynth} ${styles.instruments_active}`}>FMSynth</button>
-            <button className={`${styles.instrument_item} ${styles.instrument_amsynth} ${styles.instruments_active}`}>AMSynth</button>
-            <button className={`${styles.instrument_item} ${styles.instrument_polysynth} ${styles.instruments_active}`}>PolySynth</button>
-            <button className={`${styles.instrument_item} ${styles.instrument_sample} ${styles.instruments_active} ${styles.disabled}`}>Sample</button>
+        <div className={`${styles.instruments} ${instrument ? styles.inactive : ''}`}>
+            <button className={`${styles.instrument_item} ${styles.instrument_synth} ${styles.instrument_active}`}>Synth</button>
+            <button className={`${styles.instrument_item} ${styles.instrument_monosynth} `}>MonoSynth</button>
+            <button className={`${styles.instrument_item} ${styles.instrument_fmsynth} `}>FMSynth</button>
+            <button className={`${styles.instrument_item} ${styles.instrument_amsynth} `}>AMSynth</button>
+            <button className={`${styles.instrument_item} ${styles.instrument_polysynth} `}>PolySynth</button>
+            <button className={`${styles.instrument_item} ${styles.instrument_sample} ${styles.disabled}`}>Sample <br/> <p>(in development)</p></button>
         </div>
 
-        <div className={styles.piano_wrapper}>
+        <div className={`${styles.piano_wrapper} ${styles.active} ${instrument ? '' : styles.inactive}`}>
             <div className={styles.upper_keyboard}>
                 <div className={styles.upper_buttons}>
                     {upperKeys}

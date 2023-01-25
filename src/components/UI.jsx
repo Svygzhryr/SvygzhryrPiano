@@ -51,6 +51,7 @@ export default function UI({...props}) {
     }
 
 }
+
   return (
     <div className='controls'>
         <div className="main-controls">
@@ -63,6 +64,7 @@ export default function UI({...props}) {
             <button onClick={themeChange} className="theme_selector theme_3"></button>
             <button onClick={themeChange} className="theme_selector theme_4"></button>
             <button onClick={handleShowText} className="theme_selector toggle_text">T</button>
+            <button className="theme_selector instrument-switch" onClick={() => {props.setInstrument(!props.instrument)}}></button>
           </div>
         </div>
         <div className="extra-controls">
