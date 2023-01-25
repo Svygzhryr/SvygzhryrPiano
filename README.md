@@ -26,8 +26,13 @@ The goal of this project is to create an easy to play piano app with following f
 React libraries used:
 
   SASS
+  <br>
   Tone.js
+  <br>
   react-icons
+  <br>
   react-transition-group
+  <br>
   styled-components
+  <br>
   webfontloader
