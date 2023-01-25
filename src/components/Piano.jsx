@@ -31,6 +31,12 @@ let detune;
 
 // })
 let synth = new Tone.PolySynth(Tone.Synth).connect(FXreverb, FXtremolo).toDestination();
+let monosynth = new Tone.PolySynth(Tone.MonoSynth).connect(FXreverb, FXtremolo).toDestination();
+let fmsynth = new Tone.PolySynth(Tone.FMSynth).connect(FXreverb, FXtremolo).toDestination();
+let amsynth = new Tone.PolySynth(Tone.AMSynth).connect(FXreverb, FXtremolo).toDestination();
+let plucksynth = new Tone.PolySynth(Tone.PluckSynth).connect(FXreverb, FXtremolo).toDestination();
+let sampler = new Tone.PolySynth(Tone.Sampler).connect(FXreverb, FXtremolo).toDestination();
+let activeSynth;
 synth.set({
     oscillator: {
         type: 'sine',
@@ -68,6 +74,8 @@ export default function Piano() {
     const [delayFeedback, setDelayFeedback] = useState(0);
     const [detune, setDetune] = useState(1200);
     const [instrument, setInstrument] = useState(false);
+
+    // switch case 'pluck' (instrument = 'pluckSynth') {activeSynth = pluckSynth}
 
     // смена громкости
     const changeVolume = (volume) => {
@@ -122,7 +130,8 @@ export default function Piano() {
     async function playNote(note) {
         if (note === undefined) {
             return
-        }  
+        }
+          
         synth.volume.value = volume;
         synth.triggerAttack(note);
     }
@@ -224,7 +233,7 @@ export default function Piano() {
             <button className={`${styles.instrument_item} ${styles.instrument_fmsynth} `}>FMSynth</button>
             <button className={`${styles.instrument_item} ${styles.instrument_amsynth} `}>AMSynth</button>
             <button className={`${styles.instrument_item} ${styles.instrument_polysynth} `}>PolySynth</button>
-            <button className={`${styles.instrument_item} ${styles.instrument_sample} ${styles.disabled}`}>Sample <br/> <p>(in development)</p></button>
+            <button className={`${styles.instrument_item} ${styles.instrument_sample} ${styles.disabled}`}>Sampler <br/> <p>(in development)</p></button>
         </div>
 
         <div className={`${styles.piano_wrapper} ${styles.active} ${instrument ? '' : styles.inactive}`}>

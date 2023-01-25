@@ -209,7 +209,7 @@ body {
 
 .inactive {
     transform: translate(-50%, -50%);
-    transition: all 1s ease-in-out;
+    transition: transform 1s ease-in-out;
 }
 
 @import './adaptive.scss'

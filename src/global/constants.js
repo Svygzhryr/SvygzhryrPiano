@@ -112,5 +112,15 @@ const COLORS = {
     purplish_sharp_active: '#4c3401',
 }
 
+const INSTRUMENTS = {
+    synth: 'synth',
+    monosynth: 'monosynth',
+    fmsynth: 'fmsynth',
+    amsynth: 'amsynth',
+    polysynth: 'polysynth',
+    sample: 'sample',
+
+}
+
 export {UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS};
     

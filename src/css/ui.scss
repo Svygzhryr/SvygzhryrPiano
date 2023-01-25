@@ -321,8 +321,6 @@ input[type=range].range::-moz-range-progress {
     opacity: 0.5;
     transition: all .2s linear;
 
-    
-
     &:hover {
         background-color: var(--primary_button_active);
         opacity: 1;
