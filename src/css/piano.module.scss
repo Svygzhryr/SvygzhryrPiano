@@ -39,12 +39,11 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 101rem);
     width: 100%;
     z-index: 1;
 
-
-
+    transition: transform 1s ease-in-out;
 }
 
 .button {
@@ -159,13 +158,15 @@ body {
 
     display: grid;
     grid-template: 1fr 1fr / 1fr 1fr 1fr; 
-    background-color: var(--primary_background);
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -101vh);
     z-index: 5;
     gap: 2rem;
+
+
+    transition: all 1s ease-in-out;
 
 
     .instrument_item {
@@ -207,7 +208,8 @@ body {
 }
 
 .inactive {
-    display: none;
+    transform: translate(-50%, -50%);
+    transition: all 1s ease-in-out;
 }
 
 @import './adaptive.scss'
