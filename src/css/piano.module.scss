@@ -39,7 +39,7 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, 101rem);
+    transform: translate(-50%, 101vh);
     width: 100%;
     z-index: 1;
 
@@ -164,6 +164,7 @@ body {
     transform: translate(-50%, -101vh);
     z-index: 5;
     gap: 2rem;
+    
 
 
     transition: all 1s ease-in-out;
@@ -177,6 +178,8 @@ body {
         background: var(--primary_button);
         color: var(--primary_background);
         font-weight: 500;
+        min-width: 20rem;
+        min-height: 10rem;
 
         transition: all .2s ease-in-out; 
 

@@ -7,6 +7,10 @@ import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS} from '../gl
 import UI from './UI';
 import { delay } from 'lodash';
 
+// здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
+// начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
+Tone.context.lookAhead = 0.02;
+
 // инициализация синтезатора(-ов) и его эффектов
 let FXreverb = new Tone.Reverb(0.1).toDestination();
 let FXdelay = new Tone.FeedbackDelay('6n', 0.2).toDestination();
@@ -34,34 +38,30 @@ let synth = new Tone.PolySynth(Tone.Synth).connect(FXreverb, FXtremolo).toDestin
 let monosynth = new Tone.PolySynth(Tone.MonoSynth).connect(FXreverb, FXtremolo).toDestination();
 let fmsynth = new Tone.PolySynth(Tone.FMSynth).connect(FXreverb, FXtremolo).toDestination();
 let amsynth = new Tone.PolySynth(Tone.AMSynth).connect(FXreverb, FXtremolo).toDestination();
-let plucksynth = new Tone.PolySynth(Tone.PluckSynth).connect(FXreverb, FXtremolo).toDestination();
+let membranesynth = new Tone.PolySynth(Tone.MembraneSynth).connect(FXreverb, FXtremolo).toDestination();
 let sampler = new Tone.PolySynth(Tone.Sampler).connect(FXreverb, FXtremolo).toDestination();
-let activeSynth;
-synth.set({
-    oscillator: {
-        type: 'sine',
-    },
-    detune: 1200,  
-    // portamento: Seconds;
-    // onsilence: onSilenceCallback;
+
+const instruments = [synth, monosynth, fmsynth, amsynth, membranesynth, sampler];
+instruments.forEach((e) => {
+    e.set({
+        oscillator: {
+            type: 'sine',
+        },
     
-    envelope: {
-        atatck: 0.01,
-        sustain: 0.5,
-        decay: 0.5,
-        release: 0.5,
-        // в теории здесь можно бахнуть интерфейс с настройками кривой
-        // decay: Time;
-        // sustain: NormalRange;
-        // release: Time;
-        // attackCurve: EnvelopeCurve;
-        // releaseCurve: EnvelopeCurve;
-        // decayCurve: BasicEnvelopeCurve;
-    }
+        detune: 1200,  
+        // portamento: Seconds;
+        // onsilence: onSilenceCallback;
+        
+        envelope: {
+            atatck: 0.01,   
+            sustain: 0.5,
+            decay: 0.5,
+            release: 0.5,
+        }
+    })
 })
-// здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
-// начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
-Tone.context.lookAhead = 0.02;
+
+let activeSynth;
 
 export default function Piano() {
     let keyClassName;
@@ -74,38 +74,20 @@ export default function Piano() {
     const [delayFeedback, setDelayFeedback] = useState(0);
     const [detune, setDetune] = useState(1200);
     const [instrument, setInstrument] = useState(false);
+    const [switchInstrument, setSwitchInstrument] = useState('synth');
 
-    // switch case 'pluck' (instrument = 'pluckSynth') {activeSynth = pluckSynth}
-
-    // смена громкости
-    const changeVolume = (volume) => {
-        setVolume(volume);
-        localStorage.setItem('volume', volume);
+    const handleInstruments = (i, e) => {
+        console.log(e)
+        document.querySelectorAll('.instrument_item').forEach((k) => {
+            if (k.classList.contains('.instrument_active')) {
+                k.classList.remove('.instrument_active');
+            }
+        })
+        setSwitchInstrument(i);
+        e.classList.add('.instrument_active');
     }
 
-
-
-    const changeReverb = (reverb) => {
-        setReverb(reverb);
-        FXreverb.decay = reverb;
-        synth.connect(FXreverb);
-        console.log(reverb)
-    }
-
-    const changeDistortion= () => {
-        setDelayDuration(delayDuration);
-        console.log(delayDuration + 'n');
-        FXdelay.delayTime = 1;
-        synth.connect(FXdelay);
-    }
-
-    const changeDelayFeedBack = () => {
-        setDelayFeedback(delayFeedback);
-        FXdelay.feedback = 1;
-        synth.connect(FXdelay);
-    }
-
-    // нажатие клавиши
+        // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleKeyDown = (e) => {
         if (e.repeat) return
@@ -132,8 +114,8 @@ export default function Piano() {
             return
         }
           
-        synth.volume.value = volume;
-        synth.triggerAttack(note);
+        activeSynth.volume.value = volume;
+        activeSynth.triggerAttack(note);
     }
 
     // отпускание клавиши
@@ -142,6 +124,7 @@ export default function Piano() {
         
         const key = e.key.toLowerCase();
         const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
+        activeSynth.triggerRelease(KEY_TO_NOTE[key]);
         const button = document.querySelector(`[note=${shittySharp}]`);
         try {
             button.classList.contains(styles.button_active) ? 
@@ -151,20 +134,73 @@ export default function Piano() {
         } catch {
             return null
         }
-        synth.triggerRelease(KEY_TO_NOTE[key]);
     }
 
-    // вешаем события
-    useEffect(() => {
-        window.addEventListener('keydown', handleKeyDown);
-        window.addEventListener('keyup', handleKeyUp);
-        setShowText(JSON.parse(localStorage.getItem('text')))
-        synth.set({detune: detune})
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-            window.removeEventListener('keyup', handleKeyUp);
+        // вешаем события
+        useEffect(() => {
+            window.addEventListener('keydown', handleKeyDown);
+            window.addEventListener('keyup', handleKeyUp);
+            setShowText(JSON.parse(localStorage.getItem('text')))
+            activeSynth.set({detune: detune})
+            return () => {
+                window.removeEventListener('keydown', handleKeyDown);
+                window.removeEventListener('keyup', handleKeyUp);
+            }
+        }, [handleKeyDown, handleKeyUp, detune])
+
+    switch (switchInstrument) {
+        default: return null;
+        case 'synth': {
+            activeSynth = synth;
+            break
         }
-    }, [handleKeyDown, handleKeyUp, detune])
+        case 'monosynth': {
+            activeSynth = monosynth;
+            break
+        }
+        case 'fmsynth': {
+            activeSynth = fmsynth;
+            break
+        }
+        case 'amsynth': {
+            activeSynth = amsynth;
+            break
+        }
+        case 'membranesynth': {
+            activeSynth = membranesynth;
+            break
+        }
+        case 'sampler': {
+            activeSynth = sampler;
+            break
+        }
+    }
+
+    // смена громкости
+    const changeVolume = (volume) => {
+        setVolume(volume);
+        localStorage.setItem('volume', volume);
+    }
+
+    const changeReverb = (reverb) => {
+        setReverb(reverb);
+        FXreverb.decay = reverb;
+        activeSynth.connect(FXreverb);
+        console.log(reverb)
+    }
+
+    const changeDistortion= () => {
+        setDelayDuration(delayDuration);
+        console.log(delayDuration + 'n');
+        FXdelay.delayTime = 1;
+        activeSynth.connect(FXdelay);
+    }
+
+    const changeDelayFeedBack = () => {
+        setDelayFeedback(delayFeedback);
+        FXdelay.feedback = 1;
+        activeSynth.connect(FXdelay);
+    }
 
     // тугл текста
     const generateText = (note) => {
@@ -228,12 +264,12 @@ export default function Piano() {
         />
 
         <div className={`${styles.instruments} ${instrument ? styles.inactive : ''}`}>
-            <button className={`${styles.instrument_item} ${styles.instrument_synth} ${styles.instrument_active}`}>Synth</button>
-            <button className={`${styles.instrument_item} ${styles.instrument_monosynth} `}>MonoSynth</button>
-            <button className={`${styles.instrument_item} ${styles.instrument_fmsynth} `}>FMSynth</button>
-            <button className={`${styles.instrument_item} ${styles.instrument_amsynth} `}>AMSynth</button>
-            <button className={`${styles.instrument_item} ${styles.instrument_polysynth} `}>PolySynth</button>
-            <button className={`${styles.instrument_item} ${styles.instrument_sample} ${styles.disabled}`}>Sampler <br/> <p>(in development)</p></button>
+            <button onClick={(e) => {handleInstruments('synth', e.target)}} className={`${styles.instrument_item} ${styles.instrument_synth} ${styles.instrument_active}`}>Synth</button>
+            <button onClick={(e) => {handleInstruments('monosynth', e.target)}} className={`${styles.instrument_item} ${styles.instrument_monosynth} `}>MonoSynth</button>
+            <button onClick={(e) => {handleInstruments('fmsynth', e.target)}} className={`${styles.instrument_item} ${styles.instrument_fmsynth} `}>FMSynth</button>
+            <button onClick={(e) => {handleInstruments('amsynth', e.target)}} className={`${styles.instrument_item} ${styles.instrument_amsynth} `}>AMSynth</button>
+            <button onClick={(e) => {handleInstruments('membranesynth', e.target)}} className={`${styles.instrument_item} ${styles.instrument_polysynth} `}>MemSynth</button>
+            <button onClick={(e) => {handleInstruments('sampler', e.target)}} className={`${styles.instrument_item} ${styles.instrument_sample} ${styles.disabled}`}>Sampler <br/> <p>(in development)</p></button>
         </div>
 
         <div className={`${styles.piano_wrapper} ${styles.active} ${instrument ? '' : styles.inactive}`}>
