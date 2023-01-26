@@ -84,6 +84,7 @@ export default function Piano() {
             }
         })
         setSwitchInstrument(i);
+        activeSynth.triggerRelease();
         e.classList.add('.instrument_active');
     }
 
