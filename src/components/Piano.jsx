@@ -186,19 +186,6 @@ export default function Piano() {
         console.log(reverb)
     }
 
-    const changeDistortion= () => {
-        setDelayDuration(delayDuration);
-        console.log(delayDuration + 'n');
-        FXdelay.delayTime = 1;
-        activeSynth.connect(FXdelay);
-    }
-
-    const changeDelayFeedBack = () => {
-        setDelayFeedback(delayFeedback);
-        FXdelay.feedback = 1;
-        activeSynth.connect(FXdelay);
-    }
-
     // тугл текста
     const generateText = (note) => {
         return showText ? NOTE_TO_KEY[note] : null 
@@ -245,7 +232,6 @@ export default function Piano() {
         changeReverb,
         delayDuration,
         delayFeedback,
-        changeDelayFeedBack,
         detune,
         setDetune,
         instrument,

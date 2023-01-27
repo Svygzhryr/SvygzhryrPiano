@@ -7,7 +7,6 @@
     justify-content: space-between;
     width: 100%;
     transition: background-color .2s linear;
-
 }
 
 .extra-controls {
@@ -313,14 +312,26 @@ input[type=range].range::-moz-range-progress {
 }
 
 .instrument-switch {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+
+
     border-radius: 50%;
-    width: 6rem;
-    height: 6rem;
+    width: 8rem;
+    height: 8rem;
     background-color: var(--primary_button);
     border: none;
-    opacity: 0.5;
     transition: all .2s linear;
+    z-index: 3;
+    opacity: 0.5;
 
+    font-size: 5rem;
+    color: var(--primary_background);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &:hover {
         background-color: var(--primary_button_active);
         opacity: 1;
