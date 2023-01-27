@@ -77,12 +77,6 @@ export default function Piano() {
     const [switchInstrument, setSwitchInstrument] = useState('synth');
 
     const handleInstruments = (i, e) => {
-        console.log(e)
-        document.querySelectorAll('.instrument_item').forEach((k) => {
-            if (k.classList.contains('.instrument_active')) {
-                k.classList.remove('.instrument_active');
-            }
-        })
         setSwitchInstrument(i);
         activeSynth.triggerRelease();
         e.classList.add('.instrument_active');
@@ -136,6 +130,8 @@ export default function Piano() {
             return null
         }
     }
+
+    
 
         // вешаем события
         useEffect(() => {
@@ -265,12 +261,12 @@ export default function Piano() {
         />
 
         <div className={`${styles.instruments} ${instrument ? styles.inactive : ''}`}>
-            <button onClick={(e) => {handleInstruments('synth', e.target)}} className={`${styles.instrument_item} ${styles.instrument_synth} ${styles.instrument_active}`}>Synth</button>
-            <button onClick={(e) => {handleInstruments('monosynth', e.target)}} className={`${styles.instrument_item} ${styles.instrument_monosynth} `}>MonoSynth</button>
-            <button onClick={(e) => {handleInstruments('fmsynth', e.target)}} className={`${styles.instrument_item} ${styles.instrument_fmsynth} `}>FMSynth</button>
-            <button onClick={(e) => {handleInstruments('amsynth', e.target)}} className={`${styles.instrument_item} ${styles.instrument_amsynth} `}>AMSynth</button>
-            <button onClick={(e) => {handleInstruments('membranesynth', e.target)}} className={`${styles.instrument_item} ${styles.instrument_polysynth} `}>MemSynth</button>
-            <button onClick={(e) => {handleInstruments('sampler', e.target)}} className={`${styles.instrument_item} ${styles.instrument_sample} ${styles.disabled}`}>Sampler <br/> <p>(in development)</p></button>
+            <button onClick={(e) => {handleInstruments('synth', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'synth' ? styles.instrument_active : ''}`}>Synth</button>
+            <button onClick={(e) => {handleInstruments('monosynth', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'monosynth' ? styles.instrument_active : ''}`}>MonoSynth</button>
+            <button onClick={(e) => {handleInstruments('fmsynth', e.target)}} className={`${styles.instrument_item}  ${switchInstrument == 'fmsynth' ? styles.instrument_active : ''}`}>FMSynth</button>
+            <button onClick={(e) => {handleInstruments('amsynth', e.target)}} className={`${styles.instrument_item}  ${switchInstrument == 'amsynth' ? styles.instrument_active : ''}`}>AMSynth</button>
+            <button onClick={(e) => {handleInstruments('membranesynth', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'membranesynth' ? styles.instrument_active : ''}`}>MemSynth</button>
+            <button onClick={(e) => {handleInstruments('sampler', e.target)}} className={`${styles.instrument_item} ${styles.disabled}`}>Sampler <br/> <p>(in development)</p></button>
         </div>
 
         <div className={`${styles.piano_wrapper} ${styles.active} ${instrument ? '' : styles.inactive}`}>
