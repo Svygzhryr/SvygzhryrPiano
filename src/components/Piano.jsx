@@ -179,11 +179,15 @@ export default function Piano() {
         localStorage.setItem('volume', volume);
     }
 
+    let timerId = null;
     const changeReverb = (reverb) => {
         setReverb(reverb);
-        FXreverb.decay = reverb;
-        activeSynth.connect(FXreverb);
-        console.log(reverb)
+        // неудавшаяся попытка оптимизироать смену ревёрба
+        // возможно понадобится useMemo
+        clearTimeout(timerId)
+        timerId = setTimeout(() => { 
+            FXreverb.decay = reverb;
+        }, 500)
     }
 
     // тугл текста

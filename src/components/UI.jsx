@@ -12,6 +12,7 @@ import {RiSoundModuleFill} from 'react-icons/ri'
 export default function UI({...props}) {
 
   const [theme, setTheme] = useState('black');
+  const [reverbValue, setReverbValue] = useState(0);
 
   useEffect(() => {
     document.documentElement.setAttribute('color-scheme', localStorage.getItem('theme') ?? 'default')
@@ -54,6 +55,10 @@ export default function UI({...props}) {
 
 }
 
+const handleReverb = (e) => {
+  props.changeReverb(e.target.value)
+}
+
   return (
     <div className='controls'>
         <div className="main-controls">
@@ -70,11 +75,14 @@ export default function UI({...props}) {
         </div>
         <div className="extra-controls">
         <div className="envelope">
-            
+            <Knob/>
+            <Knob/>
+            <Knob/>
+            <Knob/>
           </div>
           <div className="controls-fx">
             <div className="effect-slider reverb">
-              <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
+              <input  step={1} min={0.001} max={51} value={props.reverb} onChange={handleReverb} className='range' type='range'/>
             </div>
             {/* <div className="effect-slider delay-duration">
               <input  step={1} min={1} max={24} value={props.delayDuration} onChange={(e) => {props.changeDelayDuration(e.target.value)}}  className='range' type='range'/>
