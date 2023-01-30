@@ -3,7 +3,7 @@ import { COLORS } from '../global/constants';
 import { useState, useRef } from 'react';
 import '../css/ui.scss'
 import styles from '../css/piano.module.scss'
-import Knob from './subcomponents/Knob';
+import CustomKnob from './subcomponents/CutstomKnob';
 import CircularSlider from 'react-circular-slider';
 import {AiOutlineRight} from 'react-icons/ai'
 import {MdPiano} from 'react-icons/md'
@@ -75,10 +75,10 @@ const handleReverb = (e) => {
         </div>
         <div className="extra-controls">
         <div className="envelope">
-            <Knob/>
-            <Knob/>
-            <Knob/>
-            <Knob/>
+            <CustomKnob/>
+            <CustomKnob/>
+            <CustomKnob/>
+            <CustomKnob/>
           </div>
           <div className="controls-fx">
             <div className="effect-slider reverb">

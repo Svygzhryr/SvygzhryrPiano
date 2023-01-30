@@ -19,6 +19,7 @@
     "react-transition-group": "^4.4.5",
     "sass": "^1.56.2",
     "styled-components": "^5.3.6",
+    "svg-knob": "^1.15.0",
     "tone": "^14.7.77",
     "web-vitals": "^2.1.4",
     "webfontloader": "^1.6.28"
