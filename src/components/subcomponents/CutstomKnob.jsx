@@ -10,6 +10,9 @@ import {
 
 export default function CustomKnob(adsr) {
   const [value, setValue] = useState(0);
+
+  adsr = value;
+
   let progressColor = getComputedStyle(document.documentElement).getPropertyValue('--primary_button_active');
   let trackColor = getComputedStyle(document.documentElement).getPropertyValue('--primary_background');
   let thumbColor = getComputedStyle(document.documentElement).getPropertyValue('--primary_background');

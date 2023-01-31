@@ -88,10 +88,10 @@ const knobProps = {
         </div>
         <div className="extra-controls">
         <div className="envelope">
-            <CustomKnob value={attack}> </CustomKnob>
-            <CustomKnob value={attack}/>
-            <CustomKnob value={attack}/>
-            <CustomKnob value={attack}/>
+            <CustomKnob className='attack' value={attack}/>
+            <CustomKnob className='decay' value={decay}/>
+            <CustomKnob className='sustain' value={sustain}/>
+            <CustomKnob className='release' value={release}/>
           </div>
           <div className="controls-fx">
             <div className="effect-slider reverb">
