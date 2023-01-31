@@ -1,6 +1,17 @@
 @import '../../css/variables';
 
-.envelope_knob {
+.envelope {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
     div {
+        width: 5rem;
+        margin: 1rem;
     }
+}
+
+.input {
+    font-size: 2rem;
+
 }

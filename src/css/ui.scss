@@ -183,7 +183,7 @@ input[type=range].range::-moz-range-progress {
     flex-direction: row;
 
     width: auto;
-    height: auto;
+    min-height: 15rem;
     top: 60%;
     padding: 1rem;
 
@@ -237,7 +237,8 @@ input[type=range].range::-moz-range-progress {
 
 .envelope {
     width: 15rem;
-    height: 2rem;
+    height: 100%;
+    margin-top: 0.5rem;
 
     .envelope_knob {
         
@@ -245,7 +246,7 @@ input[type=range].range::-moz-range-progress {
 }
 
 .reverb {
-    margin-top: 1rem;
+    margin-top: 3rem;
     position: relative;
 
     &::before {
@@ -276,7 +277,8 @@ input[type=range].range::-moz-range-progress {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 2rem;
+    height: auto;
+    margin-top: 4rem;
 
     button {
         width: 3rem;
@@ -318,7 +320,7 @@ input[type=range].range::-moz-range-progress {
         font-weight: 700;
         position: absolute;
         color: var(--primary_sharp);
-        top: 48%;
+        top: 55%;
         font-size: 1.7rem;
     }
 }
