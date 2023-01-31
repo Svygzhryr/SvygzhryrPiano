@@ -1,17 +1,17 @@
 @import '../../css/variables';
 
-.envelope {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+.envelope_knob {
+    display: grid;
+    grid-template: 
 
     div {
-        width: 5rem;
-        margin: 1rem;
     }
 }
 
-.input {
-    font-size: 2rem;
-
+.knob {
+    background-color: white;
+    margin: "20%";
+    height: "20px";
+    fontFamily: "Arial";
+    color: "white"; 
 }
