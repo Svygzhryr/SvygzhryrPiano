@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import styles from './knob.scss'
+import './knob.scss'
 import {
 	CircularInput,
 	CircularTrack,
@@ -8,10 +8,7 @@ import {
 } from 'react-circular-input'
 
 
-export default function CustomKnob(adsr) {
-  const [value, setValue] = useState(0);
-
-  adsr = value;
+export default function CustomKnob({...props}) {
 
   let progressColor = getComputedStyle(document.documentElement).getPropertyValue('--primary_button_active');
   let trackColor = getComputedStyle(document.documentElement).getPropertyValue('--primary_background');
@@ -19,11 +16,12 @@ export default function CustomKnob(adsr) {
 
 
   return (
-    <div className={styles.envelope_knob}>
-      <CircularInput radius={25} className='input' value={value} onChange={setValue}>
+    <div className='envelope_knob'>
+      <CircularInput radius={25} className='input' value={props.value} onChange={props.setValue}>
         <CircularTrack stroke={trackColor} strokeWidth={10} className='track' />
         <CircularProgress stroke={progressColor} strokeLinecap='0' strokeWidth={5} className='progress' />
         <CircularThumb stroke={progressColor} strokeWidth={2} fill={thumbColor} r={8} className='thumb' />
+        <text className='knob_value'>{Math.round(props.value * 10)}</text>
 		  </CircularInput>
     </div>  
   )

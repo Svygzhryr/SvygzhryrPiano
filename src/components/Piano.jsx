@@ -76,6 +76,11 @@ export default function Piano() {
     const [instrument, setInstrument] = useState(false);
     const [switchInstrument, setSwitchInstrument] = useState('synth');
 
+    const [attack, setAttack] = useState(0.01);
+    const [decay, setDecay] = useState(0.5);
+    const [sustain, setSustain] = useState(0.5);
+    const [release, setRelease] = useState(0.5);
+
     const handleInstruments = (i, e) => {
         setSwitchInstrument(i);
         activeSynth.triggerRelease();
@@ -131,14 +136,22 @@ export default function Piano() {
         }
     }
 
-    
 
         // вешаем события
         useEffect(() => {
             window.addEventListener('keydown', handleKeyDown);
             window.addEventListener('keyup', handleKeyUp);
             setShowText(JSON.parse(localStorage.getItem('text')))
-            activeSynth.set({detune: detune})
+            activeSynth.set({
+                detune: detune,
+                envelope: {
+                    attack: attack,
+                    decay: decay,
+                    sustain: sustain,
+                    release: release,
+                }
+
+            })
             return () => {
                 window.removeEventListener('keydown', handleKeyDown);
                 window.removeEventListener('keyup', handleKeyUp);
@@ -240,6 +253,14 @@ export default function Piano() {
         setDetune,
         instrument,
         setInstrument,
+        attack,
+        decay,
+        sustain,
+        release,
+        setAttack,
+        setDecay,
+        setSustain,
+        setRelease
     }
 
 

@@ -14,12 +14,6 @@ export default function UI({...props}) {
   const [theme, setTheme] = useState('black');
   const [reverbValue, setReverbValue] = useState(0);
 
-  const [attack, setAttack] = useState(0);
-  const [decay, setDecay] = useState(0);
-  const [sustain, setSustain] = useState(0);
-  const [release, setRelease] = useState(0);
-
-
   useEffect(() => {
     document.documentElement.setAttribute('color-scheme', localStorage.getItem('theme') ?? 'default')
   }, [theme])
@@ -65,13 +59,6 @@ const handleReverb = (e) => {
   props.changeReverb(e.target.value)
 }
 
-const knobProps = {
-  attack,
-  decay,
-  sustain,
-  release,
-}
-
   return (
     <div className='controls'>
         <div className="main-controls">
@@ -88,10 +75,10 @@ const knobProps = {
         </div>
         <div className="extra-controls">
         <div className="envelope">
-            <CustomKnob className='attack' value={attack}/>
-            <CustomKnob className='decay' value={decay}/>
-            <CustomKnob className='sustain' value={sustain}/>
-            <CustomKnob className='release' value={release}/>
+            <CustomKnob className='attack' value={props.attack} setValue={props.setAttack}/>
+            <CustomKnob className='decay' value={props.decay} setValue={props.setDecay}/>
+            <CustomKnob className='sustain' value={props.sustain} setValue={props.setSustain}/>
+            <CustomKnob className='release' value={props.release} setValue={props.setRelease}/>
           </div>
           <div className="controls-fx">
             <div className="effect-slider reverb">

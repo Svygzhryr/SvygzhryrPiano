@@ -4,6 +4,8 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    position: relative;
+
 
     div {
         width: 5rem;
@@ -13,5 +15,12 @@
 
 .input {
     font-size: 2rem;
+    text-align: center;
+    
 
 }
+
+text {
+    color: white;
+}
+
