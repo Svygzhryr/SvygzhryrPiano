@@ -195,7 +195,7 @@ input[type=range].range::-moz-range-progress {
 
     transition: all .7s cubic-bezier(.26,1.21,1,.94);
     opacity: 0.5;
-    transform: translateX(0%);
+    transform: translateX(-100%);
 
 
     .show-controls-arrow {
@@ -246,7 +246,7 @@ input[type=range].range::-moz-range-progress {
 }
 
 .reverb {
-    margin-top: 3rem;
+    margin-top: 1.5rem;
     position: relative;
 
     &::before {
@@ -273,12 +273,12 @@ input[type=range].range::-moz-range-progress {
 
 }
 
-.octave {
+.octave, .controls_waveshape {
     display: flex;
     justify-content: space-around;
     align-items: center;
     height: auto;
-    margin-top: 4rem;
+    margin-top: 2rem;
 
     button {
         width: 3rem;
@@ -320,9 +320,13 @@ input[type=range].range::-moz-range-progress {
         font-weight: 700;
         position: absolute;
         color: var(--primary_sharp);
-        top: 55%;
         font-size: 1.7rem;
+        margin-bottom: 5rem;
     }
+}
+
+.octave {
+    justify-content: space-evenly;
 }
 
 .instruments {
@@ -356,24 +360,33 @@ input[type=range].range::-moz-range-progress {
     }
 }
 
-.envelope_apply {
+.controls_waveshape {
 
+    &::before {
+        content: 'waveshape';
+        font-weight: 700;
+        position: absolute;
+        color: var(--primary_sharp);
+        font-size: 1.7rem;
+        margin-bottom: 5rem;
+    }
 }
 
-.attack {
-
+.prev_waveshape, .next_waveshape {
+    align-items: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
-.decay {
+.waveshape_type {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    svg {
 
-}
-
-.sustain {
-
-}
-
-.release {
-
+    }
 }
 
 @import './adaptive.scss'

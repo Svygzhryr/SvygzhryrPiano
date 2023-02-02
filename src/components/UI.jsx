@@ -8,6 +8,9 @@ import CircularSlider from 'react-circular-slider';
 import {AiOutlineRight} from 'react-icons/ai'
 import {MdPiano} from 'react-icons/md'
 import {RiSoundModuleFill} from 'react-icons/ri'
+import {GoArrowLeft, GoArrowRight} from 'react-icons/go'
+import {TbWaveSawTool, TbWaveSine, TbWaveSquare} from 'react-icons/tb'
+
 
 export default function UI({...props}) {
 
@@ -74,30 +77,29 @@ const handleReverb = (e) => {
           </div>
         </div>
         <div className="extra-controls">
-        <div className="envelope">
-            <CustomKnob className='attack' enType={'atk'} value={props.attack} setValue={props.setAttack}/>
-            <CustomKnob className='decay' enType={'dec'} value={props.decay} setValue={props.setDecay}/>
-            <CustomKnob className='sustain' enType={'sus'} value={props.sustain} setValue={props.setSustain}/>
-            <CustomKnob className='release' enType={'rel'} value={props.release} setValue={props.setRelease}/>
-          </div>
-          <div className="controls-fx">
-            <div className="effect-slider reverb">
-              <input  step={1} min={0.001} max={51} value={props.reverb} onChange={handleReverb} className='range' type='range'/>
+          <div className="envelope">
+              <CustomKnob className='attack' enType={'atk'} value={props.attack} setValue={props.setAttack}/>
+              <CustomKnob className='decay' enType={'dec'} value={props.decay} setValue={props.setDecay}/>
+              <CustomKnob className='sustain' enType={'sus'} value={props.sustain} setValue={props.setSustain}/>
+              <CustomKnob className='release' enType={'rel'} value={props.release} setValue={props.setRelease}/>
             </div>
-            {/* <div className="effect-slider delay-duration">
-              <input  step={1} min={1} max={24} value={props.delayDuration} onChange={(e) => {props.changeDelayDuration(e.target.value)}}  className='range' type='range'/>
-            </div>
-            <div className="effect-slider delay-feedback">
-              <input  step={0.1} min={0} max={1} value={props.delayFeedback} onChange={(e) => {props.changeDelayFeedBack(e.target.value)}}  className='range' type='range'/>
-            </div> */}
-            <div className="octave">
-              <button onClick={() => {props.setDetune(props.detune < -1200 ? props.detune : props.detune - 1200)}} className="octave-down">-</button>
-              <h1 className="detune-number">
-                {(props.detune/1200)}
-              </h1>
-              <button onClick={() => {props.setDetune(props.detune > 2400 ? props.detune : props.detune + 1200)}} className="octave-up">+</button>
-            </div>
-            </div>
+            <div className="controls-fx">
+              <div className="effect-slider reverb">
+                <input  step={1} min={0.001} max={51} value={props.reverb} onChange={handleReverb} className='range' type='range'/>
+              </div>
+              <div className="controls_waveshape">
+                <button onClick={() => {props.setWaveShape('sine')}} className="waveshape_type sine"><TbWaveSine/></button>
+                <button onClick={() => {props.setWaveShape('square')}} className="waveshape_type square"><TbWaveSquare/></button>
+                <button onClick={() => {props.setWaveShape('sawtooth')}} className="waveshape_type saw"><TbWaveSawTool/></button>
+              </div>
+              <div className="octave">  
+                <button onClick={() => {props.setDetune(props.detune < -1200 ? props.detune : props.detune - 1200)}} className="octave-down">-</button>
+                <h1 className="detune-number">
+                  {(props.detune/1200)}
+                </h1>
+                <button onClick={() => {props.setDetune(props.detune > 2400 ? props.detune : props.detune + 1200)}} className="octave-up">+</button>
+              </div>
+              </div>
             <div className="show-controls"><AiOutlineRight className='show-controls-arrow'/></div>
         </div>
         <button className="instrument-switch" onClick={() => {props.setInstrument(!props.instrument)}}>{props.instrument ? <MdPiano/> : <RiSoundModuleFill/>}</button>
