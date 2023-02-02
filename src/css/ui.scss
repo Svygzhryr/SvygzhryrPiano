@@ -195,7 +195,7 @@ input[type=range].range::-moz-range-progress {
 
     transition: all .7s cubic-bezier(.26,1.21,1,.94);
     opacity: 0.5;
-    transform: translateX(-100%);
+    transform: translateX(0%);
 
 
     .show-controls-arrow {

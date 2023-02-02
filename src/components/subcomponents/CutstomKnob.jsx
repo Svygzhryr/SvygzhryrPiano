@@ -17,12 +17,13 @@ export default function CustomKnob({...props}) {
 
   return (
     <div className='envelope_knob'>
+      <div className='knob_value'>{Math.round(props.value * 10)}</div>
       <CircularInput radius={25} className='input' value={props.value} onChange={props.setValue}>
         <CircularTrack stroke={trackColor} strokeWidth={10} className='track' />
         <CircularProgress stroke={progressColor} strokeLinecap='0' strokeWidth={5} className='progress' />
         <CircularThumb stroke={progressColor} strokeWidth={2} fill={thumbColor} r={8} className='thumb' />
-        <text className='knob_value'>{Math.round(props.value * 10)}</text>
-		  </CircularInput>
+      </CircularInput>
+      <h1 className="type">{props.enType}</h1>
     </div>  
   )
 }
