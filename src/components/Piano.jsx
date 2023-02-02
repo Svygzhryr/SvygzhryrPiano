@@ -81,6 +81,8 @@ export default function Piano() {
     const [sustain, setSustain] = useState(0.5);
     const [release, setRelease] = useState(0.5);
 
+    const [waveShape, setWaveShape] = useState('sine');
+
     const handleInstruments = (i, e) => {
         setSwitchInstrument(i);
         activeSynth.triggerRelease();
@@ -144,14 +146,19 @@ export default function Piano() {
             setShowText(JSON.parse(localStorage.getItem('text')))
             activeSynth.set({
                 detune: detune,
+
+                oscillator: {
+                    type: waveShape,
+                },
+
                 envelope: {
                     attack: attack,
                     decay: decay,
                     sustain: sustain,
                     release: release,
-                }
+                },
 
-            })
+            })  
             return () => {
                 window.removeEventListener('keydown', handleKeyDown);
                 window.removeEventListener('keyup', handleKeyUp);
@@ -260,7 +267,9 @@ export default function Piano() {
         setAttack,
         setDecay,
         setSustain,
-        setRelease
+        setRelease,
+        waveShape,
+        setWaveShape
     }
 
 
