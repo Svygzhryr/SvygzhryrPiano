@@ -1,3 +1,5 @@
+WARNING: for the time being app works correctly only in Mozilla Firefox browser, others (like Chrome and Opera) seems a bit buggy and will be fixed soon
+
 The goal of this project is to create an easy to play piano app with following features:
 
 
