@@ -6,6 +6,7 @@ import styles from '../css/piano.module.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS} from '../global/constants'
 import UI from './UI';
 import { delay, now } from 'lodash';
+import A1sample from '../samples/cowbell.wav'
 
 // здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
 // начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
@@ -40,12 +41,10 @@ let fmsynth = new Tone.PolySynth(Tone.FMSynth).connect(FXreverb, FXtremolo).toDe
 let amsynth = new Tone.PolySynth(Tone.AMSynth).connect(FXreverb, FXtremolo).toDestination();
 let membranesynth = new Tone.PolySynth(Tone.MembraneSynth).connect(FXreverb, FXtremolo).toDestination();
 let sampler = new Tone.Sampler({
-    urls: {
-        A1: "A1.mp3",
-        A2: "A2.mp3",
-    },
-    baseUrl: "https://tonejs.github.io/audio/casio/",
+        A2: A1sample,
 }).connect(FXreverb, FXtremolo).toDestination();
+
+
 
 
 
@@ -127,9 +126,11 @@ export default function Piano() {
         }
           
         activeSynth.volume.value = volume;
+        activeSynth === sampler ?
+        activeSynth.triggerAttackRelease(note) :
         activeSynth.triggerAttack(note);
-        console.log(note, 'played')
     }
+
 
     // отпускание клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -138,8 +139,11 @@ export default function Piano() {
         allowed = true;
         const key = e.key.toLowerCase();
         const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
-        console.log(KEY_TO_NOTE[key], 'r')
-        activeSynth.triggerRelease(KEY_TO_NOTE[key])
+        
+        activeSynth !== sampler ?
+        activeSynth.triggerRelease(KEY_TO_NOTE[key]) :
+        null;
+
         const button = document.querySelector(`[note=${shittySharp}]`);
         try {
             button.classList.contains(styles.button_active) ? 
