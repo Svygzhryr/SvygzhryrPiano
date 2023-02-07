@@ -10,6 +10,7 @@ import {MdPiano} from 'react-icons/md'
 import {RiSoundModuleFill} from 'react-icons/ri'
 import {GoArrowLeft, GoArrowRight} from 'react-icons/go'
 import {TbWaveSawTool, TbWaveSine, TbWaveSquare} from 'react-icons/tb'
+import Slider from 'react-rangeslider'
 
 
 export default function UI({...props}) {

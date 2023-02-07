@@ -5,8 +5,8 @@ import * as Tone from 'tone'
 import styles from '../css/piano.module.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS} from '../global/constants'
 import UI from './UI';
-import { delay, now } from 'lodash';
-import A1sample from '../samples/cowbell4.wav'
+import { delay, now, sample } from 'lodash';
+import A1sample from '../samples/musicbox.wav'
 
 // здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
 // начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
@@ -40,8 +40,11 @@ let monosynth = new Tone.PolySynth(Tone.MonoSynth).connect(FXreverb, FXtremolo).
 let fmsynth = new Tone.PolySynth(Tone.FMSynth).connect(FXreverb, FXtremolo).toDestination();
 let amsynth = new Tone.PolySynth(Tone.AMSynth).connect(FXreverb, FXtremolo).toDestination();
 let membranesynth = new Tone.PolySynth(Tone.MembraneSynth).connect(FXreverb, FXtremolo).toDestination();
+
 let sampler = new Tone.Sampler({
-        A2: A1sample,
+        urls: {
+            A2: A1sample,
+        }
 }).connect(FXreverb, FXtremolo).toDestination();
 
 
@@ -232,6 +235,11 @@ export default function Piano() {
         return showText ? NOTE_TO_KEY[note] : null 
     }
 
+    const equipSample = (e) => {
+        let file = e.target.files[0];
+         
+    }
+
         // генерируем массив клавиш
     const upperKeys = UPPER_NOTES.map((note, index) => {
         // наигениальнейшая проверка на диез и бемоль
@@ -303,7 +311,9 @@ export default function Piano() {
             <button onClick={(e) => {handleInstruments('fmsynth', e.target)}} className={`${styles.instrument_item}  ${switchInstrument == 'fmsynth' ? styles.instrument_active : ''}`}>FMSynth</button>
             <button onClick={(e) => {handleInstruments('amsynth', e.target)}} className={`${styles.instrument_item}  ${switchInstrument == 'amsynth' ? styles.instrument_active : ''}`}>AMSynth</button>
             <button onClick={(e) => {handleInstruments('membranesynth', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'membranesynth' ? styles.instrument_active : ''}`}>MemSynth</button>
-            <button onClick={(e) => {handleInstruments('sampler', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'sampler' ? styles.instrument_active : ''}`}>Sampler</button>
+            <button onClick={(e) => {handleInstruments('sampler', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'sampler' ? styles.instrument_active : ''}`}>Sampler
+                <input onChange={equipSample} type="file" name="Sample" id="" className={styles.sample_input}/>
+            </button>
         </div>
 
         <div className={`${styles.piano_wrapper} ${styles.active} ${instrument ? '' : styles.inactive}`}>
