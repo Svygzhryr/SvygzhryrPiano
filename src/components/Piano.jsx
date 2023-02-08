@@ -1,11 +1,9 @@
 /* eslint-disable no-unused-expressions */
 import {React, useState, useEffect, useRef, useMemo, useCallback} from 'react'
-import useScript from '../hooks/useScript';
 import * as Tone from 'tone'
 import styles from '../css/piano.module.scss'
-import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS} from '../global/constants'
+import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY} from '../global/constants'
 import UI from './UI';
-import { delay, now, sample } from 'lodash';
 import sample1 from '../samples/musicbox.mp3'
 import sample2 from '../samples/cowbell2.wav'
 
@@ -14,7 +12,6 @@ import sample2 from '../samples/cowbell2.wav'
 // начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
 Tone.context.lookAhead = 0.02;
 
-// инициализация синтезатора(-ов) и его эффектов
 let FXreverb = new Tone.Reverb(0.1).toDestination();
 let FXdelay = new Tone.FeedbackDelay('6n', 0.2).toDestination();
 let FXtremolo = new Tone.Vibrato(0.2, 0.8).toDestination();
@@ -37,6 +34,7 @@ let detune;
 //     // baseUrl: "https://tonejs.github.io/audio/casio/",
 
 // })
+// инициализация синтезатора(-ов) и его эффектов
 let synth = new Tone.PolySynth(Tone.Synth).connect(FXreverb, FXtremolo).toDestination();
 let monosynth = new Tone.PolySynth(Tone.MonoSynth).connect(FXreverb, FXtremolo).toDestination();
 let fmsynth = new Tone.PolySynth(Tone.FMSynth).connect(FXreverb, FXtremolo).toDestination();
@@ -48,10 +46,6 @@ let sampler = new Tone.Sampler({
             A2: sample1,
         }
 }).connect(FXreverb, FXtremolo).toDestination();
-
-
-
-
 
 const instruments = [synth, monosynth, fmsynth, amsynth, membranesynth, sampler];
 instruments.forEach((e) => {
@@ -280,6 +274,7 @@ export default function Piano() {
     })
 
     const UIprops = {
+        activeSynth,
         volume,
         changeVolume,
         showText,
