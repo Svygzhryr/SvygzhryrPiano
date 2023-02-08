@@ -389,4 +389,9 @@ input[type=range].range::-moz-range-progress {
     }
 }
 
+.sampler_active {
+    filter: blur(4px);
+    pointer-events: none;
+}
+
 @import './adaptive.scss'

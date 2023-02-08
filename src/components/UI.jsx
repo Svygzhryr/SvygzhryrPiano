@@ -1,16 +1,11 @@
 import React, { useEffect } from 'react'
-import { COLORS } from '../global/constants';
 import { useState, useRef } from 'react';
 import '../css/ui.scss'
-import styles from '../css/piano.module.scss'
 import CustomKnob from './subcomponents/CutstomKnob';
-import CircularSlider from 'react-circular-slider';
 import {AiOutlineRight} from 'react-icons/ai'
 import {MdPiano} from 'react-icons/md'
 import {RiSoundModuleFill} from 'react-icons/ri'
-import {GoArrowLeft, GoArrowRight} from 'react-icons/go'
 import {TbWaveSawTool, TbWaveSine, TbWaveSquare} from 'react-icons/tb'
-import Slider from 'react-rangeslider'
 
 
 export default function UI({...props}) {
@@ -59,6 +54,8 @@ export default function UI({...props}) {
 
 }
 
+console.log(props.activeSynth)
+
 const handleReverb = (e) => {
   props.changeReverb(e.target.value)
 }
@@ -78,7 +75,7 @@ const handleReverb = (e) => {
           </div>
         </div>
         <div className="extra-controls">
-          <div className="envelope">
+          <div className={'envelope' + (props.activeSynth.name === 'Sampler' ? ' sampler_active' : '')}>
               <CustomKnob className='attack' enType={'atk'} value={props.attack} setValue={props.setAttack}/>
               <CustomKnob className='decay' enType={'dec'} value={props.decay} setValue={props.setDecay}/>
               <CustomKnob className='sustain' enType={'sus'} value={props.sustain} setValue={props.setSustain}/>
@@ -88,12 +85,12 @@ const handleReverb = (e) => {
               <div className="effect-slider reverb">
                 <input  step={1} min={0.001} max={51} value={props.reverb} onChange={handleReverb} className='range' type='range'/>
               </div>
-              <div className="controls_waveshape">
+              <div className={"controls_waveshape" + (props.activeSynth.name === 'Sampler' ? ' sampler_active' : '')}>
                 <button onClick={() => {props.setWaveShape('sine')}} className="waveshape_type sine"><TbWaveSine/></button>
                 <button onClick={() => {props.setWaveShape('square')}} className="waveshape_type square"><TbWaveSquare/></button>
                 <button onClick={() => {props.setWaveShape('sawtooth')}} className="waveshape_type saw"><TbWaveSawTool/></button>
               </div>
-              <div className="octave">  
+              <div className={"octave" + (props.activeSynth.name === 'Sampler' ? ' sampler_active' : '')}>  
                 <button onClick={() => {props.setDetune(props.detune < -1200 ? props.detune : props.detune - 1200)}} className="octave-down">-</button>
                 <h1 className="detune-number">
                   {(props.detune/1200)}
