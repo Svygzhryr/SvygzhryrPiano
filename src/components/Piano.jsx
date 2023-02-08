@@ -88,6 +88,8 @@ export default function Piano() {
     const [sustain, setSustain] = useState(0.5);
     const [release, setRelease] = useState(0.5);
 
+    const [hold, setHold] = useState('false')
+
     const [waveShape, setWaveShape] = useState('sine');
 
     const handleInstruments = (i, e) => {
@@ -126,8 +128,8 @@ export default function Piano() {
           
         activeSynth.volume.value = volume;
         // activeSynth === sampler ?
-        // activeSynth.triggerAttackRelease(note) :
-        activeSynth.triggerAttack(note);
+        activeSynth.triggerAttackRelease(note, '8n')
+        // activeSynth.triggerAttack(note);
     }
 
 
@@ -296,7 +298,9 @@ export default function Piano() {
         setSustain,
         setRelease,
         waveShape,
-        setWaveShape
+        setWaveShape,
+        hold,
+        setHold
     }
 
 

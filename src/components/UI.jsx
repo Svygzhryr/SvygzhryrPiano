@@ -96,8 +96,8 @@ const handleReverb = (e) => {
                 <button onClick={() => {props.setDetune(props.detune > 2400 ? props.detune : props.detune + 1200)}} className="octave-up">+</button>
               </div>
               <div className={"controls_hold"}>  
-                <button onClick={() => {props.setDetune(props.detune < -1200 ? props.detune : props.detune - 1200)}} className="octave-down">-</button>
-                <button onClick={() => {props.setDetune(props.detune > 2400 ? props.detune : props.detune + 1200)}} className="octave-up">+</button>
+                <button  className="hold_on hold_active">on</button>
+                <button  className="hold_off">off</button>
               </div>
               </div>
             <div className="show-controls"><AiOutlineRight className='show-controls-arrow'/></div>

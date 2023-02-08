@@ -248,6 +248,7 @@ input[type=range].range::-moz-range-progress {
 .reverb {
     margin-top: 1.5rem;
     position: relative;
+    border: none;
 
     &::before {
         content: 'reverb';
@@ -398,6 +399,17 @@ input[type=range].range::-moz-range-progress {
         font-size: 1.7rem;
         margin-bottom: 5rem;
     }
+}
+
+.hold_on, .hold_off {
+    font-size: 1.6rem !important;
+}
+
+button.hold_active {
+    background-color: var(--primary_button);
+    color: var(--primary_sharp);
+    border: 3px solid var(--primary_sharp);
+    pointer-events: none;
 }
 
 .sampler_active {
