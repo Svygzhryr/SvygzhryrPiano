@@ -54,8 +54,6 @@ export default function UI({...props}) {
 
 }
 
-console.log(props.activeSynth)
-
 const handleReverb = (e) => {
   props.changeReverb(e.target.value)
 }
@@ -90,11 +88,15 @@ const handleReverb = (e) => {
                 <button onClick={() => {props.setWaveShape('square')}} className="waveshape_type square"><TbWaveSquare/></button>
                 <button onClick={() => {props.setWaveShape('sawtooth')}} className="waveshape_type saw"><TbWaveSawTool/></button>
               </div>
-              <div className={"octave" + (props.activeSynth.name === 'Sampler' ? ' sampler_active' : '')}>  
+              <div className={"controls_octave" + (props.activeSynth.name === 'Sampler' ? ' sampler_active' : '')}>  
                 <button onClick={() => {props.setDetune(props.detune < -1200 ? props.detune : props.detune - 1200)}} className="octave-down">-</button>
                 <h1 className="detune-number">
                   {(props.detune/1200)}
                 </h1>
+                <button onClick={() => {props.setDetune(props.detune > 2400 ? props.detune : props.detune + 1200)}} className="octave-up">+</button>
+              </div>
+              <div className={"controls_hold"}>  
+                <button onClick={() => {props.setDetune(props.detune < -1200 ? props.detune : props.detune - 1200)}} className="octave-down">-</button>
                 <button onClick={() => {props.setDetune(props.detune > 2400 ? props.detune : props.detune + 1200)}} className="octave-up">+</button>
               </div>
               </div>

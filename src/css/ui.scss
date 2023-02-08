@@ -273,7 +273,7 @@ input[type=range].range::-moz-range-progress {
 
 }
 
-.octave, .controls_waveshape {
+.controls_octave, .controls_waveshape, .controls_hold {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -386,6 +386,17 @@ input[type=range].range::-moz-range-progress {
     
     svg {
 
+    }
+}
+
+.controls_hold {
+    &::before {
+        content: 'hold';
+        font-weight: 700;
+        position: absolute;
+        color: var(--primary_sharp);
+        font-size: 1.7rem;
+        margin-bottom: 5rem;
     }
 }
 

@@ -4,7 +4,7 @@ import * as Tone from 'tone'
 import styles from '../css/piano.module.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY} from '../global/constants'
 import UI from './UI';
-import sample1 from '../samples/musicbox.mp3'
+import sample1 from '../samples/organ2.mp3'
 import sample2 from '../samples/cowbell2.wav'
 
 
@@ -125,8 +125,8 @@ export default function Piano() {
         }
           
         activeSynth.volume.value = volume;
-        activeSynth === sampler ?
-        activeSynth.triggerAttackRelease(note) :
+        // activeSynth === sampler ?
+        // activeSynth.triggerAttackRelease(note) :
         activeSynth.triggerAttack(note);
     }
 
@@ -139,9 +139,9 @@ export default function Piano() {
         const key = e.key.toLowerCase();
         const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
         
-        activeSynth !== sampler ?
-        activeSynth.triggerRelease(KEY_TO_NOTE[key]) :
-        null;
+        // activeSynth !== sampler ?
+        activeSynth.triggerRelease(KEY_TO_NOTE[key])
+        // null;
 
         const button = document.querySelector(`[note=${shittySharp}]`);
         try {
