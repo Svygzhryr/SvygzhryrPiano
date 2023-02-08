@@ -6,7 +6,9 @@ import styles from '../css/piano.module.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY, COLORS} from '../global/constants'
 import UI from './UI';
 import { delay, now, sample } from 'lodash';
-import A1sample from '../samples/musicbox.wav'
+import sample1 from '../samples/musicbox.mp3'
+import sample2 from '../samples/cowbell2.wav'
+
 
 // здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
 // начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
@@ -43,7 +45,7 @@ let membranesynth = new Tone.PolySynth(Tone.MembraneSynth).connect(FXreverb, FXt
 
 let sampler = new Tone.Sampler({
         urls: {
-            A2: A1sample,
+            A2: sample1,
         }
 }).connect(FXreverb, FXtremolo).toDestination();
 
@@ -236,8 +238,13 @@ export default function Piano() {
     }
 
     const equipSample = (e) => {
-        let file = e.target.files[0];
-         
+        sampler = new Tone.Sampler({
+            urls: {
+                A2: sample2,
+            }
+        }).connect(FXreverb, FXtremolo).toDestination();
+        console.log(sample2)
+        console.log(e.target.files[0])
     }
 
         // генерируем массив клавиш
