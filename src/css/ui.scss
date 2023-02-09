@@ -238,10 +238,9 @@ input[type=range].range::-moz-range-progress {
 .envelope {
     width: 15rem;
     height: 100%;
-    margin-top: 0.5rem;
-
+    margin-top: -1rem;
     .envelope_knob {
-        
+        margin-top: 3rem;
     }
 }
 

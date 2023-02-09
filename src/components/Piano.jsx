@@ -157,13 +157,61 @@ export default function Piano() {
         }
     }
 
-    console.log(hold)
+    const handleMouseDown = (e) => {
+        let note = e.target.getAttribute('note')
+        console.log(note);
+        note = CSS.escape(note);
 
+        const button = document.querySelector(`[note=${note}]`);
+
+        try {
+            button.classList.contains(styles.button) ? 
+            button.classList.add(styles.button_active) : 
+            button.classList.add(styles.button_sharp_active);
+
+        } catch {
+            return null
+        }
+
+        if (note === undefined) {
+            return
+        }
+
+        activeSynth.volume.value = volume;
+        activeSynth.triggerAttack(note);
+        console.log(note);
+    }
+
+    const handleMouseUp = (e) => {
+        let note = e.target.getAttribute('note')
+        console.log(note);
+
+        note = CSS.escape(note);
+        console.log(note);
+
+        activeSynth.triggerRelease(note);
+        const button = document.querySelector(`[note=${note}]`);
+        try {
+            button.classList.contains(styles.button_active) ? 
+            button.classList.remove(styles.button_active) :
+            button.classList.remove(styles.button_sharp_active);
+
+        } catch {
+            return null
+        }
+
+        
+    }
 
         // вешаем события
         useEffect(() => {
             window.addEventListener('keydown', handleKeyDown);
             window.addEventListener('keyup', handleKeyUp);
+            window.addEventListener('mousedown', handleMouseDown)
+            window.addEventListener('mouseup', handleMouseUp)
+            window.addEventListener('mouseleave', handleMouseUp)
+            window.addEventListener('mouseout', handleMouseUp)
+            
             setShowText(JSON.parse(localStorage.getItem('text')))
             activeSynth.set({
                 detune: detune,
@@ -183,8 +231,12 @@ export default function Piano() {
             return () => {
                 window.removeEventListener('keydown', handleKeyDown);
                 window.removeEventListener('keyup', handleKeyUp);
+                window.removeEventListener('mousedown', handleMouseDown);
+                window.removeEventListener('mouseup', handleMouseUp);
+                window.addEventListener('mouseleave', handleMouseUp)
+                window.addEventListener('mouseout', handleMouseUp)
             }
-        }, [handleKeyDown, handleKeyUp, detune])
+        }, [handleKeyDown, handleKeyUp, detune, handleMouseDown, handleMouseUp])
 
     switch (switchInstrument) {
         default: return null;
@@ -306,7 +358,8 @@ export default function Piano() {
         setHold
     }
 
-
+// чёт многовато кода для одного компонента
+// надо бы декомпозировать
   return (
 
     <div className={styles.piano}>
