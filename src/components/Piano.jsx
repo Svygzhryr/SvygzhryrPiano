@@ -127,9 +127,10 @@ export default function Piano() {
         }
           
         activeSynth.volume.value = volume;
-        // activeSynth === sampler ?
-        activeSynth.triggerAttackRelease(note, '8n')
-        // activeSynth.triggerAttack(note);
+        hold ?
+        activeSynth.triggerAttack(note) :
+        (activeSynth === sampler ? activeSynth.triggerAttackRelease(note) : 
+        activeSynth.triggerAttackRelease(note, '8n'))
     }
 
 
@@ -140,10 +141,10 @@ export default function Piano() {
         allowed = true;
         const key = e.key.toLowerCase();
         const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
-        
-        // activeSynth !== sampler ?
-        activeSynth.triggerRelease(KEY_TO_NOTE[key])
-        // null;
+
+        hold ? 
+        activeSynth.triggerRelease(KEY_TO_NOTE[key]) :
+        null
 
         const button = document.querySelector(`[note=${shittySharp}]`);
         try {
@@ -155,6 +156,8 @@ export default function Piano() {
             return null
         }
     }
+
+    console.log(hold)
 
 
         // вешаем события
