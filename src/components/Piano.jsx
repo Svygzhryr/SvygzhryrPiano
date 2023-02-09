@@ -159,10 +159,9 @@ export default function Piano() {
 
     const handleMouseDown = (e) => {
         let note = e.target.getAttribute('note')
-        console.log(note);
-        note = CSS.escape(note);
+        let shittynote = CSS.escape(note);
 
-        const button = document.querySelector(`[note=${note}]`);
+        const button = document.querySelector(`[note=${shittynote}]`);
 
         try {
             button.classList.contains(styles.button) ? 
@@ -179,18 +178,13 @@ export default function Piano() {
 
         activeSynth.volume.value = volume;
         activeSynth.triggerAttack(note);
-        console.log(note);
     }
 
     const handleMouseUp = (e) => {
         let note = e.target.getAttribute('note')
-        console.log(note);
-
-        note = CSS.escape(note);
-        console.log(note);
-
         activeSynth.triggerRelease(note);
-        const button = document.querySelector(`[note=${note}]`);
+        let shittynote = CSS.escape(note);
+        const button = document.querySelector(`[note=${shittynote}]`);
         try {
             button.classList.contains(styles.button_active) ? 
             button.classList.remove(styles.button_active) :
