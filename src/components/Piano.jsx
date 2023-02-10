@@ -43,7 +43,7 @@ let membranesynth = new Tone.PolySynth(Tone.MembraneSynth).connect(FXreverb, FXt
 
 let sampler = new Tone.Sampler({
         urls: {
-            A2: sample1,
+            A2: sample2,
         }
 }).connect(FXreverb, FXtremolo).toDestination();
 
@@ -68,8 +68,8 @@ instruments.forEach((e) => {
 })
 Tone.start()
 let activeSynth;
-var allowed = true;
-
+let down = false;
+let keyEnabledArray = Array(222).fill(true);
 export default function Piano() {
     let keyClassName;
     const [pressedKeys, setPressedKeys] = useState([]);
@@ -98,10 +98,14 @@ export default function Piano() {
         e.classList.add('.instrument_active');
     }
 
+    
+
         // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleKeyDown = (e) => {
-        if (e.repeat) return
+        if(keyEnabledArray[e.keyCode]) {
+            keyEnabledArray[e.keyCode] = false;
+        
 
         // вводим соответствие между нажатой клавишей и клавишей в коде
         const key = e.key.toLowerCase();
@@ -117,6 +121,7 @@ export default function Piano() {
             return null
         }
         playNote(KEY_TO_NOTE[key]);
+        }
     }
 
     // activeInstrument function
@@ -138,7 +143,6 @@ export default function Piano() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleKeyUp = (e) => {
         
-        allowed = true;
         const key = e.key.toLowerCase();
         const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
 
@@ -155,6 +159,7 @@ export default function Piano() {
         } catch {
             return null
         }
+        keyEnabledArray[e.keyCode] = true;
     }
 
     const handleMouseDown = (e) => {
@@ -199,8 +204,11 @@ export default function Piano() {
 
         // вешаем события
         useEffect(() => {
-            window.addEventListener('keydown', handleKeyDown);
-            window.addEventListener('keyup', handleKeyUp);
+            window.addEventListener('contextmenu', function(evt) { 
+                evt.preventDefault();
+              }, false);
+            window.addEventListener('keydown', handleKeyDown, false);
+            window.addEventListener('keyup', handleKeyUp, false);
             window.addEventListener('mousedown', handleMouseDown)
             window.addEventListener('mouseup', handleMouseUp)
             window.addEventListener('mouseleave', handleMouseUp)
@@ -368,7 +376,7 @@ export default function Piano() {
             <button onClick={(e) => {handleInstruments('amsynth', e.target)}} className={`${styles.instrument_item}  ${switchInstrument == 'amsynth' ? styles.instrument_active : ''}`}>AMSynth</button>
             <button onClick={(e) => {handleInstruments('membranesynth', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'membranesynth' ? styles.instrument_active : ''}`}>MemSynth</button>
             <button onClick={(e) => {handleInstruments('sampler', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'sampler' ? styles.instrument_active : ''}`}>Sampler
-                <input onChange={equipSample} type="file" name="Sample" id="" className={styles.sample_input}/>
+                <input style={{display: 'none'}} onChange={equipSample} type="file" name="Sample" id="" className={styles.sample_input}/>
             </button>
         </div>
 
