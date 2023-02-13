@@ -5,7 +5,8 @@ import styles from '../css/piano.module.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY} from '../global/constants'
 import UI from './UI';
 import sample1 from '../samples/organ2.mp3'
-import sample2 from '../samples/cowbell2.wav'
+import sample2 from '../samples/flute.wav'
+import { forEach } from 'lodash';
 
 
 // здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
@@ -43,7 +44,7 @@ let membranesynth = new Tone.PolySynth(Tone.MembraneSynth).connect(FXreverb, FXt
 
 let sampler = new Tone.Sampler({
         urls: {
-            A2: sample2,
+            'A3': sample2,
         }
 }).connect(FXreverb, FXtremolo).toDestination();
 
@@ -94,7 +95,7 @@ export default function Piano() {
 
     const handleInstruments = (i, e) => {
         setSwitchInstrument(i);
-        activeSynth.triggerRelease();
+        resetSounds();
         e.classList.add('.instrument_active');
     }
 
@@ -202,6 +203,16 @@ export default function Piano() {
         
     }
 
+    const resetSounds = () => {
+        const buttons = document.querySelectorAll(`[note]`);
+        buttons.forEach((e) => {
+            e.classList.remove(styles.button_active)
+            e.classList.remove(styles.button_sharp_active)
+        })
+        let all = [...UPPER_NOTES, ...LOWER_NOTES];
+        activeSynth.triggerRelease(all);
+    }
+
         // вешаем события
         useEffect(() => {
             window.addEventListener('contextmenu', function(evt) { 
@@ -213,6 +224,7 @@ export default function Piano() {
             window.addEventListener('mouseup', handleMouseUp)
             window.addEventListener('mouseleave', handleMouseUp)
             window.addEventListener('mouseout', handleMouseUp)
+            window.addEventListener('blur', resetSounds);
             
             setShowText(JSON.parse(localStorage.getItem('text')))
             activeSynth.set({
@@ -235,10 +247,11 @@ export default function Piano() {
                 window.removeEventListener('keyup', handleKeyUp);
                 window.removeEventListener('mousedown', handleMouseDown);
                 window.removeEventListener('mouseup', handleMouseUp);
-                window.addEventListener('mouseleave', handleMouseUp)
-                window.addEventListener('mouseout', handleMouseUp)
+                window.removeEventListener('mouseleave', handleMouseUp)
+                window.removeEventListener('mouseout', handleMouseUp)
+                window.removeEventListener('blur', resetSounds);
             }
-        }, [handleKeyDown, handleKeyUp, detune, handleMouseDown, handleMouseUp])
+        }, [handleKeyDown, handleKeyUp, detune, handleMouseDown, handleMouseUp, resetSounds])
 
     switch (switchInstrument) {
         default: return null;

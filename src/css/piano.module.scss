@@ -51,7 +51,7 @@ body {
     height: 30rem;
     background-color: var(--primary_button);
     border: 4px solid var(--primary_background);
-    border-top: none;
+    border-top: none !important;
     border-radius: 0 0 1rem 1rem;
     box-sizing: border-box;
 
