@@ -109,8 +109,8 @@ export default function Piano() {
         
 
         // вводим соответствие между нажатой клавишей и клавишей в коде
-        const key = e.key.toLowerCase();
-        const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
+        const code = e.which;
+        const shittySharp = CSS.escape(KEY_TO_NOTE[code]);
         const button = document.querySelector(`[note=${shittySharp}]`);
 
         try {
@@ -121,7 +121,7 @@ export default function Piano() {
         } catch {
             return null
         }
-        playNote(KEY_TO_NOTE[key]);
+        playNote(KEY_TO_NOTE[code]);
         }
     }
 
@@ -144,11 +144,11 @@ export default function Piano() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleKeyUp = (e) => {
         
-        const key = e.key.toLowerCase();
-        const shittySharp = CSS.escape(KEY_TO_NOTE[key]);
+        const code = e.which;
+        const shittySharp = CSS.escape(KEY_TO_NOTE[code]);
 
         hold ? 
-        activeSynth.triggerRelease(KEY_TO_NOTE[key]) :
+        activeSynth.triggerRelease(KEY_TO_NOTE[code]) :
         null
 
         const button = document.querySelector(`[note=${shittySharp}]`);
@@ -166,27 +166,30 @@ export default function Piano() {
     const handleMouseDown = (e) => {
         let note = e.target.getAttribute('note')
         let shittynote = CSS.escape(note);
+        console.log(down)
 
         const button = document.querySelector(`[note=${shittynote}]`);
 
-        try {
-            button.classList.contains(styles.button) ? 
-            button.classList.add(styles.button_active) : 
-            button.classList.add(styles.button_sharp_active);
-
-        } catch {
-            return null
+        if (true) {
+            try {
+                button.classList.contains(styles.button) ? 
+                button.classList.add(styles.button_active) : 
+                button.classList.add(styles.button_sharp_active);
+    
+            } catch {
+                return null
+            }
+    
+            if (note === undefined) {
+                return
+            }
+    
+            activeSynth.volume.value = volume;
+            hold ?
+            activeSynth.triggerAttack(note) :
+            (activeSynth === sampler ? activeSynth.triggerAttackRelease(note) : 
+            activeSynth.triggerAttackRelease(note, '8n'))
         }
-
-        if (note === undefined) {
-            return
-        }
-
-        activeSynth.volume.value = volume;
-        hold ?
-        activeSynth.triggerAttack(note) :
-        (activeSynth === sampler ? activeSynth.triggerAttackRelease(note) : 
-        activeSynth.triggerAttackRelease(note, '8n'))
     }
 
     const handleMouseUp = (e) => {
@@ -251,6 +254,7 @@ export default function Piano() {
                 window.removeEventListener('keydown', handleKeyDown);
                 window.removeEventListener('keyup', handleKeyUp);
                 window.removeEventListener('mousedown', handleMouseDown);
+                window.removeEventListener('mouseover', handleMouseDown)
                 window.removeEventListener('mouseup', handleMouseUp);
                 window.removeEventListener('mouseleave', handleMouseUp)
                 window.removeEventListener('mouseout', handleMouseUp)
@@ -314,8 +318,6 @@ export default function Piano() {
                 A2: sample2,
             }
         }).connect(FXreverb, FXtremolo).toDestination();
-        console.log(sample2)
-        console.log(e.target.files[0])
     }
 
         // генерируем массив клавиш

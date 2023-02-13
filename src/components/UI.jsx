@@ -58,8 +58,6 @@ const handleReverb = (e) => {
   props.changeReverb(e.target.value)
 }
 
-console.log(props.waveShape)
-
   return (
     <div className='controls'>
         <div className="main-controls">
