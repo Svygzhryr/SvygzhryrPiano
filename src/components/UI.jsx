@@ -58,6 +58,8 @@ const handleReverb = (e) => {
   props.changeReverb(e.target.value)
 }
 
+console.log(props.waveShape)
+
   return (
     <div className='controls'>
         <div className="main-controls">
@@ -84,9 +86,9 @@ const handleReverb = (e) => {
                 <input  step={1} min={0.001} max={51} value={props.reverb} onChange={handleReverb} className='range' type='range'/>
               </div>
               <div className={"controls_waveshape" + (props.activeSynth.name === 'Sampler' ? ' sampler_active' : '')}>
-                <button onClick={() => {props.setWaveShape('sine')}} className="waveshape_type sine"><TbWaveSine/></button>
-                <button onClick={() => {props.setWaveShape('square')}} className="waveshape_type square"><TbWaveSquare/></button>
-                <button onClick={() => {props.setWaveShape('sawtooth')}} className="waveshape_type saw"><TbWaveSawTool/></button>
+                <button onClick={() => {props.setWaveShape('sine')}} className={"waveshape_type sine" + (props.waveShape === 'sine' ? ' waveshape_active' : '')}><TbWaveSine/></button>
+                <button onClick={() => {props.setWaveShape('square')}} className={"waveshape_type square" + (props.waveShape === 'square' ? ' waveshape_active' : '')}><TbWaveSquare/></button>
+                <button onClick={() => {props.setWaveShape('sawtooth')}} className={"waveshape_type saw" + (props.waveShape === 'sawtooth' ? ' waveshape_active' : '')} ><TbWaveSawTool/></button>
               </div>
               <div className={"controls_octave" + (props.activeSynth.name === 'Sampler' ? ' sampler_active' : '')}>  
                 <button onClick={() => {props.setDetune(props.detune < -1200 ? props.detune : props.detune - 1200)}} className="octave-down">-</button>

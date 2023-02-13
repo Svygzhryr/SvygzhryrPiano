@@ -5,7 +5,7 @@ import styles from '../css/piano.module.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY} from '../global/constants'
 import UI from './UI';
 import sample1 from '../samples/organ2.mp3'
-import sample2 from '../samples/flute.wav'
+import sample2 from '../samples/harp.wav'
 import { forEach } from 'lodash';
 
 
@@ -183,12 +183,17 @@ export default function Piano() {
         }
 
         activeSynth.volume.value = volume;
-        activeSynth.triggerAttack(note);
+        hold ?
+        activeSynth.triggerAttack(note) :
+        (activeSynth === sampler ? activeSynth.triggerAttackRelease(note) : 
+        activeSynth.triggerAttackRelease(note, '8n'))
     }
 
     const handleMouseUp = (e) => {
         let note = e.target.getAttribute('note')
-        activeSynth.triggerRelease(note);
+        hold ? 
+        activeSynth.triggerRelease(note) :
+        null
         let shittynote = CSS.escape(note);
         const button = document.querySelector(`[note=${shittynote}]`);
         try {

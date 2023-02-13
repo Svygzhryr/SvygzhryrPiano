@@ -389,6 +389,13 @@ input[type=range].range::-moz-range-progress {
     }
 }
 
+.waveshape_active {
+    background-color: var(--primary_button) !important;
+    color: var(--primary_sharp) !important;
+    border: 3px solid var(--primary_sharp) !important;
+    pointer-events: none;
+}
+
 .controls_hold {
     &::before {
         content: 'hold';
