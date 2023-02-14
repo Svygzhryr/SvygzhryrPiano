@@ -6,8 +6,7 @@ import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY} from '../global/con
 import UI from './UI';
 import sample1 from '../samples/organ2.mp3'
 import sample2 from '../samples/harp.wav'
-import { forEach } from 'lodash';
-
+import { forEach, debounce } from 'lodash';
 
 // здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
 // начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
@@ -100,6 +99,11 @@ export default function Piano() {
     }
 
     
+
+    const changeReverb = (reverb) => {
+            setReverb(reverb)
+            // FXreverb.decay = reverb;
+    }
 
         // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -223,9 +227,7 @@ export default function Piano() {
 
         // вешаем события
         useEffect(() => {
-            window.addEventListener('contextmenu', function(evt) { 
-                evt.preventDefault();
-              }, false);
+            window.addEventListener('contextmenu', function(evt) {evt.preventDefault()}, false);
             window.addEventListener('keydown', handleKeyDown, false);
             window.addEventListener('keyup', handleKeyUp, false);
             window.addEventListener('mousedown', handleMouseDown)
@@ -251,6 +253,7 @@ export default function Piano() {
 
             })  
             return () => {
+                window.removeEventListener('contextmenu', function(evt) {evt.preventDefault()}, false);
                 window.removeEventListener('keydown', handleKeyDown);
                 window.removeEventListener('keyup', handleKeyUp);
                 window.removeEventListener('mousedown', handleMouseDown);
@@ -294,17 +297,6 @@ export default function Piano() {
     const changeVolume = (volume) => {
         setVolume(volume);
         localStorage.setItem('volume', volume);
-    }
-
-    let timerId = null;
-    const changeReverb = (reverb) => {
-        setReverb(reverb);
-        // неудавшаяся попытка оптимизироать смену ревёрба
-        // возможно понадобится useMemo
-        clearTimeout(timerId)
-        timerId = setTimeout(() => { 
-            FXreverb.decay = reverb;
-        }, 500)
     }
 
     // тугл текста
