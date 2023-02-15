@@ -171,7 +171,6 @@ export default function Piano() {
     const handleMouseDown = (e) => {
         let note = e.target.getAttribute('note')
         let shittynote = CSS.escape(note);
-        console.log(note, 'down');
 
         const button = document.querySelector(`[note=${shittynote}]`);
 
@@ -202,7 +201,6 @@ export default function Piano() {
         hold ? 
         activeSynth.triggerRelease(note) :
         null
-        console.log(note, 'up')
         let shittynote = CSS.escape(note);
         const button = document.querySelector(`[note=${shittynote}]`);
         try {
