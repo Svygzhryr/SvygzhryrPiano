@@ -170,7 +170,7 @@ export default function Piano() {
     const handleMouseDown = (e) => {
         let note = e.target.getAttribute('note')
         let shittynote = CSS.escape(note);
-        console.log(down)
+        console.log(note, 'down');
 
         const button = document.querySelector(`[note=${shittynote}]`);
 
@@ -201,6 +201,7 @@ export default function Piano() {
         hold ? 
         activeSynth.triggerRelease(note) :
         null
+        console.log(note, 'up')
         let shittynote = CSS.escape(note);
         const button = document.querySelector(`[note=${shittynote}]`);
         try {
@@ -230,11 +231,20 @@ export default function Piano() {
             window.addEventListener('contextmenu', function(evt) {evt.preventDefault()}, false);
             window.addEventListener('keydown', handleKeyDown, false);
             window.addEventListener('keyup', handleKeyUp, false);
-            window.addEventListener('mousedown', handleMouseDown)
-            window.addEventListener('mouseup', handleMouseUp)
-            window.addEventListener('mouseleave', handleMouseUp)
-            window.addEventListener('mouseout', handleMouseUp)
             window.addEventListener('blur', resetSounds);
+            // пиздец
+            window.addEventListener('mousedown', function(e) {
+                handleMouseDown(e);
+                window.addEventListener('mouseover', handleMouseDown);
+            }) 
+            window.addEventListener('mouseup', function(e) {
+                window.removeEventListener('mouseover', handleMouseDown);
+                window.removeEventListener('mousedown', handleMouseDown);
+                handleMouseUp(e);
+            })
+            window.addEventListener('mouseout', function(e) {
+                handleMouseUp(e);
+            })
             
             setShowText(JSON.parse(localStorage.getItem('text')))
             activeSynth.set({
@@ -254,14 +264,26 @@ export default function Piano() {
             })  
             return () => {
                 window.removeEventListener('contextmenu', function(evt) {evt.preventDefault()}, false);
-                window.removeEventListener('keydown', handleKeyDown);
-                window.removeEventListener('keyup', handleKeyUp);
-                window.removeEventListener('mousedown', handleMouseDown);
-                window.removeEventListener('mouseover', handleMouseDown)
-                window.removeEventListener('mouseup', handleMouseUp);
-                window.removeEventListener('mouseleave', handleMouseUp)
-                window.removeEventListener('mouseout', handleMouseUp)
+                window.removeEventListener('keydown', handleKeyDown, false);
+                window.removeEventListener('keyup', handleKeyUp, false);
                 window.removeEventListener('blur', resetSounds);
+                // пиздец
+                window.removeEventListener('mousedown', handleMouseDown);
+                window.removeEventListener('mouseover', handleMouseDown);
+
+                window.removeEventListener('mousedown', function(e) {
+                    window.addEventListener('mouseover', handleMouseDown);
+                }) 
+                window.removeEventListener('mouseup', function(e) {
+                    window.removeEventListener('mouseover', handleMouseDown);
+                    window.removeEventListener('mousedown', handleMouseDown);
+    
+                    handleMouseUp(e);
+                })
+                window.removeEventListener('mouseout', function(e) {
+                    window.removeEventListener('mouseover', handleMouseDown);
+                    handleMouseUp(e);
+                })
             }
         }, [handleKeyDown, handleKeyUp, detune, handleMouseDown, handleMouseUp, resetSounds])
 
