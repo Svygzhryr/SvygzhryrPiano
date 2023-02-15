@@ -115,6 +115,7 @@ export default function Piano() {
         // вводим соответствие между нажатой клавишей и клавишей в коде
         const code = e.which;
         const shittySharp = CSS.escape(KEY_TO_NOTE[code]);
+        console.log(shittySharp, 'down')
         const button = document.querySelector(`[note=${shittySharp}]`);
 
         try {
@@ -226,25 +227,32 @@ export default function Piano() {
         activeSynth.triggerRelease(all);
     }
 
+    const downFunc = (e) => {
+        handleMouseDown(e);
+        window.addEventListener('mouseover', handleMouseDown);
+    }
+    const upFunc = (e) => {
+        window.removeEventListener('mouseover', handleMouseDown);
+        window.removeEventListener('mousedown', handleMouseDown);
+        handleMouseUp(e);
+    }
+    const outFunc = (e) => {
+        handleMouseUp(e);
+    }
+
         // вешаем события
         useEffect(() => {
             window.addEventListener('contextmenu', function(evt) {evt.preventDefault()}, false);
             window.addEventListener('keydown', handleKeyDown, false);
             window.addEventListener('keyup', handleKeyUp, false);
             window.addEventListener('blur', resetSounds);
+
+
+
             // пиздец
-            window.addEventListener('mousedown', function(e) {
-                handleMouseDown(e);
-                window.addEventListener('mouseover', handleMouseDown);
-            }) 
-            window.addEventListener('mouseup', function(e) {
-                window.removeEventListener('mouseover', handleMouseDown);
-                window.removeEventListener('mousedown', handleMouseDown);
-                handleMouseUp(e);
-            })
-            window.addEventListener('mouseout', function(e) {
-                handleMouseUp(e);
-            })
+            window.addEventListener('mousedown', downFunc)
+            window.addEventListener('mouseup', upFunc)
+            window.addEventListener('mouseout', outFunc)
             
             setShowText(JSON.parse(localStorage.getItem('text')))
             activeSynth.set({
@@ -271,21 +279,11 @@ export default function Piano() {
                 window.removeEventListener('mousedown', handleMouseDown);
                 window.removeEventListener('mouseover', handleMouseDown);
 
-                window.removeEventListener('mousedown', function(e) {
-                    window.addEventListener('mouseover', handleMouseDown);
-                }) 
-                window.removeEventListener('mouseup', function(e) {
-                    window.removeEventListener('mouseover', handleMouseDown);
-                    window.removeEventListener('mousedown', handleMouseDown);
-    
-                    handleMouseUp(e);
-                })
-                window.removeEventListener('mouseout', function(e) {
-                    window.removeEventListener('mouseover', handleMouseDown);
-                    handleMouseUp(e);
-                })
+                window.removeEventListener('mousedown', downFunc)
+                window.removeEventListener('mouseup', upFunc)
+                window.removeEventListener('mouseout', outFunc)
             }
-        }, [handleKeyDown, handleKeyUp, detune, handleMouseDown, handleMouseUp, resetSounds])
+        }, [handleKeyDown, handleKeyUp, detune, handleMouseDown, handleMouseUp, resetSounds, downFunc, upFunc, outFunc])
 
     switch (switchInstrument) {
         default: return null;
