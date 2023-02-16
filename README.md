@@ -3,7 +3,9 @@ Pretty simple online piano app with intuitive design and decent functionality in
 For the best performance I suggest using Mozilla Firefox browser. However, the app runs fine in other browsers as well.
 
 <br>
-<img height='200px' src='https://i.imgur.com/a6FShGD.png'/>
+
+![кнопочки](https://user-images.githubusercontent.com/80585863/219314496-520e63c9-d6fb-4ac5-9abf-07ddff9f8338.gif)
+
 <br>
 
 For the react libraries used in this project check package.json
