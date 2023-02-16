@@ -6,7 +6,7 @@ import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY} from '../global/con
 import UI from './UI';
 import sample1 from '../samples/organ2.mp3'
 import sample2 from '../samples/harp.wav'
-import { forEach, debounce } from 'lodash';
+import { forEach } from 'lodash';
 
 // здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
 // начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
@@ -76,7 +76,7 @@ export default function Piano() {
     const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
     const [showText, setShowText] = useState(false);
 
-    const [reverb, setReverb] = useState(0);
+    const [reverb, setReverb] = useState(0.001);
     const [delayDuration, setDelayDuration] = useState(0);
     const [delayFeedback, setDelayFeedback] = useState(0);
     const [detune, setDetune] = useState(1200);
@@ -92,18 +92,18 @@ export default function Piano() {
 
     const [waveShape, setWaveShape] = useState('sine');
 
+
     const handleInstruments = (i, e) => {
         setSwitchInstrument(i);
         resetSounds();
         e.classList.add('.instrument_active');
     }
 
-    
+    const changeReverb = useCallback((reverb) => {
+        setReverb(reverb)
+        FXreverb.decay = reverb;
+    }, [])
 
-    const changeReverb = (reverb) => {
-            setReverb(reverb)
-            // FXreverb.decay = reverb;
-    }
 
         // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -115,7 +115,6 @@ export default function Piano() {
         // вводим соответствие между нажатой клавишей и клавишей в коде
         const code = e.which;
         const shittySharp = CSS.escape(KEY_TO_NOTE[code]);
-        console.log(shittySharp, 'down')
         const button = document.querySelector(`[note=${shittySharp}]`);
 
         try {
