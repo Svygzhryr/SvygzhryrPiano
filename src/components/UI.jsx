@@ -54,6 +54,11 @@ export default function UI({...props}) {
 
 }
 
+  const handleReverb = (e) => {
+    props.debounceReverb(e.target.value);
+    setReverbValue(e.target.value)
+  }
+
   return (
     <div className='controls'>
         <div className="main-controls">
@@ -77,7 +82,7 @@ export default function UI({...props}) {
             </div>
             <div className="controls-fx">
               <div className="effect-slider reverb">
-                <input  step={1} min={0.001} max={51} value={props.reverb} onChange={(e) => {props.changeReverb(e.target.value)}} className='range' type='range'/>
+                <input  step={1} min={0.001} max={51} value={reverbValue} onChange={handleReverb} className='range' type='range'/>
               </div>
               <div className={"controls_waveshape" + (props.activeSynth.name === 'Sampler' ? ' sampler_active' : '')}>
                 <button onClick={() => {props.setWaveShape('sine')}} className={"waveshape_type sine" + (props.waveShape === 'sine' ? ' waveshape_active' : '')}><TbWaveSine/></button>

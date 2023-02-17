@@ -6,7 +6,7 @@ import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY} from '../global/con
 import UI from './UI';
 import sample1 from '../samples/organ2.mp3'
 import sample2 from '../samples/harp.wav'
-import { forEach } from 'lodash';
+import debounce from 'lodash/debounce'
 
 // здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
 // начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
@@ -99,11 +99,12 @@ export default function Piano() {
         e.classList.add('.instrument_active');
     }
 
-    const changeReverb = useCallback((reverb) => {
+
+    const debounceReverb = debounce((reverb) => handleReverb(reverb), 300)
+    const handleReverb = (reverb) => {
         setReverb(reverb)
         FXreverb.decay = reverb;
-    }, [])
-
+    }
 
         // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -368,7 +369,7 @@ export default function Piano() {
         showText,
         setShowText,
         reverb,
-        changeReverb,
+        debounceReverb,
         delayDuration,
         delayFeedback,
         detune,
