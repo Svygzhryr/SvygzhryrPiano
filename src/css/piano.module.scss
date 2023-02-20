@@ -6,6 +6,10 @@ body {
 
 }
 
+label {
+    font-family: 'EB Garamond', serif;
+}
+
 /* ===== Scrollbar CSS ===== */
   /* Firefox */
   * {
@@ -169,6 +173,23 @@ body {
 
     transition: all 1s ease-in-out;
 
+    input {
+        display: none;
+    }
+
+    .input_label {
+        width: 12rem !important;
+        height: 6rem !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-weight: 500 !important;
+        font-style: initial;
+
+        cursor: pointer;
+    }
+
 
     .instrument_item {
         font-size: 2.4rem;
@@ -178,8 +199,8 @@ body {
         background: var(--primary_button);
         color: var(--primary_background);
         font-weight: 500;
-        min-width: 20rem;
-        min-height: 10rem;
+        width: 20rem;
+        height: 10rem;
 
         transition: all .2s ease-in-out; 
 
@@ -192,6 +213,9 @@ body {
             color: var(--primary_button);
             cursor: pointer;
         }
+
+
+
     }
 
     .instrument_active {

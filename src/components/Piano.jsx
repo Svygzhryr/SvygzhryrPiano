@@ -90,6 +90,8 @@ export default function Piano() {
 
     const [hold, setHold] = useState('false')
 
+    const [activeSample, setActiveSample] = useState('');
+
     const [waveShape, setWaveShape] = useState('sine');
 
 
@@ -334,14 +336,20 @@ export default function Piano() {
     }
 
     const equipSample = (e) => {
+        handleInstruments('sampler', e.target)
         let sourceAux = URL.createObjectURL(e.target.files[0]);
+        console.log(e.target.files[0].name)
+        setActiveSample(e.target.files[0].name);
+
         sampler = new Tone.Sampler({
             urls: {
                 A2: sourceAux,
             }
         }).connect(FXreverb, FXtremolo).toDestination();
         activeSynth = sampler;
-        console.log(sourceAux)
+        setHold(true);
+        resetSounds();
+
     }
 
         // генерируем массив клавиш
@@ -419,9 +427,13 @@ export default function Piano() {
             <button onClick={(e) => {handleInstruments('fmsynth', e.target)}} className={`${styles.instrument_item}  ${switchInstrument == 'fmsynth' ? styles.instrument_active : ''}`}>FMSynth</button>
             <button onClick={(e) => {handleInstruments('amsynth', e.target)}} className={`${styles.instrument_item}  ${switchInstrument == 'amsynth' ? styles.instrument_active : ''}`}>AMSynth</button>
             <button onClick={(e) => {handleInstruments('membranesynth', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'membranesynth' ? styles.instrument_active : ''}`}>MemSynth</button>
-            <button onClick={(e) => {handleInstruments('sampler', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'sampler' ? styles.instrument_active : ''}`}>Sampler
-                <input onChange={equipSample} type="file" name="Sample" id="" className={styles.sample_input}/>
-            </button>
+            <label htmlFor='sample' className={`${styles.instrument_item} ${styles.input_label} ${switchInstrument == 'sampler' ? styles.instrument_active : ''}`}>
+                Sampler
+                <br/>
+                {activeSample}
+                <input onChange={equipSample} id='sample' type='file'/>
+            </label>
+                {/* <input onChange={equipSample} type="file" name="Sample" id="" className={styles.sample_input}/> */}
         </div>
 
         <div className={`${styles.piano_wrapper} ${styles.active} ${instrument ? '' : styles.inactive}`}>
