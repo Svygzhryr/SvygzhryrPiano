@@ -244,13 +244,24 @@ export default function Piano() {
             window.addEventListener('keydown', handleKeyDown, false);
             window.addEventListener('keyup', handleKeyUp, false);
             window.addEventListener('blur', resetSounds);
-
-
-
             // пиздец
             window.addEventListener('mousedown', downFunc)
             window.addEventListener('mouseup', upFunc)
             window.addEventListener('mouseout', outFunc)
+
+            // navigator.requestMIDIAccess()
+            // .then(onMIDISuccess, onMIDIFailure);
+
+            // function onMIDISuccess(midiAccess) {
+            //     console.log(midiAccess);
+
+            //     var inputs = midiAccess.inputs;
+            //     var outputs = midiAccess.outputs;
+            // }
+
+            // function onMIDIFailure() {
+            //     console.log('Could not access your MIDI devices.');
+            // }
             
             setShowText(JSON.parse(localStorage.getItem('text')))
             activeSynth.set({
@@ -323,11 +334,14 @@ export default function Piano() {
     }
 
     const equipSample = (e) => {
+        let sourceAux = URL.createObjectURL(e.target.files[0]);
         sampler = new Tone.Sampler({
             urls: {
-                A2: sample2,
+                A2: sourceAux,
             }
         }).connect(FXreverb, FXtremolo).toDestination();
+        activeSynth = sampler;
+        console.log(sourceAux)
     }
 
         // генерируем массив клавиш
@@ -406,7 +420,7 @@ export default function Piano() {
             <button onClick={(e) => {handleInstruments('amsynth', e.target)}} className={`${styles.instrument_item}  ${switchInstrument == 'amsynth' ? styles.instrument_active : ''}`}>AMSynth</button>
             <button onClick={(e) => {handleInstruments('membranesynth', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'membranesynth' ? styles.instrument_active : ''}`}>MemSynth</button>
             <button onClick={(e) => {handleInstruments('sampler', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'sampler' ? styles.instrument_active : ''}`}>Sampler
-                <input style={{display: 'none'}} onChange={equipSample} type="file" name="Sample" id="" className={styles.sample_input}/>
+                <input onChange={equipSample} type="file" name="Sample" id="" className={styles.sample_input}/>
             </button>
         </div>
 
