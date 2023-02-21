@@ -6,6 +6,7 @@ import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY} from '../global/con
 import UI from './UI';
 import sample2 from '../samples/harp.wav'
 import debounce from 'lodash/debounce'
+import { ToneAudioBuffer } from 'tone';
 
 // здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
 // начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
@@ -74,24 +75,20 @@ export default function Piano() {
     const [pressedKeys, setPressedKeys] = useState([]);
     const [volume, setVolume] = useState(localStorage.getItem('volume') || 0);
     const [showText, setShowText] = useState(false);
-
     const [reverb, setReverb] = useState(0.001);
     const [delayDuration, setDelayDuration] = useState(0);
     const [delayFeedback, setDelayFeedback] = useState(0);
     const [detune, setDetune] = useState(1200);
     const [instrument, setInstrument] = useState(false);
     const [switchInstrument, setSwitchInstrument] = useState('synth');
-
     const [attack, setAttack] = useState(0.01);
     const [decay, setDecay] = useState(0.5);
     const [sustain, setSustain] = useState(0.5);
     const [release, setRelease] = useState(0.5);
-
     const [hold, setHold] = useState('false')
-
     const [activeSample, setActiveSample] = useState('');
-
     const [waveShape, setWaveShape] = useState('sine');
+    const [loading, setLoading] = useState(true);
 
 
     const handleInstruments = (i, e) => {
@@ -239,6 +236,14 @@ export default function Piano() {
         handleMouseUp(e);
     }
 
+        useEffect(() => {
+            setLoading(true);
+            ToneAudioBuffer.loaded(setLoading(false));
+            return () => {
+
+            }
+        }, []);
+
         // вешаем события
         useEffect(() => {
             window.addEventListener('contextmenu', function(evt) {evt.preventDefault()}, false);
@@ -249,7 +254,6 @@ export default function Piano() {
             window.addEventListener('mousedown', downFunc)
             window.addEventListener('mouseup', upFunc)
             window.addEventListener('mouseout', outFunc)
-
             // navigator.requestMIDIAccess()
             // .then(onMIDISuccess, onMIDIFailure);
 
@@ -421,10 +425,14 @@ export default function Piano() {
   return (
 
     <div className={styles.piano}>
+        {loading 
+        ? <div className={styles.loader}>
+            <div className={styles.loader_inside}></div>
+        </div>
+        : <div>
         <UI 
             {...UIprops}
         />
-
         <div className={`${styles.instruments} ${instrument ? styles.inactive : ''}`}>
             <button onClick={(e) => {handleInstruments('synth', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'synth' ? styles.instrument_active : ''}`}>Synth</button>
             <button onClick={(e) => {handleInstruments('monosynth', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'monosynth' ? styles.instrument_active : ''}`}>MonoSynth</button>
@@ -439,22 +447,24 @@ export default function Piano() {
             </label>
                 {/* <input onChange={equipSample} type="file" name="Sample" id="" className={styles.sample_input}/> */}
         </div>
-
+    
         <div className={`${styles.piano_wrapper} ${styles.active} ${instrument ? '' : styles.inactive}`}>
             <div className={styles.upper_keyboard}>
                 <div className={styles.upper_buttons}>
                     {upperKeys}
                 </div>
             </div>
-
+    
             <div className={styles.lower_keyboard}>
                 <div className={styles.lower_buttons}>
                     {lowerKeys}
                 </div>
             </div>
-
+    
         </div>
-        
+    </div>
+    
+    }
     </div>
   )
 }
