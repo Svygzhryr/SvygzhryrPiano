@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-expressions */
-import {React, useState, useEffect, useRef, useMemo, useCallback} from 'react'
+import {React, useState, useEffect} from 'react'
 import * as Tone from 'tone'
 import styles from '../css/piano.module.scss'
 import { UPPER_NOTES, LOWER_NOTES, KEY_TO_NOTE, NOTE_TO_KEY} from '../global/constants'
 import UI from './UI';
-import sample1 from '../samples/organ2.mp3'
 import sample2 from '../samples/harp.wav'
 import debounce from 'lodash/debounce'
 
@@ -339,17 +338,19 @@ export default function Piano() {
         handleInstruments('sampler', e.target)
         let sourceAux = URL.createObjectURL(e.target.files[0]);
         console.log(e.target.files[0].name)
+        let regex = /.((wav)|(ogg)|(mp3))/gi;
+        if (e.target.files[0].name.match(regex)) {
         setActiveSample(e.target.files[0].name);
-
-        sampler = new Tone.Sampler({
-            urls: {
-                A2: sourceAux,
-            }
-        }).connect(FXreverb, FXtremolo).toDestination();
-        activeSynth = sampler;
-        setHold(true);
-        resetSounds();
-
+            sampler = new Tone.Sampler({
+                urls: {
+                    A2: sourceAux,
+                }
+            }).connect(FXreverb, FXtremolo).toDestination();
+            activeSynth = sampler;
+            setHold(true);
+            resetSounds();
+        } else alert('Only files with extentions (.mp3 .ogg .wav) are allowed.')
+ 
     }
 
         // генерируем массив клавиш
@@ -358,6 +359,7 @@ export default function Piano() {
         if (note.length > 2 ? keyClassName = styles.button_sharp : keyClassName = styles.button)
         return (
             <button 
+            tabIndex='-1'
             key={index} 
             note={note} 
             className={keyClassName} 
@@ -373,6 +375,7 @@ export default function Piano() {
         if (note.length > 2 ? keyClassName = styles.button_sharp : keyClassName = styles.button)
         return (
             <button 
+            tabIndex='-1'
             key={index}     
             note={note} 
             className={keyClassName}
@@ -412,6 +415,7 @@ export default function Piano() {
         setHold
     }
 
+
 // чёт многовато кода для одного компонента
 // надо бы декомпозировать
   return (
@@ -430,7 +434,7 @@ export default function Piano() {
             <label htmlFor='sample' className={`${styles.instrument_item} ${styles.input_label} ${switchInstrument == 'sampler' ? styles.instrument_active : ''}`}>
                 Sampler
                 <br/>
-                {activeSample}
+                {activeSample !== '' ? activeSample : '.mp3/.wav/.ogg files'}
                 <input onChange={equipSample} id='sample' type='file'/>
             </label>
                 {/* <input onChange={equipSample} type="file" name="Sample" id="" className={styles.sample_input}/> */}
