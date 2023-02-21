@@ -59,6 +59,20 @@ export default function UI({...props}) {
     setReverbValue(e.target.value)
   }
 
+  const sampleUp = (e) => {
+    if (props.samplePitch < 3) {
+      props.setSamplePitch(props.samplePitch + 1)
+    }
+
+  } 
+
+  const sampleDown = () => {
+    if (props.samplePitch > -2) {
+      props.setSamplePitch(props.samplePitch - 1)
+    }
+
+  }
+
   return (
     <div className='controls'>
         <div className="main-controls">
@@ -89,13 +103,24 @@ export default function UI({...props}) {
                 <button onClick={() => {props.setWaveShape('square')}} className={"waveshape_type square" + (props.waveShape === 'square' ? ' waveshape_active' : '')}><TbWaveSquare/></button>
                 <button onClick={() => {props.setWaveShape('sawtooth')}} className={"waveshape_type saw" + (props.waveShape === 'sawtooth' ? ' waveshape_active' : '')} ><TbWaveSawTool/></button>
               </div>
-              <div className={"controls_octave" + (props.activeSynth.name === 'Sampler' ? ' sampler_active' : '')}>  
-                <button onClick={() => {props.setDetune(props.detune < -1200 ? props.detune : props.detune - 1200)}} className="octave-down">-</button>
-                <h1 className="detune-number">
-                  {(props.detune/1200)}
-                </h1>
-                <button onClick={() => {props.setDetune(props.detune > 2400 ? props.detune : props.detune + 1200)}} className="octave-up">+</button>
-              </div>
+                {props.activeSynth.name === 'Sampler' ?
+                  <div className='controls_octave'>
+                  <button onClick={sampleDown} className="octave-down">+</button>
+                  <h1 className="detune-number">
+                    {props.samplePitch * -1}
+                  </h1>
+                  <button onClick={sampleUp} className="octave-up">-</button>
+                </div>
+                :
+                <div className='controls_octave'>
+                  <button onClick={() => {props.setDetune(props.detune < -1200 ? props.detune : props.detune - 1200)}} className="octave-down">-</button>
+                  <h1 className="detune-number">
+                    {(props.detune/1200)}
+                  </h1>
+                  <button onClick={() => {props.setDetune(props.detune > 2400 ? props.detune : props.detune + 1200)}} className="octave-up">+</button>
+                </div>
+
+                }
               <div className={"controls_hold"}>  
                 <button onClick={(e) => {props.setHold(true)}} className={"hold_on" + (props.hold ? ' hold_active' : '')}>on</button>
                 <button onClick={(e) => {props.setHold(false)}} className={"hold_off" + (props.hold ? '' : ' hold_active')}>off</button>

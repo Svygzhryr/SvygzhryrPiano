@@ -89,6 +89,7 @@ export default function Piano() {
     const [activeSample, setActiveSample] = useState('');
     const [waveShape, setWaveShape] = useState('sine');
     const [loading, setLoading] = useState(true);
+    const [samplePitch, setSamplePitch] = useState(2);
 
 
     const handleInstruments = (i, e) => {
@@ -341,13 +342,13 @@ export default function Piano() {
     const equipSample = (e) => {
         handleInstruments('sampler', e.target)
         let sourceAux = URL.createObjectURL(e.target.files[0]);
-        console.log(e.target.files[0].name)
         let regex = /.((wav)|(ogg)|(mp3))/gi;
         if (e.target.files[0].name.match(regex)) {
         setActiveSample(e.target.files[0].name);
+        let sampleKey = 'A' + samplePitch;
             sampler = new Tone.Sampler({
                 urls: {
-                    A2: sourceAux,
+                    [sampleKey]: sourceAux,
                 }
             }).connect(FXreverb, FXtremolo).toDestination();
             activeSynth = sampler;
@@ -416,7 +417,10 @@ export default function Piano() {
         waveShape,
         setWaveShape,
         hold,
-        setHold
+        setHold,
+        samplePitch,
+        setSamplePitch,
+        equipSample
     }
 
 
