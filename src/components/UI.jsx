@@ -59,7 +59,7 @@ export default function UI({...props}) {
     setReverbValue(e.target.value)
   }
 
-  const sampleUp = (e) => {
+  const sampleUp = () => {
     if (props.samplePitch < 3) {
       props.setSamplePitch(props.samplePitch + 1)
     }

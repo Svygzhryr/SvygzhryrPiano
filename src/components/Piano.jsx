@@ -67,8 +67,9 @@ instruments.forEach((e) => {
     })
 })
 Tone.start()
+let currentFile;
 let activeSynth;
-let down = false;
+let sourceAux;
 let keyEnabledArray = Array(222).fill(true);
 export default function Piano() {
     let keyClassName;
@@ -340,8 +341,9 @@ export default function Piano() {
     }
 
     const equipSample = (e) => {
+        currentFile = e;
         handleInstruments('sampler', e.target)
-        let sourceAux = URL.createObjectURL(e.target.files[0]);
+        sourceAux = URL.createObjectURL(e.target.files[0]);
         let regex = /.((wav)|(ogg)|(mp3))/gi;
         if (e.target.files[0].name.match(regex)) {
         setActiveSample(e.target.files[0].name);
@@ -420,7 +422,8 @@ export default function Piano() {
         setHold,
         samplePitch,
         setSamplePitch,
-        equipSample
+        equipSample,
+        sourceAux
     }
 
 
