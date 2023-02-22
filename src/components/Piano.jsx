@@ -109,12 +109,13 @@ export default function Piano() {
         // нажатие клавиши
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleKeyDown = (e) => {
+        const code = e.which;
+        extraBindings(code);
+
         if(keyEnabledArray[e.keyCode]) {
             keyEnabledArray[e.keyCode] = false;
         
-
         // вводим соответствие между нажатой клавишей и клавишей в коде
-        const code = e.which;
         const shittySharp = CSS.escape(KEY_TO_NOTE[code]);
         const button = document.querySelector(`[note=${shittySharp}]`);
 
@@ -130,11 +131,25 @@ export default function Piano() {
         }
     }
 
+    const extraBindings = (code) => {
+        switch (code) {
+            default: return null;
+            case 173: {
+                setVolume(volume - 1)
+                break
+            }
+            case 61 : {
+                setVolume(volume + 1)
+                break
+            }
+        }
+    }
+
     // activeInstrument function
     // проигрыш звука
     async function playNote(note) {
         if (note === undefined) {
-            return
+            
         }
           
         activeSynth.volume.value = volume;
