@@ -99,7 +99,6 @@ export default function Piano() {
         e.classList.add('.instrument_active');
     }
 
-
     const debounceReverb = debounce((reverb) => handleReverb(reverb), 300)
     const handleReverb = (reverb) => {
         setReverb(reverb)
@@ -134,14 +133,15 @@ export default function Piano() {
     const extraBindings = (code) => {
         switch (code) {
             default: return null;
-            case 173: {
-                setVolume(volume - 1)
-                break
-            }
             case 61 : {
-                setVolume(volume + 1)
+                +volume < 20 ? setVolume(+volume + 1) : null;
                 break
             }
+            case 173: {
+                +volume > -30 ? setVolume(+volume - 1) : null;
+                break
+            }
+
         }
     }
 
@@ -263,14 +263,17 @@ export default function Piano() {
 
         // вешаем события
         useEffect(() => {
-            window.addEventListener('contextmenu', function(evt) {evt.preventDefault()}, false);
-            window.addEventListener('keydown', handleKeyDown, false);
-            window.addEventListener('keyup', handleKeyUp, false);
-            window.addEventListener('blur', resetSounds);
-            // пиздец
-            window.addEventListener('mousedown', downFunc)
-            window.addEventListener('mouseup', upFunc)
-            window.addEventListener('mouseout', outFunc)
+            if (!loading) {
+                window.addEventListener('contextmenu', function(evt) {evt.preventDefault()}, false);
+                window.addEventListener('keydown', handleKeyDown, false);
+                window.addEventListener('keyup', handleKeyUp, false);
+                window.addEventListener('blur', resetSounds);
+                // пиздец
+                window.addEventListener('mousedown', downFunc)
+                window.addEventListener('mouseup', upFunc)
+                window.addEventListener('mouseout', outFunc)
+            }
+
             // navigator.requestMIDIAccess()
             // .then(onMIDISuccess, onMIDIFailure);
 
