@@ -14,7 +14,6 @@ Tone.context.lookAhead = 0.02;
 
 let FXreverb = new Tone.Reverb(0.1).toDestination();
 let FXdelay = new Tone.FeedbackDelay('6n', 0.2).toDestination();
-let FXtremolo = new Tone.Vibrato(0.2, 0.8).toDestination();
 let detune;
 
 // let synth = new Tone.Sampler({
@@ -35,17 +34,17 @@ let detune;
 
 // })
 // инициализация синтезатора(-ов) и его эффектов
-let synth = new Tone.PolySynth(Tone.Synth).connect(FXreverb, FXtremolo).toDestination();
-let monosynth = new Tone.PolySynth(Tone.MonoSynth).connect(FXreverb, FXtremolo).toDestination();
-let fmsynth = new Tone.PolySynth(Tone.FMSynth).connect(FXreverb, FXtremolo).toDestination();
-let amsynth = new Tone.PolySynth(Tone.AMSynth).connect(FXreverb, FXtremolo).toDestination();
-let membranesynth = new Tone.PolySynth(Tone.MembraneSynth).connect(FXreverb, FXtremolo).toDestination();
+let synth = new Tone.PolySynth(Tone.Synth).connect(FXreverb).toDestination();
+let monosynth = new Tone.PolySynth(Tone.MonoSynth).connect(FXreverb).toDestination();
+let fmsynth = new Tone.PolySynth(Tone.FMSynth).connect(FXreverb).toDestination();
+let amsynth = new Tone.PolySynth(Tone.AMSynth).connect(FXreverb).toDestination();
+let membranesynth = new Tone.PolySynth(Tone.MembraneSynth).connect(FXreverb).toDestination();
 
 let sampler = new Tone.Sampler({
         urls: {
             'A3': sample2,
         }
-}).connect(FXreverb, FXtremolo).toDestination();
+}).connect(FXreverb).toDestination();
 
 const instruments = [synth, monosynth, fmsynth, amsynth, membranesynth, sampler];
 instruments.forEach((e) => {
@@ -67,7 +66,7 @@ instruments.forEach((e) => {
     })
 })
 Tone.start()
-let currentFile;
+let currentFile = sample2;
 let activeSynth;
 let sourceAux;
 let keyEnabledArray = Array(222).fill(true);
@@ -274,6 +273,8 @@ export default function Piano() {
                 window.addEventListener('mouseout', outFunc)
             }
 
+            
+
             // navigator.requestMIDIAccess()
             // .then(onMIDISuccess, onMIDIFailure);
 
@@ -359,23 +360,24 @@ export default function Piano() {
     }
 
     const equipSample = (e) => {
-        currentFile = e;
+        e == undefined ? e = currentFile : null;
         handleInstruments('sampler', e.target)
         sourceAux = URL.createObjectURL(e.target.files[0]);
         let regex = /.((wav)|(ogg)|(mp3))/gi;
         if (e.target.files[0].name.match(regex)) {
         setActiveSample(e.target.files[0].name);
-        let sampleKey = 'A' + samplePitch;
+        let sampleKey = 'C' + samplePitch;
             sampler = new Tone.Sampler({
                 urls: {
                     [sampleKey]: sourceAux,
                 }
-            }).connect(FXreverb, FXtremolo).toDestination();
+            }).connect(FXreverb).toDestination();
             activeSynth = sampler;
             setHold(true);
             resetSounds();
         } else alert('Only files with extentions (.mp3 .ogg .wav) are allowed.')
- 
+        currentFile = e;
+
     }
 
         // генерируем массив клавиш
@@ -419,6 +421,7 @@ export default function Piano() {
         showText,
         setShowText,
         reverb,
+        FXreverb,
         debounceReverb,
         delayDuration,
         delayFeedback,
@@ -441,7 +444,8 @@ export default function Piano() {
         samplePitch,
         setSamplePitch,
         equipSample,
-        sourceAux
+        sourceAux,
+        sampler
     }
 
 

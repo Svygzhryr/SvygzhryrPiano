@@ -59,19 +59,11 @@ export default function UI({...props}) {
     setReverbValue(e.target.value)
   }
 
-  const sampleUp = () => {
-    if (props.samplePitch < 3) {
-      props.setSamplePitch(props.samplePitch + 1)
-    }
+  const lowOctave = () => {props.equipSample(); props.setSamplePitch(3); props.equipSample()}
+  const midOctave = () => {props.equipSample(); props.setSamplePitch(2); props.equipSample()}
+  const highOctave = () => {props.setSamplePitch(1); props.equipSample()}
 
-  } 
-
-  const sampleDown = () => {
-    if (props.samplePitch > -2) {
-      props.setSamplePitch(props.samplePitch - 1)
-    }
-
-  }
+  console.log(props.samplePitch)
 
   return (
     <div className='controls'>
@@ -105,11 +97,9 @@ export default function UI({...props}) {
               </div>
                 {props.activeSynth.name === 'Sampler' ?
                   <div className='controls_octave'>
-                  <button onClick={sampleDown} className="octave-down">+</button>
-                  <h1 className="detune-number">
-                    {props.samplePitch * -1}
-                  </h1>
-                  <button onClick={sampleUp} className="octave-up">-</button>
+                <button onClick={lowOctave} className={"waveshape_type sine" + (props.samplePitch === 3 ? ' waveshape_active' : '')}>-1</button>
+                <button onClick={midOctave} className={"waveshape_type square" + (props.samplePitch === 2 ? ' waveshape_active' : '')}>0</button>
+                <button onClick={highOctave} className={"waveshape_type saw" + (props.samplePitch === 1 ? ' waveshape_active' : '')} >1</button>
                 </div>
                 :
                 <div className='controls_octave'>
