@@ -92,6 +92,8 @@ export default function Piano() {
     const [samplePitch, setSamplePitch] = useState(2);
 
 
+
+
     const handleInstruments = (i, e) => {
         setSwitchInstrument(i);
         resetSounds();
@@ -454,7 +456,7 @@ export default function Piano() {
         setSamplePitch,
         equipSample,
         sourceAux,
-        sampler
+        sampler, 
     }
 
 

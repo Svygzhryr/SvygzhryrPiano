@@ -64,6 +64,12 @@ export default function UI({...props}) {
     setReverbValue(e.target.value)
   }
 
+  const colors = [
+      props.trackColor,
+      props.progressColor,
+      props.thumbColor
+  ]
+
   return (
     <div className='controls'>
         <div className="main-controls">
@@ -80,10 +86,10 @@ export default function UI({...props}) {
         </div>
         <div className="extra-controls">
           <div className={'envelope' + (props.activeSynth.name === 'Sampler' ? ' sampler_active' : '')}>
-              <CustomKnob className='attack' enType={'Attack'} value={props.attack} setValue={props.setAttack}/>
-              <CustomKnob className='decay' enType={'Decay'} value={props.decay} setValue={props.setDecay}/>
-              <CustomKnob className='sustain' enType={'Sustain'} value={props.sustain} setValue={props.setSustain}/>
-              <CustomKnob className='release' enType={'Release'} value={props.release} setValue={props.setRelease}/>
+              <CustomKnob {...colors} className='attack' enType={'Attack'} value={props.attack} setValue={props.setAttack}/>
+              <CustomKnob {...colors} className='decay' enType={'Decay'} value={props.decay} setValue={props.setDecay}/>
+              <CustomKnob {...colors} className='sustain' enType={'Sustain'} value={props.sustain} setValue={props.setSustain}/>
+              <CustomKnob {...colors} className='release' enType={'Release'} value={props.release} setValue={props.setRelease}/>
             </div>
             <div className="controls-fx">
               <div className="effect-slider reverb">
@@ -96,9 +102,9 @@ export default function UI({...props}) {
               </div>
                 {props.activeSynth.name === 'Sampler' ?
                   <div className='controls_octave'>
-                <button onClick={() => {props.setSamplePitch(3)}} className={"waveshape_type sine samplerOct" + (props.samplePitch === 3 ? ' waveshape_active' : '')}>-1</button>
-                <button onClick={() => {props.setSamplePitch(2)}} className={"waveshape_type square samplerOct" + (props.samplePitch === 2 ? ' waveshape_active' : '')}>0</button>
-                <button onClick={() => {props.setSamplePitch(1)}} className={"waveshape_type saw samplerOct" + (props.samplePitch === 1 ? ' waveshape_active' : '')} >1</button>
+                <button onClick={() => {props.setSamplePitch(4)}} className={"waveshape_type sine samplerOct" + (props.samplePitch === 4 ? ' waveshape_active' : '')}>-1</button>
+                <button onClick={() => {props.setSamplePitch(3)}} className={"waveshape_type square samplerOct" + (props.samplePitch === 3 ? ' waveshape_active' : '')}>0</button>
+                <button onClick={() => {props.setSamplePitch(2)}} className={"waveshape_type saw samplerOct" + (props.samplePitch === 2 ? ' waveshape_active' : '')} >1</button>
                 </div>
                 :
                 <div className='controls_octave'>
