@@ -273,7 +273,7 @@ export default function Piano() {
                 window.addEventListener('mouseout', outFunc)
             }
 
-            
+            altEquip()
 
             // navigator.requestMIDIAccess()
             // .then(onMIDISuccess, onMIDIFailure);
@@ -359,6 +359,16 @@ export default function Piano() {
         return showText ? NOTE_TO_KEY[note] : null 
     }
 
+
+    const altEquip = () => {
+        let sampleKey = 'C' + samplePitch;
+        sampler = new Tone.Sampler({
+        urls: {
+            [sampleKey]: sourceAux,
+        }
+        }).connect(FXreverb).toDestination();
+    }
+
     const equipSample = (e) => {
         e == undefined ? e = currentFile : null;
         handleInstruments('sampler', e.target)
@@ -373,7 +383,6 @@ export default function Piano() {
                 }
             }).connect(FXreverb).toDestination();
             activeSynth = sampler;
-            setHold(true);
             resetSounds();
         } else alert('Only files with extentions (.mp3 .ogg .wav) are allowed.')
         currentFile = e;

@@ -6,6 +6,8 @@ import {AiOutlineRight} from 'react-icons/ai'
 import {MdPiano} from 'react-icons/md'
 import {RiSoundModuleFill} from 'react-icons/ri'
 import {TbWaveSawTool, TbWaveSine, TbWaveSquare} from 'react-icons/tb'
+import * as Tone from 'tone'
+
 
 
 export default function UI({...props}) {
@@ -13,8 +15,11 @@ export default function UI({...props}) {
   const [theme, setTheme] = useState('black');
   const [reverbValue, setReverbValue] = useState(0);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     document.documentElement.setAttribute('color-scheme', localStorage.getItem('theme') ?? 'default')
+    
   }, [theme])
 
   function handleShowText() {
@@ -59,12 +64,6 @@ export default function UI({...props}) {
     setReverbValue(e.target.value)
   }
 
-  const lowOctave = () => {props.equipSample(); props.setSamplePitch(3); props.equipSample()}
-  const midOctave = () => {props.equipSample(); props.setSamplePitch(2); props.equipSample()}
-  const highOctave = () => {props.setSamplePitch(1); props.equipSample()}
-
-  console.log(props.samplePitch)
-
   return (
     <div className='controls'>
         <div className="main-controls">
@@ -97,9 +96,9 @@ export default function UI({...props}) {
               </div>
                 {props.activeSynth.name === 'Sampler' ?
                   <div className='controls_octave'>
-                <button onClick={lowOctave} className={"waveshape_type sine" + (props.samplePitch === 3 ? ' waveshape_active' : '')}>-1</button>
-                <button onClick={midOctave} className={"waveshape_type square" + (props.samplePitch === 2 ? ' waveshape_active' : '')}>0</button>
-                <button onClick={highOctave} className={"waveshape_type saw" + (props.samplePitch === 1 ? ' waveshape_active' : '')} >1</button>
+                <button onClick={() => {props.setSamplePitch(3)}} className={"waveshape_type sine samplerOct" + (props.samplePitch === 3 ? ' waveshape_active' : '')}>-1</button>
+                <button onClick={() => {props.setSamplePitch(2)}} className={"waveshape_type square samplerOct" + (props.samplePitch === 2 ? ' waveshape_active' : '')}>0</button>
+                <button onClick={() => {props.setSamplePitch(1)}} className={"waveshape_type saw samplerOct" + (props.samplePitch === 1 ? ' waveshape_active' : '')} >1</button>
                 </div>
                 :
                 <div className='controls_octave'>
