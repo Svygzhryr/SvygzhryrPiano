@@ -1,15 +1,14 @@
 {
   "files": {
-    "main.css": "/SvygzhryrPiano/static/css/main.6e823bf3.css",
-    "main.js": "/SvygzhryrPiano/static/js/main.20a1f089.js",
-    "static/media/cowbell2.wav": "/SvygzhryrPiano/static/media/cowbell2.64e45b46599739230df1.wav",
-    "static/media/organ2.mp3": "/SvygzhryrPiano/static/media/organ2.50df9f082a100a6c5d2d.mp3",
+    "main.css": "/SvygzhryrPiano/static/css/main.4e0209ac.css",
+    "main.js": "/SvygzhryrPiano/static/js/main.db1d385f.js",
+    "static/media/harp.wav": "/SvygzhryrPiano/static/media/harp.9642506fa2951095e41f.wav",
     "index.html": "/SvygzhryrPiano/index.html",
-    "main.6e823bf3.css.map": "/SvygzhryrPiano/static/css/main.6e823bf3.css.map",
-    "main.20a1f089.js.map": "/SvygzhryrPiano/static/js/main.20a1f089.js.map"
+    "main.4e0209ac.css.map": "/SvygzhryrPiano/static/css/main.4e0209ac.css.map",
+    "main.db1d385f.js.map": "/SvygzhryrPiano/static/js/main.db1d385f.js.map"
   },
   "entrypoints": [
-    "static/css/main.6e823bf3.css",
-    "static/js/main.20a1f089.js"
+    "static/css/main.4e0209ac.css",
+    "static/js/main.db1d385f.js"
   ]
 }
