@@ -354,6 +354,7 @@ export default function Piano() {
     const changeVolume = (volume) => {
         setVolume(volume);
         localStorage.setItem('volume', volume);
+        resetSounds();
     }
 
     // тугл текста
