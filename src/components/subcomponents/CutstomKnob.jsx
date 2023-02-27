@@ -10,10 +10,9 @@ import {
 
 export default function CustomKnob({...props}) {
 
-  let progressColor = getComputedStyle(document.documentElement).getPropertyValue('--primary_button_active');
-  let trackColor = getComputedStyle(document.documentElement).getPropertyValue('--primary_background');
-  let thumbColor = getComputedStyle(document.documentElement).getPropertyValue('--primary_background');
-
+  let progressColor = getComputedStyle(document.documentElement).getPropertyValue('--reddish_button_active');
+  let trackColor = getComputedStyle(document.documentElement).getPropertyValue('--bluish_background');
+  let thumbColor = getComputedStyle(document.documentElement).getPropertyValue('--bluish_background');
 
   return (
     <div className='envelope_knob'>
