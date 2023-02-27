@@ -4,7 +4,7 @@ For the best performance I suggest using Mozilla Firefox browser. However, the a
 
 <br>
 
-![кнопочки](https://user-images.githubusercontent.com/80585863/219314496-520e63c9-d6fb-4ac5-9abf-07ddff9f8338.gif)
+![preview](https://user-images.githubusercontent.com/80585863/221504750-85ff7317-6d59-43f6-b5aa-b39007d71ff6.gif)
 
 <br>
 
