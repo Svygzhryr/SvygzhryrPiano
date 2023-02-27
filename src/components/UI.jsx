@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import '../css/ui.scss'
 import CustomKnob from './subcomponents/CutstomKnob';
 import {AiOutlineRight} from 'react-icons/ai'
@@ -15,12 +15,22 @@ export default function UI({...props}) {
   const [theme, setTheme] = useState('black');
   const [reverbValue, setReverbValue] = useState(0);
 
+  const [progressColor, setProgressColor] = useState(getComputedStyle(document.documentElement).getPropertyValue('--primary_button_active'));
+  const [trackColor, setTrackColor] = useState(getComputedStyle(document.documentElement).getPropertyValue('--primary_background'));
+  const [thumbColor, setThumbColor] = useState(getComputedStyle(document.documentElement).getPropertyValue('--primary_background'));
+
+  const envelopeColorChange = useCallback(() => {
+    setProgressColor(getComputedStyle(document.documentElement).getPropertyValue('--primary_button_active'));
+    setTrackColor(getComputedStyle(document.documentElement).getPropertyValue('--primary_background'));
+    setThumbColor(getComputedStyle(document.documentElement).getPropertyValue('--primary_background'));
+  },[setProgressColor, setTrackColor, setThumbColor])
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     document.documentElement.setAttribute('color-scheme', localStorage.getItem('theme') ?? 'default')
-    
-  }, [theme])
+    envelopeColorChange()
+  }, [theme, envelopeColorChange])
 
   function handleShowText() {
     localStorage.setItem('text', !props.showText)
@@ -29,6 +39,7 @@ export default function UI({...props}) {
   
   // смена цветовой схемы
   const themeChange = (e) => {
+    envelopeColorChange();
     const button = e.target;
     switch (true) {
         default: return null;
@@ -56,7 +67,7 @@ export default function UI({...props}) {
             break
         }
     }
-
+    console.log(trackColor)
 }
 
   const handleReverb = (e) => {
@@ -64,11 +75,14 @@ export default function UI({...props}) {
     setReverbValue(e.target.value)
   }
 
-  const colors = [
-      props.trackColor,
-      props.progressColor,
-      props.thumbColor
-  ]
+  const colors = {
+      trackColor,
+      progressColor,
+      thumbColor,
+      setTrackColor,
+      setProgressColor,
+      setThumbColor
+  }
 
   return (
     <div className='controls'>
