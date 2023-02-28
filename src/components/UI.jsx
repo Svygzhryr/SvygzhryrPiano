@@ -1,20 +1,17 @@
 import React, { useEffect } from 'react'
-import { useState, useRef, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import '../css/ui.scss'
-import CustomKnob from './subcomponents/CutstomKnob';
-import {AiOutlineRight} from 'react-icons/ai'
 import {MdPiano} from 'react-icons/md'
 import {RiSoundModuleFill} from 'react-icons/ri'
-import {TbWaveSawTool, TbWaveSine, TbWaveSquare} from 'react-icons/tb'
-import * as Tone from 'tone'
+import Extracontrols from './Extracontrols';
+import Themes from './Themes';
 
 
 
 export default function UI({...props}) {
 
-  const [theme, setTheme] = useState('black');
   const [reverbValue, setReverbValue] = useState(0);
-
+  
   const [progressColor, setProgressColor] = useState(getComputedStyle(document.documentElement).getPropertyValue('--primary_button_active'));
   const [trackColor, setTrackColor] = useState(getComputedStyle(document.documentElement).getPropertyValue('--primary_background'));
   const [thumbColor, setThumbColor] = useState(getComputedStyle(document.documentElement).getPropertyValue('--primary_background'));
@@ -30,58 +27,27 @@ export default function UI({...props}) {
   useEffect(() => {
     document.documentElement.setAttribute('color-scheme', localStorage.getItem('theme') ?? 'default')
     envelopeColorChange()
-  }, [theme, envelopeColorChange])
+  }, [envelopeColorChange])
 
-  function handleShowText() {
-    localStorage.setItem('text', !props.showText)
-    return props.setShowText(!props.showText)
-  }
+
   
   // смена цветовой схемы
-  const themeChange = (e) => {
-    envelopeColorChange();
-    const button = e.target;
-    switch (true) {
-        default: return null;
-        case button.classList.contains('theme_1'): {
-            setTheme('default');
-            localStorage.setItem('theme', 'default')
-            break
-        }
-
-        case button.classList.contains('theme_2'): {
-            setTheme('purple');     
-            localStorage.setItem('theme', 'purple')
-            break
-        }
-
-        case button.classList.contains('theme_3'): {
-            setTheme('red');
-            localStorage.setItem('theme', 'red')
-            break
-        }
-
-        case button.classList.contains('theme_4'): {
-            setTheme('blue');
-            localStorage.setItem('theme', 'blue')
-            break
-        }
-    }
-    console.log(trackColor)
-}
+  
 
   const handleReverb = (e) => {
     props.debounceReverb(e.target.value);
     setReverbValue(e.target.value)
   }
 
-  const colors = {
-      trackColor,
-      progressColor,
-      thumbColor,
-      setTrackColor,
-      setProgressColor,
-      setThumbColor
+  const extraControls = {
+    trackColor,
+    progressColor,
+    thumbColor,
+    setTrackColor,
+    setThumbColor,
+    setProgressColor,
+    reverbValue,
+    handleReverb,
   }
 
   return (
@@ -90,53 +56,11 @@ export default function UI({...props}) {
           <div className="slider_wrapper">
             <input  step={1} min={-30} max={20} value={props.volume} onChange={(e) => {props.changeVolume(e.target.value)}} className='range' type='range'/>
           </div>
-          <div className='themes'>
-            <button onClick={themeChange} className="theme_selector theme_1"></button>
-            <button onClick={themeChange} className="theme_selector theme_2"></button>
-            <button onClick={themeChange} className="theme_selector theme_3"></button>
-            <button onClick={themeChange} className="theme_selector theme_4"></button>
-            <button onClick={handleShowText} className="theme_selector toggle_text">T</button>
-          </div>
+          {/* Themes */}
+          <Themes/>
         </div>
-        <div className="extra-controls">
-          <div className={'envelope' + (props.activeSynth.name === 'Sampler' ? ' sampler_active' : '')}>
-              <CustomKnob {...colors} className='attack' enType={'Attack'} value={props.attack} setValue={props.setAttack}/>
-              <CustomKnob {...colors} className='decay' enType={'Decay'} value={props.decay} setValue={props.setDecay}/>
-              <CustomKnob {...colors} className='sustain' enType={'Sustain'} value={props.sustain} setValue={props.setSustain}/>
-              <CustomKnob {...colors} className='release' enType={'Release'} value={props.release} setValue={props.setRelease}/>
-            </div>
-            <div className="controls-fx">
-              <div className="effect-slider reverb">
-                <input  step={1} min={0.001} max={51} value={reverbValue} onChange={handleReverb} className='range' type='range'/>
-              </div>
-              <div className={"controls_waveshape" + (props.activeSynth.name === 'Sampler' ? ' sampler_active' : '')}>
-                <button onClick={() => {props.setWaveShape('sine')}} className={"waveshape_type sine" + (props.waveShape === 'sine' ? ' waveshape_active' : '')}><TbWaveSine/></button>
-                <button onClick={() => {props.setWaveShape('square')}} className={"waveshape_type square" + (props.waveShape === 'square' ? ' waveshape_active' : '')}><TbWaveSquare/></button>
-                <button onClick={() => {props.setWaveShape('sawtooth')}} className={"waveshape_type saw" + (props.waveShape === 'sawtooth' ? ' waveshape_active' : '')} ><TbWaveSawTool/></button>
-              </div>
-                {props.activeSynth.name === 'Sampler' ?
-                  <div className='controls_octave'>
-                <button onClick={() => {props.setSamplePitch(4)}} className={"waveshape_type sine samplerOct" + (props.samplePitch === 4 ? ' waveshape_active' : '')}>-1</button>
-                <button onClick={() => {props.setSamplePitch(3)}} className={"waveshape_type square samplerOct" + (props.samplePitch === 3 ? ' waveshape_active' : '')}>0</button>
-                <button onClick={() => {props.setSamplePitch(2)}} className={"waveshape_type saw samplerOct" + (props.samplePitch === 2 ? ' waveshape_active' : '')} >1</button>
-                </div>
-                :
-                <div className='controls_octave'>
-                  <button onClick={() => {props.setDetune(props.detune < -1200 ? props.detune : props.detune - 1200)}} className="octave-down">-</button>
-                  <h1 className="detune-number">
-                    {(props.detune/1200)}
-                  </h1>
-                  <button onClick={() => {props.setDetune(props.detune > 2400 ? props.detune : props.detune + 1200)}} className="octave-up">+</button>
-                </div>
-
-                }
-              <div className={"controls_hold"}>  
-                <button onClick={(e) => {props.setHold(true)}} className={"hold_on" + (props.hold ? ' hold_active' : '')}>on</button>
-                <button onClick={(e) => {props.setHold(false)}} className={"hold_off" + (props.hold ? '' : ' hold_active')}>off</button>
-              </div>
-              </div>
-            <div className="show-controls"><AiOutlineRight className='show-controls-arrow'/></div>
-        </div>
+        {/* Extra-Controls */}
+        <Extracontrols {...extraControls} />
         <button className="instrument-switch" onClick={() => {props.setInstrument(!props.instrument)}}>{props.instrument ? <MdPiano/> : <RiSoundModuleFill/>}</button>
 
     </div>

@@ -7,6 +7,7 @@ import UI from './UI';
 import sample2 from '../samples/harp.wav'
 import debounce from 'lodash/debounce'
 import { ToneAudioBuffer } from 'tone';
+import Instruments from './Instruments'
 
 // здесь пришлось пойти на компромисс между разрывами звука и задержкой при нажатии
 // начиная со значения 0.05 задержка становится заметной, как и пердёж если ставить ниже 0.02
@@ -474,6 +475,7 @@ export default function Piano() {
         <UI 
             {...UIprops}
         />
+        {/* компонент Instruments */}
         <div className={`${styles.instruments} ${instrument ? styles.inactive : ''}`}>
             <button onClick={(e) => {handleInstruments('synth', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'synth' ? styles.instrument_active : ''}`}>Synth</button>
             <button onClick={(e) => {handleInstruments('monosynth', e.target)}} className={`${styles.instrument_item} ${switchInstrument == 'monosynth' ? styles.instrument_active : ''}`}>MonoSynth</button>
@@ -488,6 +490,8 @@ export default function Piano() {
             </label>
                 {/* <input onChange={equipSample} type="file" name="Sample" id="" className={styles.sample_input}/> */}
         </div>
+
+        <Instruments/>
     
         <div className={`${styles.piano_wrapper} ${styles.active} ${instrument ? '' : styles.inactive}`}>
             <div className={styles.upper_keyboard}>
