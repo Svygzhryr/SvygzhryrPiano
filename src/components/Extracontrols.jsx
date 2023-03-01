@@ -6,6 +6,13 @@ import {AiOutlineRight} from 'react-icons/ai'
 
 export default function Extracontrols({...props}) {
 
+  const [reverbValue, setReverbValue] = useState(0);
+
+  const handleReverb = (e) => {
+    props.debounceReverb(e.target.value);
+    setReverbValue(e.target.value)
+  }
+
     const colors = {
         trackColor: props.trackColor,
         progressColor: props.progressColor,
@@ -25,7 +32,7 @@ export default function Extracontrols({...props}) {
             </div>
             <div className="controls-fx">
               <div className="effect-slider reverb">
-                <input  step={1} min={0.001} max={51} value={props.reverbValue} onChange={props.handleReverb} className='range' type='range'/>
+                <input  step={1} min={0.001} max={51} value={reverbValue} onChange={handleReverb} className='range' type='range'/>
               </div>
               <div className={"controls_waveshape" + (props.activeSynth.name === 'Sampler' ? ' sampler_active' : '')}>
                 <button onClick={() => {props.setWaveShape('sine')}} className={"waveshape_type sine" + (props.waveShape === 'sine' ? ' waveshape_active' : '')}><TbWaveSine/></button>

@@ -9,8 +9,6 @@ import Themes from './Themes';
 
 
 export default function UI({...props}) {
-
-  const [reverbValue, setReverbValue] = useState(0);
   
   const [progressColor, setProgressColor] = useState(getComputedStyle(document.documentElement).getPropertyValue('--primary_button_active'));
   const [trackColor, setTrackColor] = useState(getComputedStyle(document.documentElement).getPropertyValue('--primary_background'));
@@ -29,16 +27,6 @@ export default function UI({...props}) {
     envelopeColorChange()
   }, [envelopeColorChange])
 
-
-  
-  // смена цветовой схемы
-  
-
-  const handleReverb = (e) => {
-    props.debounceReverb(e.target.value);
-    setReverbValue(e.target.value)
-  }
-
   const extraControls = {
     trackColor,
     progressColor,
@@ -46,8 +34,22 @@ export default function UI({...props}) {
     setTrackColor,
     setThumbColor,
     setProgressColor,
-    reverbValue,
-    handleReverb,
+    envelopeColorChange,
+    activeSynth: props.activeSynth,
+    attack: props.attack,
+    decay: props.decay,
+    sustain: props.sustain,
+    release: props.release,
+    detune: props.detune,
+    debounceReverb: props.debounceReverb,
+    samplePitch: props.samplePitch,
+    setSamplePitch: props.setSamplePitch,
+    waveShape: props.waveShape,
+    setWaveShape: props.setWaveShape,
+  }
+
+  const themes = {
+    envelopeColorChange
   }
 
   return (
@@ -57,7 +59,7 @@ export default function UI({...props}) {
             <input  step={1} min={-30} max={20} value={props.volume} onChange={(e) => {props.changeVolume(e.target.value)}} className='range' type='range'/>
           </div>
           {/* Themes */}
-          <Themes/>
+          <Themes {...themes}/>
         </div>
         {/* Extra-Controls */}
         <Extracontrols {...extraControls} />

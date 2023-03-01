@@ -1,12 +1,16 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Themes({...props}) {
 
     const [theme, setTheme] = useState('black');
 
+    useEffect(() => {
+        document.documentElement.setAttribute('color-scheme', localStorage.getItem('theme') ?? 'default')
+         props.envelopeColorChange()
+      }, [props.envelopeColorChange, theme])
+
     const themeChange = (e) => {
-        envelopeColorChange();
         const button = e.target;
         switch (true) {
             default: return null;
@@ -43,10 +47,10 @@ export default function Themes({...props}) {
 
   return (
     <div className='themes'>
-        <button onClick={props.themeChange} className="theme_selector theme_1"></button>
-        <button onClick={props.themeChange} className="theme_selector theme_2"></button>
-        <button onClick={props.themeChange} className="theme_selector theme_3"></button>
-        <button onClick={props.themeChange} className="theme_selector theme_4"></button>
+        <button onClick={themeChange} className="theme_selector theme_1"></button>
+        <button onClick={themeChange} className="theme_selector theme_2"></button>
+        <button onClick={themeChange} className="theme_selector theme_3"></button>
+        <button onClick={themeChange} className="theme_selector theme_4"></button>
         <button onClick={handleShowText} className="theme_selector toggle_text">T</button>
     </div>
   )
