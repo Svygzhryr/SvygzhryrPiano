@@ -8,4 +8,6 @@ For the best performance I suggest using Mozilla Firefox browser. However, the a
 
 <br>
 
+CONTROLS: keys are displayed on buttons. For volume adjusting press '-' and '='.
+
 For the react libraries used in this project check package.json
