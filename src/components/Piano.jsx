@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import { React, useState, useEffect } from "react";
 import * as Tone from "tone";
-import styles from "../css/piano.module.scss";
+import styles from "../styles/piano.module.scss";
 import {
   UPPER_NOTES,
   LOWER_NOTES,
@@ -17,8 +17,8 @@ import Instruments from "./Instruments";
 Tone.context.lookAhead = 0.02;
 
 let FXreverb = new Tone.Reverb(0.1).toDestination();
-let FXdelay = new Tone.FeedbackDelay("6n", 0.2).toDestination();
-let detune;
+// let FXdelay = new Tone.FeedbackDelay("6n", 0.2).toDestination();
+// let detune;
 
 let synth = new Tone.PolySynth(Tone.Synth).connect(FXreverb).toDestination();
 let monosynth = new Tone.PolySynth(Tone.MonoSynth)
@@ -74,10 +74,6 @@ let activeSynth;
 let sourceAux;
 let keyEnabledArray = Array(222).fill(true);
 export default function Piano() {
-  let keyClassName;
-  const [pressedKeys, setPressedKeys] = useState([]);
-  const [volume, setVolume] = useState(localStorage.getItem("volume") || 0);
-  const [showText, setShowText] = useState(false);
   const [reverb, setReverb] = useState(0.001);
   const [delayDuration, setDelayDuration] = useState(0);
   const [delayFeedback, setDelayFeedback] = useState(0);
@@ -306,6 +302,12 @@ export default function Piano() {
     downFunc,
     upFunc,
     outFunc,
+    loading,
+    waveShape,
+    attack,
+    decay,
+    sustain,
+    release,
   ]);
 
   switch (switchInstrument) {
@@ -343,10 +345,6 @@ export default function Piano() {
     resetSounds();
   };
 
-  const generateText = (note) => {
-    return showText ? NOTE_TO_KEY[note] : null;
-  };
-
   const altEquip = () => {
     let sampleKey = "C" + samplePitch;
     sampler = new Tone.Sampler({
@@ -359,7 +357,7 @@ export default function Piano() {
   };
 
   const equipSample = (e) => {
-    e == undefined ? (e = currentFile) : null;
+    e === undefined ? (e = currentFile) : null;
     handleInstruments("sampler", e.target);
     sourceAux = URL.createObjectURL(e.target.files[0]);
     let regex = /.((wav)|(ogg)|(mp3))/gi;
@@ -378,46 +376,6 @@ export default function Piano() {
     } else alert("Only files with extentions (.mp3 .ogg .wav) are allowed.");
     currentFile = e;
   };
-
-  const upperKeys = UPPER_NOTES.map((note, index) => {
-    if (
-      note.length > 2
-        ? (keyClassName = styles.button_sharp)
-        : (keyClassName = styles.button)
-    )
-      return (
-        <button
-          tabIndex="-1"
-          key={index}
-          note={note}
-          className={keyClassName}
-          pressedkeys={pressedKeys}
-          volume={volume}
-        >
-          {generateText(note)}
-        </button>
-      );
-  });
-
-  const lowerKeys = LOWER_NOTES.map((note, index) => {
-    if (
-      note.length > 2
-        ? (keyClassName = styles.button_sharp)
-        : (keyClassName = styles.button)
-    )
-      return (
-        <button
-          tabIndex="-1"
-          key={index}
-          note={note}
-          className={keyClassName}
-          pressedkey={pressedKeys}
-          volume={volume}
-        >
-          {generateText(note)}
-        </button>
-      );
-  });
 
   const UIprops = {
     activeSynth,
@@ -472,7 +430,7 @@ export default function Piano() {
                 handleInstruments("synth", e.target);
               }}
               className={`${styles.instrument_item} ${
-                switchInstrument == "synth" ? styles.instrument_active : ""
+                switchInstrument === "synth" ? styles.instrument_active : ""
               }`}
             >
               Synth
@@ -482,7 +440,7 @@ export default function Piano() {
                 handleInstruments("monosynth", e.target);
               }}
               className={`${styles.instrument_item} ${
-                switchInstrument == "monosynth" ? styles.instrument_active : ""
+                switchInstrument === "monosynth" ? styles.instrument_active : ""
               }`}
             >
               MonoSynth
@@ -492,7 +450,7 @@ export default function Piano() {
                 handleInstruments("fmsynth", e.target);
               }}
               className={`${styles.instrument_item}  ${
-                switchInstrument == "fmsynth" ? styles.instrument_active : ""
+                switchInstrument === "fmsynth" ? styles.instrument_active : ""
               }`}
             >
               FMSynth
@@ -502,7 +460,7 @@ export default function Piano() {
                 handleInstruments("amsynth", e.target);
               }}
               className={`${styles.instrument_item}  ${
-                switchInstrument == "amsynth" ? styles.instrument_active : ""
+                switchInstrument === "amsynth" ? styles.instrument_active : ""
               }`}
             >
               AMSynth
@@ -512,7 +470,7 @@ export default function Piano() {
                 handleInstruments("membranesynth", e.target);
               }}
               className={`${styles.instrument_item} ${
-                switchInstrument == "membranesynth"
+                switchInstrument === "membranesynth"
                   ? styles.instrument_active
                   : ""
               }`}
@@ -522,7 +480,7 @@ export default function Piano() {
             <label
               htmlFor="sample"
               className={`${styles.instrument_item} ${styles.input_label} ${
-                switchInstrument == "sampler" ? styles.instrument_active : ""
+                switchInstrument === "sampler" ? styles.instrument_active : ""
               }`}
             >
               Sampler
@@ -533,20 +491,6 @@ export default function Piano() {
           </div>
 
           <Instruments />
-
-          <div
-            className={`${styles.piano_wrapper} ${styles.active} ${
-              instrument ? "" : styles.inactive
-            }`}
-          >
-            <div className={styles.upper_keyboard}>
-              <div className={styles.upper_buttons}>{upperKeys}</div>
-            </div>
-
-            <div className={styles.lower_keyboard}>
-              <div className={styles.lower_buttons}>{lowerKeys}</div>
-            </div>
-          </div>
         </div>
       )}
     </div>

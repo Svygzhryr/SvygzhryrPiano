@@ -1,7 +1,7 @@
 import React from "react";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { TbWaveSawTool, TbWaveSine, TbWaveSquare } from "react-icons/tb";
-import CustomKnob from "./subcomponents/CutstomKnob";
+import CustomKnob from "./CustomKnob";
 import { AiOutlineRight } from "react-icons/ai";
 
 export default function Extracontrols({ ...props }) {

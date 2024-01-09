@@ -1,10 +1,9 @@
-@import '../../css/variables';
+@import '../../styles/variables';
 
 .envelope {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-
 
     div {
         width: 5rem;
@@ -12,12 +11,12 @@
     }
 }
 
-div.envelope_knob {
+.envelopeKnob {
     position: relative;
     margin-top: 1rem;
 }
 
-div.knob_value {
+.knobValue {
     position: absolute;
 
     font-size: 2rem;

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
-import "../css/ui.scss";
+import "../styles/ui.scss";
 import { MdPiano } from "react-icons/md";
 import { RiSoundModuleFill } from "react-icons/ri";
 import Extracontrols from "./Extracontrols";
