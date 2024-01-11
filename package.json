@@ -2,20 +2,31 @@
   "name": "piano",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Svygzhryr.github.io/SvyghryrPiano",
+  "homepage": "https://Svygzhryr.github.io/SvygzhryrPiano",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "audiosynth": "^0.0.5",
+    "css.escape": "^1.5.1",
     "gh-pages": "^4.0.0",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
+    "react-circular-input": "^0.2.4",
+    "react-circular-slider": "^1.0.12",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.7.1",
+    "react-rangeslider": "^2.2.0",
     "react-scripts": "5.0.1",
+    "react-simple-knob": "^0.0.6",
+    "react-transition-group": "^4.4.5",
     "sass": "^1.56.2",
     "styled-components": "^5.3.6",
+    "svg-knob": "^1.15.0",
+    "tone": "^14.7.77",
     "web-vitals": "^2.1.4",
-    "webfontloader": "^1.6.28"
+    "webfontloader": "^1.6.28",
+    "x-knob": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -42,5 +53,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "lodash.debounce": "^4.0.8"
   }
 }

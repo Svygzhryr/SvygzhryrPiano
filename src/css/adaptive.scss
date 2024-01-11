@@ -1,0 +1,57 @@
+@import './variables';
+
+@media (max-width: 1600px) {
+    .button {
+        width: 7rem;
+        height: 25rem;
+        border: 4px solid var(--primary_background);
+        font-size: 3rem;
+    }
+
+    .button_sharp {
+        width: 5rem;
+        height: 15rem;  
+        margin-left: -2.5rem;
+        margin-right: -2.5rem;
+    }
+
+    .theme_selector {
+        padding: 0;
+        border-radius: 50%;
+        width: 4rem;
+        margin: 1rem 0;
+        height: 4rem;
+        border: none;
+        display: flex;
+        opacity: 0.5;
+    
+        transition: all .2s ease;
+    
+        &:hover:not(:last-child) {
+            cursor: pointer;
+            transform: rotate(180deg);
+            opacity: 1;
+        }
+    }
+
+    .toggle_text {
+        background-color: var(--primary_button);
+        color: var(--primary_sharp);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        font-weight: 700;
+        font-size: 2rem;
+        font-family: 'EB Garamond', serif;
+    
+        transition: all .5s ease-in-out;
+    
+        &:hover {
+            cursor: pointer;
+            background-color: var(--primary_sharp);
+            border: 3px solid var(--primary_button);
+            opacity: 1;
+        }
+    }
+}

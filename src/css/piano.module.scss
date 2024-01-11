@@ -1,0 +1,283 @@
+@import './variables';
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&display=swap');
+
+body {
+    overflow: hidden;
+
+}
+
+label {
+    font-family: 'EB Garamond', serif;
+}
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: 10px;
+    scrollbar-color: var(--button_active);
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 24px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: var(--button_sharp);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--button_active);;
+    border-radius: 10px;
+    border: 3px solid var(--button_active);;
+  }
+
+// классы для смены темы
+.theme-background {
+    background-color: #fff;
+}
+//---------------------
+
+.piano_wrapper {
+    background-color: var(--primary_background);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 101vh);
+    width: 100%;
+    z-index: 1;
+
+    transition: transform 1s ease-in-out;
+}
+
+.button {
+    width: 9rem;
+    height: 30rem;
+    background-color: var(--primary_button);
+    border: 4px solid var(--primary_background);
+    border-top: none !important;
+    border-radius: 0 0 1rem 1rem;
+    box-sizing: border-box;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 3rem;
+
+    font-weight: 500;
+    font-size: 4rem;
+    font-family: 'EB Garamond', serif;
+    
+    
+
+    color: var(--primary_background);
+
+    transition: background-color .6s;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+}
+
+.button_active {
+    background-color: var(--primary_button_active);
+    transition: all 0s;
+}
+
+.button_text_hidden {
+    color: var(--primary_button);
+}
+
+.button_sharp {
+    background-color: var(--primary_sharp);
+    border: none;
+    width: 6rem;
+    height: 17rem;  
+    z-index: 100;
+    border-radius: 0 0 1rem 1rem;
+    margin-left: -3rem;
+    margin-right: -3rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 3rem;
+
+    color: var(--primary_button);
+
+    font-weight: 500;
+    font-size: 2rem;
+    font-family: 'EB Garamond', serif;
+
+    transition: background-color .6s;
+
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.button_sharp_active {
+    background-color: var(--primary_sharp_active);
+    transition: all 0s;
+
+}
+
+.button_sharp_hidden {
+    color: var(--primary_sharp);
+}
+
+.upper_buttons>.button:first-child, 
+.lower_buttons>.button:first-child {
+    border-radius: 2.5rem 0 1rem 1rem;
+}
+
+.upper_buttons>.button:last-child, 
+.lower_buttons>.button:last-child {
+    border-radius: 0 2.5rem 1rem 1rem;
+}
+
+
+
+.upper_keyboard {
+    display: flex;
+    justify-content: center;
+    .upper_buttons {
+        display: flex;
+    }
+}
+
+.lower_keyboard {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: center;
+    .lower_buttons {
+        display: flex;
+    }
+}
+
+.instruments {
+
+    display: grid;
+    grid-template: 1fr 1fr / 1fr 1fr 1fr; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -101vh);
+    z-index: 5;
+    gap: 2rem;
+    
+
+
+    transition: all 1s ease-in-out;
+
+    input {
+        display: none;
+    }
+
+    .input_label {
+        width: 12rem !important;
+        height: 6rem !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-weight: 500 !important;
+        font-style: initial;
+
+        cursor: pointer;
+    }
+
+
+    .instrument_item {
+        font-size: 2.4rem;
+        border-radius: 1rem;
+        padding: 2rem 4rem;
+        border: none;
+        background: var(--primary_button);
+        color: var(--primary_background);
+        font-weight: 500;
+        width: 20rem;
+        height: 10rem;
+
+        transition: all .2s ease-in-out; 
+
+        p {
+            font-size: 1rem;
+        }
+
+        &:hover {
+            background-color: var(--primary_button_active);
+            color: var(--primary_button);
+            cursor: pointer;
+        }
+
+
+
+    }
+
+    .instrument_active {
+        background-color: var(--primary_button_active);
+        color: var(--primary_button);
+
+        &:hover {
+            cursor: unset;
+        }
+    }
+
+    .disabled {
+        pointer-events: none;
+        color: var(--primary_background);
+        opacity: 0.5;
+    }
+}
+
+.inactive {
+    transform: translate(-50%, -50%);
+    transition: transform 1s ease-in-out;
+}
+
+.sample_input {
+    
+}
+
+.loader {
+    background-color: var(--primary_button);
+    height: 20vh;
+    width: 20vh;
+    border-radius: 50%;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .loader_inside {
+        background-color: var(--primary_background);
+        outline: 10px dotted var(--primary_sharp);
+        outline-offset: 5px;
+        width: 70%;
+        height: 70%;
+        border-radius: 50%;
+
+        animation: spin 3s infinite;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@import './adaptive.scss'

@@ -1,17 +1,13 @@
-The goal of this project is to create a simple piano app that have following features:
+Pretty simple online piano app with intuitive design and decent functionality including multiple synths (and a sampler), envelope editing, reverb and octave changer, and 'hold' option. Moreover, there is some color themes and a text switch.
 
+For the best performance I suggest using Mozilla Firefox browser. However, the app runs fine in other browsers as well.
 
-- Theme change with various color schemes
-<br>
-<img height='400px' src='https://i.imgur.com/gtHZCEE.png'/>
-<br>
-<img height='200px' src='https://i.imgur.com/a6FShGD.png'/>
 <br>
 
-- Volume control
-<br>
-<img  height='300px' src='https://i.imgur.com/tm02xSA.png'/>
+![preview](https://user-images.githubusercontent.com/80585863/221504750-85ff7317-6d59-43f6-b5aa-b39007d71ff6.gif)
+
 <br>
 
-Created using react for the cause of practice and self improvement!
+CONTROLS: keys are displayed on buttons. For volume adjusting press '-' and '='.
 
+For the react libraries used in this project check package.json
