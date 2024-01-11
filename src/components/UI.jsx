@@ -4,7 +4,7 @@ import "../styles/ui.scss";
 import { MdPiano } from "react-icons/md";
 import { RiSoundModuleFill } from "react-icons/ri";
 import Extracontrols from "./Extracontrols";
-import Themes from "./Themes";
+import Themes from "./Themes/Themes";
 
 export default function UI({ ...props }) {
   const [progressColor, setProgressColor] = useState(

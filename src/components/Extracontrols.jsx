@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { TbWaveSawTool, TbWaveSine, TbWaveSquare } from "react-icons/tb";
-import CustomKnob from "./CustomKnob";
+import { CustomKnob } from "./CustomKnob";
 import { AiOutlineRight } from "react-icons/ai";
 
 export default function Extracontrols({ ...props }) {
@@ -26,7 +26,7 @@ export default function Extracontrols({ ...props }) {
       <div
         className={
           "envelope" +
-          (props.activeSynth.name === "Sampler" ? " sampler_active" : "")
+          (props?.activeSynth.name === "Sampler" ? " sampler_active" : "")
         }
       >
         <CustomKnob
