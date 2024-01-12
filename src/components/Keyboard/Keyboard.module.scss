@@ -159,7 +159,6 @@ label {
 }
 
 .loader {
-    background-color: var(--primary_button);
     height: 20vh;
     width: 20vh;
     border-radius: 50%;
@@ -175,13 +174,13 @@ label {
 
     .loader_inside {
         background-color: var(--primary_background);
-        outline: 10px dotted var(--primary_sharp);
+        outline: 18px dotted var(--primary_button);
         outline-offset: 5px;
-        width: 70%;
-        height: 70%;
+        width: 50%;
+        height: 50%;
         border-radius: 50%;
 
-        animation: spin 3s infinite;
+        animation: spin 3s linear infinite;
     }
 }
 

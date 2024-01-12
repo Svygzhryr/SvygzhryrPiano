@@ -5,11 +5,8 @@ import {
   NOTE_TO_KEY,
   KEY_TO_NOTE,
 } from "../../global/constants";
-import * as Tone from "tone";
 import { ToneAudioBuffer } from "tone";
-import sample2 from "../../samples/harp.wav";
 import { useCallback } from "react";
-import { Instruments } from "../Instuments";
 import styles from "./Keyboard.module.scss";
 
 export const Keyboard = ({ instruments, keyEnabledArray }) => {
