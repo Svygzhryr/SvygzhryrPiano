@@ -9,10 +9,9 @@ import {
   NOTE_TO_KEY,
 } from "../global/constants";
 import UI from "./UI";
-import sample2 from "../samples/harp.wav";
 import debounce from "lodash/debounce";
 import { ToneAudioBuffer } from "tone";
-import Instruments from "./Instuments/Instruments";
+import Instruments from "./Instuments";
 
 Tone.context.lookAhead = 0.02;
 
@@ -82,41 +81,13 @@ export default function Piano() {
   const [decay, setDecay] = useState(0.5);
   const [sustain, setSustain] = useState(0.5);
   const [release, setRelease] = useState(0.5);
-  const [activeSample, setActiveSample] = useState("");
   const [waveShape, setWaveShape] = useState("sine");
   const [samplePitch, setSamplePitch] = useState(2);
-
-  const handleInstruments = (i, e) => {
-    setSwitchInstrument(i);
-    resetSounds();
-    e.classList.add(".instrument_active");
-  };
 
   const debounceReverb = debounce((reverb) => handleReverb(reverb), 300);
   const handleReverb = (reverb) => {
     setReverb(reverb);
     FXreverb.decay = reverb;
-  };
-
-  const equipSample = (e) => {
-    e === undefined ? (e = currentFile) : null;
-    handleInstruments("sampler", e.target);
-    sourceAux = URL.createObjectURL(e.target.files[0]);
-    let regex = /.((wav)|(ogg)|(mp3))/gi;
-    if (e.target.files[0].name.match(regex)) {
-      setActiveSample(e.target.files[0].name);
-      let sampleKey = "C" + samplePitch;
-      sampler = new Tone.Sampler({
-        urls: {
-          [sampleKey]: sourceAux,
-        },
-      })
-        .connect(FXreverb)
-        .toDestination();
-      activeSynth = sampler;
-      resetSounds();
-    } else alert("Only files with extentions (.mp3 .ogg .wav) are allowed.");
-    currentFile = e;
   };
 
   const UIprops = {

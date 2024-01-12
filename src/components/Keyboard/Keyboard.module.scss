@@ -1,4 +1,33 @@
 @import '../../styles/variables';
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&display=swap');
+
+body {
+  overflow: hidden;
+
+}
+
+label {
+  font-family: 'EB Garamond', serif;
+}
+
+* {
+  scrollbar-width: 10px;
+  scrollbar-color: var(--button_active);
+}
+
+*::-webkit-scrollbar {
+  width: 24px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--button_sharp);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--button_active);;
+  border-radius: 10px;
+  border: 3px solid var(--button_active);;
+}
 
 .piano_wrapper {
   background-color: var(--primary_background);
@@ -118,4 +147,107 @@
   .lower_buttons {
       display: flex;
   }
+}
+
+.inactive {
+  transform: translate(-50%, -50%);
+  transition: transform 1s ease-in-out;
+}
+
+.theme-background {
+    background-color: #fff;
+}
+
+.loader {
+    background-color: var(--primary_button);
+    height: 20vh;
+    width: 20vh;
+    border-radius: 50%;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .loader_inside {
+        background-color: var(--primary_background);
+        outline: 10px dotted var(--primary_sharp);
+        outline-offset: 5px;
+        width: 70%;
+        height: 70%;
+        border-radius: 50%;
+
+        animation: spin 3s infinite;
+    }
+}
+
+@media (max-width: 1600px) {
+    .button {
+        width: 7rem;
+        height: 25rem;
+        border: 4px solid var(--primary_background);
+        font-size: 3rem;
+    }
+
+    .button_sharp {
+        width: 5rem;
+        height: 15rem;  
+        margin-left: -2.5rem;
+        margin-right: -2.5rem;
+    }
+
+    .theme_selector {
+        padding: 0;
+        border-radius: 50%;
+        width: 4rem;
+        margin: 1rem 0;
+        height: 4rem;
+        border: none;
+        display: flex;
+        opacity: 0.5;
+    
+        transition: all .2s ease;
+    
+        &:hover:not(:last-child) {
+            cursor: pointer;
+            transform: rotate(180deg);
+            opacity: 1;
+        }
+    }
+
+    .toggle_text {
+        background-color: var(--primary_button);
+        color: var(--primary_sharp);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        font-weight: 700;
+        font-size: 2rem;
+        font-family: 'EB Garamond', serif;
+    
+        transition: all .5s ease-in-out;
+    
+        &:hover {
+            cursor: pointer;
+            background-color: var(--primary_sharp);
+            border: 3px solid var(--primary_button);
+            opacity: 1;
+        }
+    }
+}
+
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }

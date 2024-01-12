@@ -329,37 +329,6 @@ input[type=range].range::-moz-range-progress {
     justify-content: space-evenly;
 }
 
-.instruments {
-    
-}
-
-.instrument-switch {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-
-
-    border-radius: 50%;
-    width: 8rem;
-    height: 8rem;
-    background-color: var(--primary_button);
-    border: none;
-    transition: all .2s linear;
-    z-index: 3;
-    opacity: 0.5;
-
-    font-size: 5rem;
-    color: var(--primary_background);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    &:hover {
-        background-color: var(--primary_button_active);
-        opacity: 1;
-    }
-}
-
 .controls_waveshape {
 
     &::before {

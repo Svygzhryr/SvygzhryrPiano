@@ -1,0 +1,106 @@
+.instruments {
+
+  display: grid;
+  grid-template: 1fr 1fr / 1fr 1fr 1fr; 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -101vh);
+  z-index: 5;
+  gap: 2rem;
+  
+
+
+  transition: all 1s ease-in-out;
+
+  input {
+      display: none;
+  }
+
+  .input_label {
+      width: 12rem !important;
+      height: 6rem !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-weight: 500 !important;
+      font-style: initial;
+
+      cursor: pointer;
+  }
+
+
+  .instrument_item {
+      font-size: 2.4rem;
+      border-radius: 1rem;
+      padding: 2rem 4rem;
+      border: none;
+      background: var(--primary_button);
+      color: var(--primary_background);
+      font-weight: 500;
+      width: 20rem;
+      height: 10rem;
+
+      transition: all .2s ease-in-out; 
+
+      p {
+          font-size: 1rem;
+      }
+
+      &:hover {
+          background-color: var(--primary_button_active);
+          color: var(--primary_button);
+          cursor: pointer;
+      }
+
+
+
+  }
+
+  .instrument_active {
+      background-color: var(--primary_button_active);
+      color: var(--primary_button);
+
+      &:hover {
+          cursor: unset;
+      }
+  }
+
+  .disabled {
+      pointer-events: none;
+      color: var(--primary_background);
+      opacity: 0.5;
+  }
+}
+
+.sample_input {
+  
+}
+
+.instrument-switch {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+
+
+  border-radius: 50%;
+  width: 8rem;
+  height: 8rem;
+  background-color: var(--primary_button);
+  border: none;
+  transition: all .2s linear;
+  z-index: 3;
+  opacity: 0.5;
+
+  font-size: 5rem;
+  color: var(--primary_background);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+      background-color: var(--primary_button_active);
+      opacity: 1;
+  }
+}
