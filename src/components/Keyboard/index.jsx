@@ -9,7 +9,7 @@ import { ToneAudioBuffer } from "tone";
 import { useCallback } from "react";
 import styles from "./Keyboard.module.scss";
 
-export const Keyboard = ({ instruments, keyEnabledArray }) => {
+export const Keyboard = ({ instruments, activeKeys, volume }) => {
   const { synth, sampler } = instruments;
   const instrument = false;
   let keyClassName,
@@ -17,47 +17,19 @@ export const Keyboard = ({ instruments, keyEnabledArray }) => {
 
   const [showText, setShowText] = useState(false);
   const [pressedKeys, setPressedKeys] = useState([]);
-  const [volume, setVolume] = useState(localStorage.getItem("volume") || 0);
   const [hold, setHold] = useState("false");
   const [loading, setLoading] = useState(true);
 
   const resetSounds = useCallback(() => {
     const buttons = document.querySelectorAll(`[note]`);
-    buttons.forEach((e) => {
-      e.classList.remove(styles.button_active);
-      e.classList.remove(styles.button_sharp_active);
+    buttons.forEach((button) => {
+      button.classList.remove(styles.button_active);
+      button.classList.remove(styles.button_sharp_active);
     });
-    let all = [...UPPER_NOTES, ...LOWER_NOTES];
-    activeSynth.triggerRelease(all);
+
+    const allButtons = [...UPPER_NOTES, ...LOWER_NOTES];
+    activeSynth.triggerRelease(allButtons);
   }, [activeSynth]);
-
-  const changeVolume = (volume) => {
-    setVolume(volume);
-    localStorage.setItem("volume", volume);
-    resetSounds();
-  };
-
-  const extraBindings = useCallback(
-    (code) => {
-      switch (code) {
-        default:
-          return null;
-        case 61: {
-          if (+volume < 20) {
-            setVolume(+volume + 1);
-          }
-          break;
-        }
-        case 173: {
-          if (+volume > -30) {
-            setVolume(+volume - 1);
-          }
-          break;
-        }
-      }
-    },
-    [volume]
-  );
 
   const playNote = useCallback(
     async (note) => {
@@ -77,10 +49,10 @@ export const Keyboard = ({ instruments, keyEnabledArray }) => {
   const handleKeyDown = useCallback(
     (e) => {
       const code = e.which;
-      extraBindings(code);
+      // extraBindings(code);
 
-      if (keyEnabledArray[e.keyCode]) {
-        keyEnabledArray[e.keyCode] = false;
+      if (activeKeys[e.keyCode]) {
+        activeKeys[e.keyCode] = false;
 
         const shittySharp = CSS.escape(KEY_TO_NOTE[code]);
         const button = document.querySelector(`[note=${shittySharp}]`);
@@ -95,7 +67,7 @@ export const Keyboard = ({ instruments, keyEnabledArray }) => {
         playNote(KEY_TO_NOTE[code]);
       }
     },
-    [extraBindings, playNote]
+    [playNote, activeKeys]
   );
 
   const handleKeyUp = useCallback(
@@ -115,7 +87,7 @@ export const Keyboard = ({ instruments, keyEnabledArray }) => {
       } catch {
         return null;
       }
-      keyEnabledArray[e.keyCode] = true;
+      activeKeys[e.keyCode] = true;
     },
     [activeSynth, hold]
   );
@@ -341,13 +313,6 @@ export const Keyboard = ({ instruments, keyEnabledArray }) => {
         </div>
       ) : (
         <div>
-          {/* <UI {...UIprops} /> */}
-
-          {/* <Instruments
-            instruments={instruments}
-            keyEnabledArray={keyEnabledArray}
-          /> */}
-
           <div
             className={`${styles.piano_wrapper} ${styles.active} ${
               instrument ? "" : styles.inactive

@@ -9,59 +9,6 @@
     transition: background-color .2s linear;
 }
 
-.slider_wrapper {
-    background-color: var(--primary_button);
-    transform: rotate(-90deg) translate(-40%, -125%);
-    width: 20rem;
-    height: 5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100rem;
-    z-index: 2;
-    opacity: 0.5;
-
-    transition: all .2s;
-
-    &:hover {
-        opacity: 1;
-    }
-
-
-}
-
-input[type=range].range {   
-    width: 15rem;       
-    height: 1rem;
-    -webkit-appearance: none;
-    border-radius: 100rem;
-    background-color: var(--primary_button_active);
-}
-
-input[type=range].range::-moz-range-thumb {
-    -webkit-appearance: none;
-    background: var(--primary_sharp);
-    border: none;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 100rem;
-}
-
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    background: var(--primary_sharp);
-    border: none;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 100rem;
-}
-
-input[type=range].range::-moz-range-progress {
-    background: var(--primary_background);
-    height: 100%;
-    border-radius: 100rem;
-}
-
 .effect-slider {
     background-color: var(--primary_sharp);
     width: 10rem;
