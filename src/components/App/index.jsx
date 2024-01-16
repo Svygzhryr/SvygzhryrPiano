@@ -4,6 +4,7 @@ import { Keyboard } from "../Keyboard";
 import sample2 from "../../samples/harp.wav";
 import "../../styles/app.scss";
 import { VolumeSlider } from "../VolumeSlider";
+import { Themes } from "../Themes/Themes";
 
 Tone.context.lookAhead = 0.02;
 
@@ -46,7 +47,7 @@ Object.values(instruments).forEach((instrument) => {
       type: "sine",
     },
 
-    detune: 1200,
+    detune: 2400,
     // portamento: Seconds;
     // onsilence: onSilenceCallback;
 
@@ -65,12 +66,14 @@ let activeKeys = Array(222).fill(true);
 
 export const App = () => {
   const [volume, setVolume] = useState(localStorage.getItem("volume") || 0);
-  const props = { instruments, activeKeys, volume };
+  const [showText, setShowText] = useState(false);
+  const props = { instruments, activeKeys, volume, showText, setShowText };
 
   return (
     <div className="app">
       <Keyboard {...props} />
       <VolumeSlider volume={volume} setVolume={setVolume} />
+      <Themes showText={showText} setShowText={setShowText} />
     </div>
   );
 };

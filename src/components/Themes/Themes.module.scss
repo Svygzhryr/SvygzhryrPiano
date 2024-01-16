@@ -1,0 +1,76 @@
+.themes {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0 1rem;
+  z-index: 2;
+}
+
+.themeSelector {
+  padding: 0;
+  border-radius: 50%;
+  width: 5rem;
+  margin: 1rem 0;
+  height: 5rem;
+  border: none;
+  display: flex;
+  opacity: 0.5;
+
+  transition: all .2s ease;
+
+  &:hover:not(:last-child) {
+      cursor: pointer;
+      transform: rotate(180deg);
+      opacity: 1;
+  }
+}
+
+.theme1 {
+  background: linear-gradient(90deg, var(--black_button) 50%, var(--black_sharp) 50%);
+
+}
+
+.theme2 {
+  background: linear-gradient(90deg, var(--purplish_button_active) 50%, var(--purplish_sharp) 50%);
+
+}
+
+.theme3 {
+  background: linear-gradient(90deg, var(--reddish_button_active) 50%, var(--reddish_sharp) 50%);
+}
+
+.theme4 {
+  background: linear-gradient(90deg, var(--bluish_button_active) 50%, var(--bluish_sharp) 50%);
+}
+
+.toggleText {
+  background-color: var(--primary_button);
+  color: var(--primary_sharp);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 700;
+  font-size: 3rem;
+  font-family: 'EB Garamond', serif;
+
+  transition: all .2s ease-in-out;
+  transform: none;
+
+
+  &:hover {
+      color: transparent;
+      cursor: pointer;
+  }
+}
+
+.textActive {
+  cursor: pointer;
+  background-color: var(--primary_sharp);
+  opacity: 1;
+  transform: none;
+  
+  &:hover {
+    color: var(--primary_button)
+  }
+}

@@ -9,13 +9,18 @@ import { ToneAudioBuffer } from "tone";
 import { useCallback } from "react";
 import styles from "./Keyboard.module.scss";
 
-export const Keyboard = ({ instruments, activeKeys, volume }) => {
+export const Keyboard = ({
+  instruments,
+  activeKeys,
+  volume,
+  showText,
+  setShowText,
+}) => {
   const { synth, sampler } = instruments;
   const instrument = false;
   let keyClassName,
     activeSynth = synth;
 
-  const [showText, setShowText] = useState(false);
   const [pressedKeys, setPressedKeys] = useState([]);
   const [hold, setHold] = useState("false");
   const [loading, setLoading] = useState(true);
