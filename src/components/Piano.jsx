@@ -11,7 +11,7 @@ import {
 import UI from "./UI";
 import debounce from "lodash/debounce";
 import { ToneAudioBuffer } from "tone";
-import Instruments from "./Instuments";
+import Instruments from "./Instruments";
 
 Tone.context.lookAhead = 0.02;
 

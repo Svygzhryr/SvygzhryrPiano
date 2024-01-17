@@ -5,6 +5,7 @@ import sample2 from "../../samples/harp.wav";
 import "../../styles/app.scss";
 import { VolumeSlider } from "../VolumeSlider";
 import { Themes } from "../Themes/Themes";
+import { Instruments } from "../Instruments";
 
 Tone.context.lookAhead = 0.02;
 
@@ -67,13 +68,31 @@ let activeKeys = Array(222).fill(true);
 export const App = () => {
   const [volume, setVolume] = useState(localStorage.getItem("volume") || 0);
   const [showText, setShowText] = useState(false);
-  const props = { instruments, activeKeys, volume, showText, setShowText };
+  const [isInstrumentActive, setIsInstrumentActive] = useState(false);
+  const [activeInstrument, setActiveInstrument] = useState("synth");
+  const props = {
+    instruments,
+    activeKeys,
+    volume,
+    showText,
+    setShowText,
+    isInstrumentActive,
+    activeInstrument,
+  };
 
   return (
     <div className="app">
       <Keyboard {...props} />
       <VolumeSlider volume={volume} setVolume={setVolume} />
       <Themes showText={showText} setShowText={setShowText} />
+      <Instruments
+        instruments={instruments}
+        keyEnabledArray={activeKeys}
+        isInstrumentActive={isInstrumentActive}
+        setIsInstrumentActive={setIsInstrumentActive}
+        activeInstrument={activeInstrument}
+        setActiveInstrument={setActiveInstrument}
+      />
     </div>
   );
 };

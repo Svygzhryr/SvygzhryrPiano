@@ -10,16 +10,17 @@ import { useCallback } from "react";
 import styles from "./Keyboard.module.scss";
 
 export const Keyboard = ({
+  isInstrumentActive,
   instruments,
   activeKeys,
   volume,
   showText,
   setShowText,
+  activeInstrument,
 }) => {
   const { synth, sampler } = instruments;
   const instrument = false;
-  let keyClassName,
-    activeSynth = synth;
+  let keyClassName;
 
   const [pressedKeys, setPressedKeys] = useState([]);
   const [hold, setHold] = useState("false");
@@ -33,27 +34,28 @@ export const Keyboard = ({
     });
 
     const allButtons = [...UPPER_NOTES, ...LOWER_NOTES];
-    activeSynth.triggerRelease(allButtons);
-  }, [activeSynth]);
+    activeInstrument.triggerRelease(allButtons);
+  }, [activeInstrument]);
 
   const playNote = useCallback(
     async (note) => {
       if (note === undefined) {
       }
 
-      activeSynth.volume.value = volume;
+      activeInstrument.volume.value = volume;
       hold
-        ? activeSynth.triggerAttack(note)
-        : activeSynth === sampler
-        ? activeSynth.triggerAttackRelease(note)
-        : activeSynth.triggerAttackRelease(note, "8n");
+        ? activeInstrument.triggerAttack(note)
+        : activeInstrument === sampler
+        ? activeInstrument.triggerAttackRelease(note)
+        : activeInstrument.triggerAttackRelease(note, "8n");
     },
-    [activeSynth, hold, volume]
+    [activeInstrument, hold, volume]
   );
 
   const handleKeyDown = useCallback(
     (e) => {
       const code = e.which;
+      e.preventDefault();
       // extraBindings(code);
 
       if (activeKeys[e.keyCode]) {
@@ -81,7 +83,7 @@ export const Keyboard = ({
       const shittySharp = CSS.escape(KEY_TO_NOTE[code]);
 
       if (hold) {
-        activeSynth.triggerRelease(KEY_TO_NOTE[code]);
+        activeInstrument.triggerRelease(KEY_TO_NOTE[code]);
       }
 
       const button = document.querySelector(`[note=${shittySharp}]`);
@@ -94,7 +96,7 @@ export const Keyboard = ({
       }
       activeKeys[e.keyCode] = true;
     },
-    [activeSynth, hold]
+    [activeInstrument, hold]
   );
 
   const handleMouseDown = useCallback(
@@ -117,22 +119,22 @@ export const Keyboard = ({
           return;
         }
 
-        activeSynth.volume.value = volume;
+        activeInstrument.volume.value = volume;
         hold
-          ? activeSynth.triggerAttack(note)
-          : activeSynth === sampler
-          ? activeSynth.triggerAttackRelease(note)
-          : activeSynth.triggerAttackRelease(note, "8n");
+          ? activeInstrument.triggerAttack(note)
+          : activeInstrument === sampler
+          ? activeInstrument.triggerAttackRelease(note)
+          : activeInstrument.triggerAttackRelease(note, "8n");
       }
     },
-    [activeSynth, hold, volume]
+    [activeInstrument, hold, volume]
   );
 
   const handleMouseUp = useCallback(
     (e) => {
       let note = e.target.getAttribute("note");
       if (hold) {
-        activeSynth.triggerRelease(note);
+        activeInstrument.triggerRelease(note);
       }
       let shittynote = CSS.escape(note);
       const button = document.querySelector(`[note=${shittynote}]`);
@@ -144,7 +146,7 @@ export const Keyboard = ({
         return null;
       }
     },
-    [activeSynth, hold]
+    [activeInstrument, hold]
   );
 
   const downFunc = useCallback(
@@ -210,7 +212,7 @@ export const Keyboard = ({
 
     setShowText(JSON.parse(localStorage.getItem("text")));
 
-    // activeSynth.set({
+    // activeInstrument.set({
     //   detune: detune,
 
     //   oscillator: {
@@ -320,7 +322,7 @@ export const Keyboard = ({
         <div>
           <div
             className={`${styles.piano_wrapper} ${styles.active} ${
-              instrument ? "" : styles.inactive
+              isInstrumentActive ? "" : styles.inactive
             }`}
           >
             <div className={styles.upper_keyboard}>
