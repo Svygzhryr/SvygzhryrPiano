@@ -51,9 +51,6 @@
           color: var(--primary_button);
           cursor: pointer;
       }
-
-
-
   }
 
   .instrumentActive {
@@ -61,6 +58,11 @@
       color: var(--primary_button);
 
       &:hover {
+        background-color: var(--primary_button);
+        color: var(--primary_button_active)
+      }
+
+      &:hover:not(:last-child) {
           cursor: unset;
       }
 

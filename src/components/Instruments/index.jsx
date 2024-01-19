@@ -1,29 +1,30 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { UPPER_NOTES, LOWER_NOTES } from "../../global/constants";
 import * as Tone from "tone";
+import { UPPER_NOTES, LOWER_NOTES } from "../../global/constants";
 import { MdPiano } from "react-icons/md";
 import { RiSoundModuleFill } from "react-icons/ri";
 import styles from "./Instruments.module.scss";
+import { sample } from "lodash";
 
 export const Instruments = ({
   instruments,
+  setInstruments,
   activeKeys,
   isInstrumentActive,
   setIsInstrumentActive,
   activeInstrument,
   setActiveInstrument,
   samplePitch,
+  fxReverb,
 }) => {
-  // const { synth, monosynth, fmsynth, amsynth, membranesynth } = instruments;
-  // let { sampler } = instruments;
-  const [switchInstrument, setSwitchInstrument] = useState("synth");
+  const { synth, monosynth, fmsynth, amsynth, membranesynth } = instruments;
+  let { sampler } = instruments;
   const [activeSample, setActiveSample] = useState("");
 
-  const handleInstruments = (i, e) => {
-    setSwitchInstrument(i);
-    resetSounds();
-    e.classList.add(".instrumentActive");
-  };
+  // const handleInstruments = (i, e) => {
+  //   resetSounds();
+  //   e.classList.add(".instrumentActive");
+  // };
 
   const resetSounds = useCallback(() => {
     const buttons = document.querySelectorAll(`[note]`);
@@ -38,55 +39,24 @@ export const Instruments = ({
   const equipSample = (event) => {
     // eslint-disable-next-line no-unused-expressions
     // event === undefined ? (event = currentFile) : null;
-    handleInstruments("sampler", event.target);
     const sourceAux = URL.createObjectURL(event.target.files[0]);
     const extension = /.((wav)|(ogg)|(mp3))/gi;
     if (event.target.files[0].name.match(extension)) {
       setActiveSample(event.target.files[0].name);
       const sampleKey = "C" + samplePitch;
-      // sampler = new Tone.Sampler({
-      //   urls: {
-      //     [sampleKey]: sourceAux,
-      //   },
-      // })
-      // .connect(FXreverb)
-      // .toDestination();
-      // setActiveInstrument(sampler);
+      const newSampler = new Tone.Sampler({
+        urls: {
+          [sampleKey]: sourceAux,
+        },
+      })
+        .connect(fxReverb)
+        .toDestination();
+      setInstruments({ ...instruments, sampler: newSampler });
+      setActiveInstrument(newSampler);
       resetSounds();
     } else alert("Only files with extentions (.mp3 .ogg .wav) are allowed.");
     // currentFile = event;
   };
-
-  useEffect(() => {
-    switch (switchInstrument) {
-      default:
-        return undefined;
-      // case "synth": {
-      //   setActiveInstrument(synth);
-      //   break;
-      // }
-      // case "monosynth": {
-      //   setActiveInstrument(monosynth);
-      //   break;
-      // }
-      // case "fmsynth": {
-      //   setActiveInstrument(fmsynth);
-      //   break;
-      // }
-      // case "amsynth": {
-      //   setActiveInstrument(amsynth);
-      //   break;
-      // }
-      // case "membranesynth": {
-      //   setActiveInstrument(membranesynth);
-      //   break;
-      // }
-      // case "sampler": {
-      //   setActiveInstrument(sampler);
-      //   break;
-      // }
-    }
-  }, []);
 
   return (
     <>
@@ -104,51 +74,41 @@ export const Instruments = ({
         }`}
       >
         <button
-          onClick={(e) => {
-            handleInstruments("synth", e.target);
-          }}
+          onClick={() => setActiveInstrument(synth)}
           className={`${styles.instrumentItem} ${
-            switchInstrument === "synth" ? styles.instrumentActive : ""
+            activeInstrument === synth ? styles.instrumentActive : ""
           }`}
         >
           Synth
         </button>
         <button
-          onClick={(e) => {
-            handleInstruments("monosynth", e.target);
-          }}
+          onClick={() => setActiveInstrument(monosynth)}
           className={`${styles.instrumentItem} ${
-            switchInstrument === "monosynth" ? styles.instrumentActive : ""
+            activeInstrument === monosynth ? styles.instrumentActive : ""
           }`}
         >
           MonoSynth
         </button>
         <button
-          onClick={(e) => {
-            handleInstruments("fmsynth", e.target);
-          }}
+          onClick={() => setActiveInstrument(fmsynth)}
           className={`${styles.instrumentItem}  ${
-            switchInstrument === "fmsynth" ? styles.instrumentActive : ""
+            activeInstrument === fmsynth ? styles.instrumentActive : ""
           }`}
         >
           FMSynth
         </button>
         <button
-          onClick={(e) => {
-            handleInstruments("amsynth", e.target);
-          }}
+          onClick={() => setActiveInstrument(amsynth)}
           className={`${styles.instrumentItem}  ${
-            switchInstrument === "amsynth" ? styles.instrumentActive : ""
+            activeInstrument === amsynth ? styles.instrumentActive : ""
           }`}
         >
           AMSynth
         </button>
         <button
-          onClick={(e) => {
-            handleInstruments("membranesynth", e.target);
-          }}
+          onClick={() => setActiveInstrument(membranesynth)}
           className={`${styles.instrumentItem} ${
-            switchInstrument === "membranesynth" ? styles.instrumentActive : ""
+            activeInstrument === membranesynth ? styles.instrumentActive : ""
           }`}
         >
           MemSynth
@@ -156,7 +116,7 @@ export const Instruments = ({
         <label
           htmlFor="sample"
           className={`${styles.instrumentItem} ${styles.inputLabel} ${
-            switchInstrument === "sampler" ? styles.instrumentActive : ""
+            activeInstrument === sampler ? styles.instrumentActive : ""
           }`}
         >
           Sampler

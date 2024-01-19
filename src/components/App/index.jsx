@@ -49,7 +49,7 @@ export const App = () => {
       .connect(reverb)
       .toDestination();
 
-    const instruments = {
+    const initialInstruments = {
       synth,
       monosynth,
       fmsynth,
@@ -58,7 +58,7 @@ export const App = () => {
       sampler,
     };
 
-    Object.values(instruments).forEach((instrument) => {
+    Object.values(initialInstruments).forEach((instrument) => {
       instrument.set({
         oscillator: {
           type: "sine",
@@ -76,20 +76,21 @@ export const App = () => {
         },
       });
     });
-    setInstruments(instruments);
-    setActiveInstrument(instruments.synth);
+
+    setInstruments(initialInstruments);
+    setActiveInstrument(initialInstruments.synth);
     setActiveKeys(Array(222).fill(true));
     Tone.start();
   }, []);
 
   useEffect(() => {
-    console.log(instruments);
     synthStart();
   }, [synthStart]);
 
   const keyboardProps = {
     instruments,
     activeKeys,
+    setActiveKeys,
     volume,
     showText,
     setShowText,
@@ -99,6 +100,7 @@ export const App = () => {
 
   const instrumentsProps = {
     instruments,
+    setInstruments,
     activeKeys,
     isInstrumentActive,
     setIsInstrumentActive,
@@ -106,6 +108,7 @@ export const App = () => {
     setActiveInstrument,
     samplePitch,
     currentSample,
+    fxReverb,
   };
 
   return (

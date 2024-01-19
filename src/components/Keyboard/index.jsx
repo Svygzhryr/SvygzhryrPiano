@@ -13,11 +13,13 @@ export const Keyboard = ({
   isInstrumentActive,
   instruments,
   activeKeys,
+  setActiveKeys,
   volume,
   showText,
   setShowText,
   activeInstrument,
 }) => {
+  const { sampler } = instruments;
   const instrument = false;
   let keyClassName;
 
@@ -40,25 +42,29 @@ export const Keyboard = ({
     async (note) => {
       if (note === undefined) {
       }
-
-      console.log(activeInstrument);
+      console.log(
+        "%c activeInstrument",
+        "background: #222; color: #ff00ff",
+        activeInstrument
+      );
       activeInstrument.volume.value = volume;
       hold
         ? activeInstrument.triggerAttack(note)
-        : // : activeInstrument === sampler
-          // ? activeInstrument.triggerAttackRelease(note)
-          activeInstrument.triggerAttackRelease(note, "8n");
+        : activeInstrument === sampler
+        ? activeInstrument.triggerAttackRelease(note)
+        : activeInstrument.triggerAttackRelease(note, "8n");
     },
     [activeInstrument, hold, volume]
   );
 
   const handleKeyDown = useCallback(
     (e) => {
-      const code = e.which;
+      const code = e.keyCode;
       // e.preventDefault();
       // extraBindings(code);
-      if (activeKeys[e.keyCode]) {
-        activeKeys[e.keyCode] = false;
+      if (activeKeys[code]) {
+        activeKeys[code] = false;
+        // setActiveKeys([...activeKeys]);
 
         const shittySharp = CSS.escape(KEY_TO_NOTE[code]);
         const button = document.querySelector(`[note=${shittySharp}]`);
@@ -78,7 +84,7 @@ export const Keyboard = ({
 
   const handleKeyUp = useCallback(
     (e) => {
-      const code = e.which;
+      const code = e.keyCode;
       const shittySharp = CSS.escape(KEY_TO_NOTE[code]);
 
       if (hold) {
@@ -94,8 +100,9 @@ export const Keyboard = ({
         return null;
       }
       activeKeys[e.keyCode] = true;
+      // setActiveKeys([...activeKeys, (activeKeys[e.keycode] = true)]);
     },
-    [activeInstrument, hold]
+    [activeInstrument, hold, activeKeys]
   );
 
   const handleMouseDown = useCallback(
@@ -132,8 +139,8 @@ export const Keyboard = ({
   const handleMouseUp = useCallback(
     (e) => {
       let note = e.target.getAttribute("note");
-      if (hold) {
-        activeInstrument.triggerRelease(note);
+      if (hold && note) {
+        activeInstrument?.triggerRelease(note);
       }
       let shittynote = CSS.escape(note);
       const button = document.querySelector(`[note=${shittynote}]`);
