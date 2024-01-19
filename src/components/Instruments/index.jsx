@@ -1,24 +1,21 @@
-import React, { useState, useCallback } from "react";
-import {
-  UPPER_NOTES,
-  LOWER_NOTES,
-  NOTE_TO_KEY,
-  KEY_TO_NOTE,
-} from "../../global/constants";
+import React, { useState, useCallback, useEffect } from "react";
+import { UPPER_NOTES, LOWER_NOTES } from "../../global/constants";
+import * as Tone from "tone";
 import { MdPiano } from "react-icons/md";
 import { RiSoundModuleFill } from "react-icons/ri";
 import styles from "./Instruments.module.scss";
 
 export const Instruments = ({
   instruments,
-  keyEnabledArray,
+  activeKeys,
   isInstrumentActive,
   setIsInstrumentActive,
   activeInstrument,
   setActiveInstrument,
+  samplePitch,
 }) => {
-  const { synth, monosynth, fmsynth, amsynth, membranesynth, sampler } =
-    instruments;
+  // const { synth, monosynth, fmsynth, amsynth, membranesynth } = instruments;
+  // let { sampler } = instruments;
   const [switchInstrument, setSwitchInstrument] = useState("synth");
   const [activeSample, setActiveSample] = useState("");
 
@@ -38,55 +35,58 @@ export const Instruments = ({
     activeInstrument.triggerRelease(all);
   }, [activeInstrument]);
 
-  // const equipSample = (e) => {
-  //   e === undefined ? (e = currentFile) : null;
-  //   handleInstruments("sampler", e.target);
-  //   sourceAux = URL.createObjectURL(e.target.files[0]);
-  //   let regex = /.((wav)|(ogg)|(mp3))/gi;
-  //   if (e.target.files[0].name.match(regex)) {
-  //     setActiveSample(e.target.files[0].name);
-  //     let sampleKey = "C" + samplePitch;
-  //     sampler = new Tone.Sampler({
-  //       urls: {
-  //         [sampleKey]: sourceAux,
-  //       },
-  //     })
-  //       .connect(FXreverb)
-  //       .toDestination();
-  //     activeSynth = sampler;
-  //     resetSounds();
-  //   } else alert("Only files with extentions (.mp3 .ogg .wav) are allowed.");
-  //   currentFile = e;
-  // };
+  const equipSample = (event) => {
+    // eslint-disable-next-line no-unused-expressions
+    // event === undefined ? (event = currentFile) : null;
+    handleInstruments("sampler", event.target);
+    const sourceAux = URL.createObjectURL(event.target.files[0]);
+    const extension = /.((wav)|(ogg)|(mp3))/gi;
+    if (event.target.files[0].name.match(extension)) {
+      setActiveSample(event.target.files[0].name);
+      const sampleKey = "C" + samplePitch;
+      // sampler = new Tone.Sampler({
+      //   urls: {
+      //     [sampleKey]: sourceAux,
+      //   },
+      // })
+      // .connect(FXreverb)
+      // .toDestination();
+      // setActiveInstrument(sampler);
+      resetSounds();
+    } else alert("Only files with extentions (.mp3 .ogg .wav) are allowed.");
+    // currentFile = event;
+  };
 
-  switch (switchInstrument) {
-    default:
-      return null;
-    case "synth": {
-      setActiveInstrument(synth);
-      break;
+  useEffect(() => {
+    switch (switchInstrument) {
+      default:
+        return undefined;
+      // case "synth": {
+      //   setActiveInstrument(synth);
+      //   break;
+      // }
+      // case "monosynth": {
+      //   setActiveInstrument(monosynth);
+      //   break;
+      // }
+      // case "fmsynth": {
+      //   setActiveInstrument(fmsynth);
+      //   break;
+      // }
+      // case "amsynth": {
+      //   setActiveInstrument(amsynth);
+      //   break;
+      // }
+      // case "membranesynth": {
+      //   setActiveInstrument(membranesynth);
+      //   break;
+      // }
+      // case "sampler": {
+      //   setActiveInstrument(sampler);
+      //   break;
+      // }
     }
-    case "monosynth": {
-      setActiveInstrument(monosynth);
-      break;
-    }
-    case "fmsynth": {
-      setActiveInstrument(fmsynth);
-      break;
-    }
-    case "amsynth": {
-      setActiveInstrument(amsynth);
-      break;
-    }
-    case "membranesynth": {
-      setActiveInstrument(membranesynth);
-      break;
-    }
-    case "sampler": {
-      setActiveInstrument(sampler);
-      break;
-    }
-  }
+  }, []);
 
   return (
     <>
@@ -162,7 +162,7 @@ export const Instruments = ({
           Sampler
           <br />
           {activeSample !== "" ? activeSample : ".mp3/.wav/.ogg files"}
-          {/* <input onChange={equipSample} id="sample" type="file" /> */}
+          <input onChange={equipSample} id="sample" type="file" />
         </label>
       </div>
     </>

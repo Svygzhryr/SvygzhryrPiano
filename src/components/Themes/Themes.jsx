@@ -47,37 +47,6 @@ export const Themes = ({ showText, setShowText }) => {
     envelopeColorChange();
   }, [envelopeColorChange, theme]);
 
-  // const themeChange = (e) => {
-  //   const button = e.target;
-  //   switch (true) {
-  //     default:
-  //       return null;
-  //     case button.classList.contains("theme1"): {
-  //       setTheme("default");
-  //       localStorage.setItem("theme", "default");
-  //       break;
-  //     }
-
-  //     case button.classList.contains("theme2"): {
-  //       setTheme("purple");
-  //       localStorage.setItem("theme", "purple");
-  //       break;
-  //     }
-
-  //     case button.classList.contains("theme3"): {
-  //       setTheme("red");
-  //       localStorage.setItem("theme", "red");
-  //       break;
-  //     }
-
-  //     case button.classList.contains("theme4"): {
-  //       setTheme("blue");
-  //       localStorage.setItem("theme", "blue");
-  //       break;
-  //     }
-  //   }
-  // };
-
   const setBlackTheme = () => {
     setTheme("default");
     localStorage.setItem("theme", "default");

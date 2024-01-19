@@ -18,7 +18,6 @@ export const Keyboard = ({
   setShowText,
   activeInstrument,
 }) => {
-  const { synth, sampler } = instruments;
   const instrument = false;
   let keyClassName;
 
@@ -42,12 +41,13 @@ export const Keyboard = ({
       if (note === undefined) {
       }
 
+      console.log(activeInstrument);
       activeInstrument.volume.value = volume;
       hold
         ? activeInstrument.triggerAttack(note)
-        : activeInstrument === sampler
-        ? activeInstrument.triggerAttackRelease(note)
-        : activeInstrument.triggerAttackRelease(note, "8n");
+        : // : activeInstrument === sampler
+          // ? activeInstrument.triggerAttackRelease(note)
+          activeInstrument.triggerAttackRelease(note, "8n");
     },
     [activeInstrument, hold, volume]
   );
@@ -55,9 +55,8 @@ export const Keyboard = ({
   const handleKeyDown = useCallback(
     (e) => {
       const code = e.which;
-      e.preventDefault();
+      // e.preventDefault();
       // extraBindings(code);
-
       if (activeKeys[e.keyCode]) {
         activeKeys[e.keyCode] = false;
 
@@ -122,9 +121,9 @@ export const Keyboard = ({
         activeInstrument.volume.value = volume;
         hold
           ? activeInstrument.triggerAttack(note)
-          : activeInstrument === sampler
-          ? activeInstrument.triggerAttackRelease(note)
-          : activeInstrument.triggerAttackRelease(note, "8n");
+          : // : activeInstrument === sampler
+            // ? activeInstrument.triggerAttackRelease(note)
+            activeInstrument.triggerAttackRelease(note, "8n");
       }
     },
     [activeInstrument, hold, volume]
