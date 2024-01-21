@@ -1,12 +1,14 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import * as Tone from "tone";
-import { Keyboard } from "../Keyboard";
+
 import sample2 from "../../samples/harp.wav";
+import { Keyboard } from "../Keyboard";
 import { VolumeSlider } from "../VolumeSlider";
 import { Themes } from "../Themes/Themes";
 import { Instruments } from "../Instruments";
+import { Envelope } from "../Envelope";
+
 import "../../styles/app.scss";
-import { useEffect } from "react";
 
 export const App = () => {
   const [volume, setVolume] = useState(localStorage.getItem("volume") || 0);
@@ -19,6 +21,21 @@ export const App = () => {
   const [instruments, setInstruments] = useState({});
   const [fxReverb, setFxReverb] = useState(null);
   const [currentSample, setCurrentSample] = useState(null);
+
+  const [waveShape, setWaveShape] = useState("sine");
+
+  const [adsr, setAdsr] = useState({
+    attack: 0.1,
+    decay: 0.5,
+    sustain: 0.5,
+    release: 0.5,
+  });
+
+  const [effects, setEffects] = useState({
+    samplePitch: 2,
+    fxDetune: 1200,
+    fxHold: true,
+  });
 
   const synthStart = useCallback(() => {
     Tone.context.lookAhead = 0.02;
@@ -111,12 +128,27 @@ export const App = () => {
     fxReverb,
   };
 
+  const envelopeProps = {
+    activeInstrument,
+    adsr,
+    setAdsr,
+    effects,
+    setEffects,
+    fxReverb,
+    setFxReverb,
+    samplePitch,
+    setSamplePitch,
+    waveShape,
+    setWaveShape,
+  };
+
   return (
     <div className="app">
       <Keyboard {...keyboardProps} />
       <VolumeSlider volume={volume} setVolume={setVolume} />
       <Themes showText={showText} setShowText={setShowText} />
       <Instruments {...instrumentsProps} />
+      <Envelope {...envelopeProps} />
     </div>
   );
 };
