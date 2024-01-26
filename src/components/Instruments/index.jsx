@@ -59,12 +59,18 @@ export const Instruments = ({
   };
 
   useEffect(() => {
-    const sampleKey = "C" + effects.samplePitch;
-    const newSampler = new Tone.Sampler({
-      urls: {
-        [sampleKey]: URL.createObjectURL(activeSample),
-      },
-    });
+    if (activeSample) {
+      const sampleKey = "C" + effects.samplePitch;
+      activeInstrument?.disconnect();
+      const newSampler = new Tone.Sampler({
+        urls: {
+          [sampleKey]: URL.createObjectURL(activeSample),
+        },
+      })
+        .connect(fxReverb)
+        .toDestination();
+      setActiveInstrument(newSampler);
+    }
   }, [effects.samplePitch]);
 
   return (
@@ -130,7 +136,7 @@ export const Instruments = ({
         >
           Sampler
           <br />
-          {activeSample ? activeSample : ".mp3/.wav/.ogg files"}
+          {activeSample ? activeSample?.name : ".mp3/.wav/.ogg files"}
           <input onChange={equipSample} id="sample" type="file" />
         </label>
       </div>

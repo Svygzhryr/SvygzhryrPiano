@@ -21,8 +21,6 @@ export const App = () => {
   const [fxReverb, setFxReverb] = useState(null);
   const [currentSample, setCurrentSample] = useState(null);
 
-  const [waveShape, setWaveShape] = useState("sine");
-
   const [adsr, setAdsr] = useState({
     attack: 0.1,
     decay: 0.5,
@@ -31,9 +29,10 @@ export const App = () => {
   });
 
   const [effects, setEffects] = useState({
-    samplePitch: 2,
     fxDetune: 1200,
     fxHold: true,
+    samplePitch: 2,
+    waveShape: "sine",
   });
 
   const synthStart = useCallback(() => {
@@ -136,8 +135,6 @@ export const App = () => {
     setEffects,
     fxReverb,
     setFxReverb,
-    waveShape,
-    setWaveShape,
   };
 
   return (

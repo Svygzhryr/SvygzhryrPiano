@@ -62,7 +62,7 @@
 
   transition: all 0.7s cubic-bezier(0.26, 1.21, 1, 0.94);
   opacity: 0.5;
-  transform: translateX(-100%);
+  // transform: translateX(-100%);
 
   .showControlsArrow {
     transition: all 0.7s cubic-bezier(0.26, 1.21, 1, 0.94);
@@ -184,6 +184,11 @@
     font-size: 1.7rem;
     margin-bottom: 5rem;
   }
+
+  .sampleOct {
+    font-size: 1.6rem;
+    padding: 0;
+  }
 }
 
 .octave {
@@ -253,6 +258,4 @@ button.holdActive {
   pointer-events: none;
 }
 
-.samplerOct {
-  font-size: 1.6rem !important;
-}
+

@@ -21,8 +21,6 @@ export const Envelope = ({
   effects,
   setEffects,
   activeInstrument,
-  waveShape,
-  setWaveShape,
 }) => {
   const colors = {
     trackColor,
@@ -41,10 +39,6 @@ export const Envelope = ({
     debounceReverb(e.target.value);
     setFxReverb(e.target.value);
   };
-
-  useState(() => {
-    console.log(effects);
-  }, [effects]);
 
   const handleOctaveDown = () => {
     setEffects({
@@ -109,42 +103,42 @@ export const Envelope = ({
           />
         </div>
         <div
-          className={clsx(styles.ontrolsWaveshape, {
+          className={clsx(styles.controlsWaveshape, {
             [styles.samplerActive]: activeInstrument === "Sampler",
           })}
         >
           <button
             onClick={() => {
-              setWaveShape("sine");
+              setEffects({ ...effects, waveShape: "sine" });
             }}
             className={clsx(styles.waveshapeType, styles.sine, {
-              [styles.waveshapeActive]: waveShape === "sine",
+              [styles.waveshapeActive]: effects.waveShape === "sine",
             })}
           >
             <TbWaveSine />
           </button>
           <button
             onClick={() => {
-              setWaveShape("square");
+              setEffects({ ...effects, waveShape: "square" });
             }}
             className={clsx(styles.waveshapeType, styles.square, {
-              [styles.waveshapeActive]: waveShape === "square",
+              [styles.waveshapeActive]: effects.waveShape === "square",
             })}
           >
             <TbWaveSquare />
           </button>
           <button
             onClick={() => {
-              setWaveShape("sawtooth");
+              setEffects({ ...effects, waveShape: "sawtooth" });
             }}
             className={clsx(styles.waveshapeType, styles.saw, {
-              [styles.waveshapeActive]: waveShape === "sawtooth",
+              [styles.waveshapeActive]: effects.waveShape === "sawtooth",
             })}
           >
             <TbWaveSawTool />
           </button>
         </div>
-        {activeInstrument === "Sampler" ? (
+        {activeInstrument?.name === "Sampler" ? (
           <div className={styles.controlsOctave}>
             <button
               onClick={() => {
@@ -202,7 +196,9 @@ export const Envelope = ({
             onClick={(e) => {
               setEffects({ ...effects, fxHold: true });
             }}
-            className={clsx(styles.holdOn, { [styles.holdActive]: hold })}
+            className={clsx(styles.holdOn, {
+              [styles.holdActive]: effects.fxHold,
+            })}
           >
             on
           </button>
@@ -210,7 +206,9 @@ export const Envelope = ({
             onClick={(e) => {
               setEffects({ ...effects, fxHold: false });
             }}
-            className={clsx(styles.holdOff, { [styles.holdActive]: !hold })}
+            className={clsx(styles.holdOff, {
+              [styles.holdActive]: !effects.fxHold,
+            })}
           >
             off
           </button>

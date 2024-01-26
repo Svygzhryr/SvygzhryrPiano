@@ -13,7 +13,6 @@ export const Keyboard = ({
   isInstrumentActive,
   instruments,
   activeKeys,
-  setActiveKeys,
   volume,
   showText,
   setShowText,
@@ -21,11 +20,9 @@ export const Keyboard = ({
   effects,
 }) => {
   const { sampler } = instruments;
-  const instrument = false;
   let keyClassName;
 
   const [pressedKeys, setPressedKeys] = useState([]);
-  const [hold, setHold] = useState("false");
   const [loading, setLoading] = useState(true);
 
   const resetSounds = useCallback(() => {
@@ -43,19 +40,14 @@ export const Keyboard = ({
     async (note) => {
       if (note === undefined) {
       }
-      console.log(
-        "%c activeInstrument",
-        "background: #222; color: #ff00ff",
-        activeInstrument
-      );
       activeInstrument.volume.value = volume;
-      hold
+      effects.fxHold
         ? activeInstrument.triggerAttack(note)
         : activeInstrument === sampler
         ? activeInstrument.triggerAttackRelease(note)
         : activeInstrument.triggerAttackRelease(note, "8n");
     },
-    [activeInstrument, hold, volume]
+    [activeInstrument, effects.fxHold, volume]
   );
 
   const handleKeyDown = useCallback(
@@ -88,7 +80,7 @@ export const Keyboard = ({
       const code = e.keyCode;
       const shittySharp = CSS.escape(KEY_TO_NOTE[code]);
 
-      if (hold) {
+      if (effects.fxHold) {
         activeInstrument.triggerRelease(KEY_TO_NOTE[code]);
       }
 
@@ -103,7 +95,7 @@ export const Keyboard = ({
       activeKeys[e.keyCode] = true;
       // setActiveKeys([...activeKeys, (activeKeys[e.keycode] = true)]);
     },
-    [activeInstrument, hold, activeKeys]
+    [activeInstrument, effects.fxHold, activeKeys]
   );
 
   const handleMouseDown = useCallback(
@@ -127,20 +119,20 @@ export const Keyboard = ({
         }
 
         activeInstrument.volume.value = volume;
-        hold
+        effects.fxHold
           ? activeInstrument.triggerAttack(note)
-          : // : activeInstrument === sampler
-            // ? activeInstrument.triggerAttackRelease(note)
-            activeInstrument.triggerAttackRelease(note, "8n");
+          : activeInstrument === sampler
+          ? activeInstrument.triggerAttackRelease(note)
+          : activeInstrument.triggerAttackRelease(note, "8n");
       }
     },
-    [activeInstrument, hold, volume]
+    [activeInstrument, effects.fxHold, volume]
   );
 
   const handleMouseUp = useCallback(
     (e) => {
       let note = e.target.getAttribute("note");
-      if (hold && note) {
+      if (effects.fxHold && note) {
         activeInstrument?.triggerRelease(note);
       }
       let shittynote = CSS.escape(note);
@@ -153,7 +145,7 @@ export const Keyboard = ({
         return null;
       }
     },
-    [activeInstrument, hold]
+    [activeInstrument, effects.fxHold]
   );
 
   const downFunc = useCallback(
@@ -180,17 +172,6 @@ export const Keyboard = ({
     [handleMouseUp]
   );
 
-  // const altEquip = () => {
-  //   let sampleKey = "C" + effects.samplePitch;
-  //   sampler = new Tone.Sampler({
-  //     urls: {
-  //       [sampleKey]: sourceAux,
-  //     },
-  //   })
-  //     // .connect(FXreverb)
-  //     .toDestination();
-  // };
-
   useEffect(() => {
     setLoading(true);
     ToneAudioBuffer.loaded(setLoading(false));
@@ -215,16 +196,14 @@ export const Keyboard = ({
       window.addEventListener("mouseout", outFunc);
     }
 
-    // altEquip();
-
     setShowText(JSON.parse(localStorage.getItem("text")));
 
     activeInstrument?.set({
       detune: effects.fxDetune,
 
-      // oscillator: {
-      //   type: waveShape,
-      // },
+      oscillator: {
+        type: effects.waveShape,
+      },
 
       // envelope: {
       //   attack: attack,
@@ -264,11 +243,6 @@ export const Keyboard = ({
     upFunc,
     outFunc,
     loading,
-    // waveShape,
-    // attack,
-    // decay,
-    // sustain,
-    // release,
   ]);
 
   const upperKeys = UPPER_NOTES.map((note, index) => {
