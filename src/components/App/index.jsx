@@ -15,7 +15,6 @@ export const App = () => {
   const [showText, setShowText] = useState(false);
   const [isInstrumentActive, setIsInstrumentActive] = useState(false);
   const [activeInstrument, setActiveInstrument] = useState(null);
-  const [samplePitch, setSamplePitch] = useState(2);
 
   const [activeKeys, setActiveKeys] = useState([]);
   const [instruments, setInstruments] = useState({});
@@ -113,6 +112,7 @@ export const App = () => {
     setShowText,
     isInstrumentActive,
     activeInstrument,
+    effects,
   };
 
   const instrumentsProps = {
@@ -123,7 +123,7 @@ export const App = () => {
     setIsInstrumentActive,
     activeInstrument,
     setActiveInstrument,
-    samplePitch,
+    effects,
     currentSample,
     fxReverb,
   };
@@ -136,8 +136,6 @@ export const App = () => {
     setEffects,
     fxReverb,
     setFxReverb,
-    samplePitch,
-    setSamplePitch,
     waveShape,
     setWaveShape,
   };

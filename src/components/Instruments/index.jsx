@@ -14,12 +14,12 @@ export const Instruments = ({
   setIsInstrumentActive,
   activeInstrument,
   setActiveInstrument,
-  samplePitch,
   fxReverb,
+  effects,
 }) => {
   const { synth, monosynth, fmsynth, amsynth, membranesynth } = instruments;
   let { sampler } = instruments;
-  const [activeSample, setActiveSample] = useState("");
+  const [activeSample, setActiveSample] = useState(null);
 
   // const handleInstruments = (i, e) => {
   //   resetSounds();
@@ -42,8 +42,8 @@ export const Instruments = ({
     const sourceAux = URL.createObjectURL(event.target.files[0]);
     const extension = /.((wav)|(ogg)|(mp3))/gi;
     if (event.target.files[0].name.match(extension)) {
-      setActiveSample(event.target.files[0].name);
-      const sampleKey = "C" + samplePitch;
+      setActiveSample(event.target.files[0]);
+      const sampleKey = "C" + effects.samplePitch;
       const newSampler = new Tone.Sampler({
         urls: {
           [sampleKey]: sourceAux,
@@ -57,6 +57,15 @@ export const Instruments = ({
     } else alert("Only files with extentions (.mp3 .ogg .wav) are allowed.");
     // currentFile = event;
   };
+
+  useEffect(() => {
+    const sampleKey = "C" + effects.samplePitch;
+    const newSampler = new Tone.Sampler({
+      urls: {
+        [sampleKey]: URL.createObjectURL(activeSample),
+      },
+    });
+  }, [effects.samplePitch]);
 
   return (
     <>
@@ -121,7 +130,7 @@ export const Instruments = ({
         >
           Sampler
           <br />
-          {activeSample !== "" ? activeSample : ".mp3/.wav/.ogg files"}
+          {activeSample ? activeSample : ".mp3/.wav/.ogg files"}
           <input onChange={equipSample} id="sample" type="file" />
         </label>
       </div>

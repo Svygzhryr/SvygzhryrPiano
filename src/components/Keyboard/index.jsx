@@ -18,6 +18,7 @@ export const Keyboard = ({
   showText,
   setShowText,
   activeInstrument,
+  effects,
 }) => {
   const { sampler } = instruments;
   const instrument = false;
@@ -180,13 +181,13 @@ export const Keyboard = ({
   );
 
   // const altEquip = () => {
-  //   let sampleKey = "C" + samplePitch;
+  //   let sampleKey = "C" + effects.samplePitch;
   //   sampler = new Tone.Sampler({
   //     urls: {
   //       [sampleKey]: sourceAux,
   //     },
   //   })
-  //     .connect(FXreverb)
+  //     // .connect(FXreverb)
   //     .toDestination();
   // };
 
@@ -218,20 +219,20 @@ export const Keyboard = ({
 
     setShowText(JSON.parse(localStorage.getItem("text")));
 
-    // activeInstrument.set({
-    //   detune: detune,
+    activeInstrument?.set({
+      detune: effects.fxDetune,
 
-    //   oscillator: {
-    //     type: waveShape,
-    //   },
+      // oscillator: {
+      //   type: waveShape,
+      // },
 
-    //   envelope: {
-    //     attack: attack,
-    //     decay: decay,
-    //     sustain: sustain,
-    //     release: release,
-    //   },
-    // });
+      // envelope: {
+      //   attack: attack,
+      //   decay: decay,
+      //   sustain: sustain,
+      //   release: release,
+      // },
+    });
 
     return () => {
       window.removeEventListener(
@@ -255,7 +256,7 @@ export const Keyboard = ({
   }, [
     handleKeyDown,
     handleKeyUp,
-    // detune,
+    effects,
     handleMouseDown,
     handleMouseUp,
     resetSounds,

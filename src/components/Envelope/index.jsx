@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { CustomKnob } from "../CustomKnob";
 import { TbWaveSawTool, TbWaveSine, TbWaveSquare } from "react-icons/tb";
 import { AiOutlineRight } from "react-icons/ai";
@@ -40,6 +40,24 @@ export const Envelope = ({
   const handleReverb = (e) => {
     debounceReverb(e.target.value);
     setFxReverb(e.target.value);
+  };
+
+  useState(() => {
+    console.log(effects);
+  }, [effects]);
+
+  const handleOctaveDown = () => {
+    setEffects({
+      ...effects,
+      fxDetune: fxDetune < -1200 ? fxDetune : fxDetune - 1200,
+    });
+  };
+
+  const handleOctaveUp = () => {
+    setEffects({
+      ...effects,
+      fxDetune: fxDetune > 2400 ? fxDetune : fxDetune + 1200,
+    });
   };
 
   return (
@@ -170,27 +188,11 @@ export const Envelope = ({
           </div>
         ) : (
           <div className={styles.controlsOctave}>
-            <button
-              onClick={() => {
-                setEffects({
-                  ...effects,
-                  fxDetune: fxDetune < -1200 ? fxDetune : fxDetune - 1200,
-                });
-              }}
-              className={styles.octaveDown}
-            >
+            <button onClick={handleOctaveDown} className={styles.octaveDown}>
               -
             </button>
             <h1 className={styles.detuneNumber}>{fxDetune / 1200}</h1>
-            <button
-              onClick={() => {
-                setEffects({
-                  ...effects,
-                  fxDetune: fxDetune > 2400 ? fxDetune : fxDetune + 1200,
-                });
-              }}
-              className={styles.octaveUp}
-            >
+            <button onClick={handleOctaveUp} className={styles.octaveUp}>
               +
             </button>
           </div>
