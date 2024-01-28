@@ -14,7 +14,6 @@ export const Instruments = ({
   setIsInstrumentActive,
   activeInstrument,
   setActiveInstrument,
-  fxReverb,
   effects,
 }) => {
   const { synth, monosynth, fmsynth, amsynth, membranesynth } = instruments;
@@ -37,8 +36,6 @@ export const Instruments = ({
   }, [activeInstrument]);
 
   const equipSample = (event) => {
-    // eslint-disable-next-line no-unused-expressions
-    // event === undefined ? (event = currentFile) : null;
     const sourceAux = URL.createObjectURL(event.target.files[0]);
     const extension = /.((wav)|(ogg)|(mp3))/gi;
     if (event.target.files[0].name.match(extension)) {
@@ -49,7 +46,7 @@ export const Instruments = ({
           [sampleKey]: sourceAux,
         },
       })
-        .connect(fxReverb)
+        .connect(effects.fxReverb)
         .toDestination();
       setInstruments({ ...instruments, sampler: newSampler });
       setActiveInstrument(newSampler);
@@ -67,7 +64,7 @@ export const Instruments = ({
           [sampleKey]: URL.createObjectURL(activeSample),
         },
       })
-        .connect(fxReverb)
+        .connect(effects.fxReverb)
         .toDestination();
       setActiveInstrument(newSampler);
     }

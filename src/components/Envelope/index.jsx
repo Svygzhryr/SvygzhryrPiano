@@ -16,8 +16,6 @@ export const Envelope = ({
   setThumbColor,
   adsr,
   setAdsr,
-  fxReverb,
-  setFxReverb,
   effects,
   setEffects,
   activeInstrument,
@@ -31,13 +29,16 @@ export const Envelope = ({
     setThumbColor,
   };
 
-  const { hold, fxDetune } = effects;
+  const { fxDetune } = effects;
   const { attack, decay, sustain, release } = adsr;
+  const [localReverbValue, setLocalReverbValue] = useState(0.001);
 
-  const debounceReverb = debounce((reverb) => handleReverb(reverb), 300);
+  const debounceReverb = debounce((reverb) => {
+    effects.fxReverb.decay = reverb;
+  }, 300);
   const handleReverb = (e) => {
+    setLocalReverbValue(e.target.value);
     debounceReverb(e.target.value);
-    setFxReverb(e.target.value);
   };
 
   const handleOctaveDown = () => {
@@ -66,28 +67,28 @@ export const Envelope = ({
           className={styles.attack}
           enType={"Attack"}
           value={attack}
-          setValue={setAdsr({ ...adsr, attack })}
+          setValue={setAdsr}
         />
         <CustomKnob
           {...colors}
           className={styles.decay}
           enType={"Decay"}
           value={decay}
-          setValue={setAdsr({ ...adsr, decay })}
+          setValue={setAdsr}
         />
         <CustomKnob
           {...colors}
           className={styles.sustain}
           enType={"Sustain"}
           value={sustain}
-          setValue={setAdsr({ ...adsr, sustain })}
+          setValue={setAdsr}
         />
         <CustomKnob
           {...colors}
           className={styles.release}
           enType={"Release"}
           value={release}
-          setValue={setAdsr({ ...adsr, release })}
+          setValue={setAdsr}
         /> */}
       </div>
       <div className={styles.controlsFx}>
@@ -96,7 +97,7 @@ export const Envelope = ({
             step={1}
             min={0.001}
             max={51}
-            value={fxReverb}
+            value={localReverbValue}
             onChange={handleReverb}
             className={styles.range}
             type="range"

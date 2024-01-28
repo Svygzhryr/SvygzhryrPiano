@@ -18,7 +18,6 @@ export const App = () => {
 
   const [activeKeys, setActiveKeys] = useState([]);
   const [instruments, setInstruments] = useState({});
-  const [fxReverb, setFxReverb] = useState(null);
   const [currentSample, setCurrentSample] = useState(null);
 
   const [adsr, setAdsr] = useState({
@@ -28,18 +27,18 @@ export const App = () => {
     release: 0.5,
   });
 
+  const reverb = new Tone.Reverb(0.1).toDestination();
+
   const [effects, setEffects] = useState({
     fxDetune: 1200,
     fxHold: true,
+    fxReverb: reverb,
     samplePitch: 2,
     waveShape: "sine",
   });
 
   const synthStart = useCallback(() => {
     Tone.context.lookAhead = 0.02;
-
-    const reverb = new Tone.Reverb(0.1).toDestination();
-    setFxReverb(reverb);
 
     const synth = new Tone.PolySynth(Tone.Synth)
       .connect(reverb)
@@ -124,7 +123,6 @@ export const App = () => {
     setActiveInstrument,
     effects,
     currentSample,
-    fxReverb,
   };
 
   const envelopeProps = {
@@ -133,8 +131,6 @@ export const App = () => {
     setAdsr,
     effects,
     setEffects,
-    fxReverb,
-    setFxReverb,
   };
 
   return (
