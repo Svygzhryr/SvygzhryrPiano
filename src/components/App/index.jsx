@@ -101,6 +101,40 @@ export const App = () => {
     synthStart();
   }, [synthStart]);
 
+  const [progressColor, setProgressColor] = useState(
+    getComputedStyle(document.documentElement).getPropertyValue(
+      "--primary_button_active"
+    )
+  );
+  const [trackColor, setTrackColor] = useState(
+    getComputedStyle(document.documentElement).getPropertyValue(
+      "--primary_background"
+    )
+  );
+  const [thumbColor, setThumbColor] = useState(
+    getComputedStyle(document.documentElement).getPropertyValue(
+      "--primary_background"
+    )
+  );
+
+  const envelopeColorChange = useCallback(() => {
+    setProgressColor(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--primary_button_active"
+      )
+    );
+    setTrackColor(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--primary_background"
+      )
+    );
+    setThumbColor(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--primary_background"
+      )
+    );
+  }, [setProgressColor, setTrackColor, setThumbColor]);
+
   const keyboardProps = {
     instruments,
     activeKeys,
@@ -131,13 +165,20 @@ export const App = () => {
     setAdsr,
     effects,
     setEffects,
+    progressColor,
+    trackColor,
+    thumbColor,
   };
 
   return (
     <div className="app">
       <Keyboard {...keyboardProps} />
       <VolumeSlider volume={volume} setVolume={setVolume} />
-      <Themes showText={showText} setShowText={setShowText} />
+      <Themes
+        envelopeColorChange={envelopeColorChange}
+        showText={showText}
+        setShowText={setShowText}
+      />
       <Instruments {...instrumentsProps} />
       <Envelope {...envelopeProps} />
     </div>

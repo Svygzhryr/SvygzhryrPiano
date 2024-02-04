@@ -2,42 +2,8 @@ import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import styles from "./Themes.module.scss";
 
-export const Themes = ({ showText, setShowText }) => {
+export const Themes = ({ showText, setShowText, envelopeColorChange }) => {
   const [theme, setTheme] = useState("black");
-
-  const [progressColor, setProgressColor] = useState(
-    getComputedStyle(document.documentElement).getPropertyValue(
-      "--primary_button_active"
-    )
-  );
-  const [trackColor, setTrackColor] = useState(
-    getComputedStyle(document.documentElement).getPropertyValue(
-      "--primary_background"
-    )
-  );
-  const [thumbColor, setThumbColor] = useState(
-    getComputedStyle(document.documentElement).getPropertyValue(
-      "--primary_background"
-    )
-  );
-
-  const envelopeColorChange = useCallback(() => {
-    setProgressColor(
-      getComputedStyle(document.documentElement).getPropertyValue(
-        "--primary_button_active"
-      )
-    );
-    setTrackColor(
-      getComputedStyle(document.documentElement).getPropertyValue(
-        "--primary_background"
-      )
-    );
-    setThumbColor(
-      getComputedStyle(document.documentElement).getPropertyValue(
-        "--primary_background"
-      )
-    );
-  }, [setProgressColor, setTrackColor, setThumbColor]);
 
   useEffect(() => {
     document.documentElement.setAttribute(

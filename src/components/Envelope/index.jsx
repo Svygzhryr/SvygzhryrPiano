@@ -62,7 +62,7 @@ export const Envelope = ({
           [styles.samplerActive]: activeInstrument === "Sampler",
         })}
       >
-        {/* <CustomKnob
+        <CustomKnob
           {...colors}
           className={styles.attack}
           enType={"Attack"}
@@ -89,7 +89,7 @@ export const Envelope = ({
           enType={"Release"}
           value={release}
           setValue={setAdsr}
-        /> */}
+        />
       </div>
       <div className={styles.controlsFx}>
         <div className={`${styles.effectSlider} ${styles.fxReverb}`}>

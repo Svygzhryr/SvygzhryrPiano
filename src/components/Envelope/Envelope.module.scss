@@ -101,11 +101,15 @@
 }
 
 .envelope {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
   width: 15rem;
-  height: 100%;
-  margin-top: -1rem;
-  .envelopeKnob {
-    margin-top: 3rem;
+
+  div {
+    width: 5rem;
+    margin: 1rem;
   }
 }
 

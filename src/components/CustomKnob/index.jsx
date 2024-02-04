@@ -7,36 +7,44 @@ import {
   CircularThumb,
 } from "react-circular-input";
 
-export const CustomKnob = ({ ...props }) => {
+export const CustomKnob = ({
+  value,
+  setValue,
+  trackColor,
+  progressColor,
+  thumbColor,
+  enType,
+}) => {
+  console.log(trackColor);
   return (
     <div className={styles.envelopeKnob}>
-      <div className={styles.knobValue}>{Math.round(props.value * 10)}</div>
+      <div className={styles.knobValue}>{Math.round(value * 10)}</div>
       <CircularInput
         radius={25}
         className={styles.input}
-        value={props.value}
-        onChange={props.setValue}
+        value={value}
+        onChange={setValue}
       >
         <CircularTrack
-          stroke={props.trackColor}
+          stroke={trackColor}
           strokeWidth={10}
           className={styles.track}
         />
         <CircularProgress
-          stroke={props.progressColor}
+          stroke={progressColor}
           strokeLinecap="0"
           strokeWidth={5}
           className={styles.progress}
         />
         <CircularThumb
-          stroke={props.progressColor}
+          stroke={progressColor}
           strokeWidth={2}
-          fill={props.thumbColor}
+          fill={thumbColor}
           r={8}
           className={styles.thumb}
         />
       </CircularInput>
-      <h1 className={styles.type}>{props.enType}</h1>
+      <h1 className={styles.type}>{enType}</h1>
     </div>
   );
 };
