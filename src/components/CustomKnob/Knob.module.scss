@@ -1,0 +1,32 @@
+@import "../../styles/variables";
+
+.envelopeKnob {
+  position: relative;
+  margin-top: 3rem;
+}
+
+.knobValue {
+  position: absolute;
+
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary_background);
+
+  margin: 0;
+  padding: 0.5rem 1rem;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: -1;
+}
+
+.type {
+  position: absolute;
+  font-size: 1.8rem;
+  color: var(--primary_background);
+  font-weight: 700;
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+}
