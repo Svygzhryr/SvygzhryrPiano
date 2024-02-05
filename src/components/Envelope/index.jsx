@@ -31,6 +31,8 @@ export const Envelope = ({
   setSustain,
   setDecay,
   setRelease,
+  setIsReverbActive,
+  isReverbActive,
 }) => {
   const colors = {
     trackColor,
@@ -43,7 +45,11 @@ export const Envelope = ({
 
   const { fxDetune } = effects;
   const [localReverbValue, setLocalReverbValue] = useState(0.001);
-  const [isReverbActive, setIsReverbActive] = useState(false);
+
+  useEffect(() => {
+    setIsReverbActive(false);
+    setLocalReverbValue(0.01);
+  }, [activeInstrument]);
 
   const debounceReverb = debounce((reverb) => {
     reverbInstance.decay = reverb;

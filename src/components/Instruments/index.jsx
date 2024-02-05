@@ -45,9 +45,7 @@ export const Instruments = ({
         urls: {
           [sampleKey]: sourceAux,
         },
-      })
-        .connect(effects.fxReverb)
-        .toDestination();
+      }).toDestination();
       setInstruments({ ...instruments, sampler: newSampler });
       setActiveInstrument(newSampler);
       resetSounds();
@@ -63,9 +61,7 @@ export const Instruments = ({
         urls: {
           [sampleKey]: URL.createObjectURL(activeSample),
         },
-      })
-        .connect(effects.fxReverb)
-        .toDestination();
+      }).toDestination();
       setActiveInstrument(newSampler);
     }
   }, [effects.samplePitch]);

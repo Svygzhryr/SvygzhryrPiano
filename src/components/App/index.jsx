@@ -15,6 +15,7 @@ export const App = () => {
   const [showText, setShowText] = useState(false);
   const [isInstrumentActive, setIsInstrumentActive] = useState(false);
   const [activeInstrument, setActiveInstrument] = useState(null);
+  const [isReverbActive, setIsReverbActive] = useState(false);
 
   const [activeKeys, setActiveKeys] = useState([]);
   const [instruments, setInstruments] = useState({});
@@ -147,6 +148,8 @@ export const App = () => {
     setActiveInstrument,
     effects,
     currentSample,
+    setIsReverbActive,
+    isReverbActive,
   };
 
   const envelopeProps = {
@@ -164,6 +167,8 @@ export const App = () => {
     setDecay,
     setSustain,
     setRelease,
+    setIsReverbActive,
+    isReverbActive,
   };
 
   return (
