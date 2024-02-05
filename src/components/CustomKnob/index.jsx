@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Knob.module.scss";
 import {
   CircularInput,
@@ -15,7 +15,6 @@ export const CustomKnob = ({
   thumbColor,
   enType,
 }) => {
-  console.log(trackColor);
   return (
     <div className={styles.envelopeKnob}>
       <div className={styles.knobValue}>{Math.round(value * 10)}</div>

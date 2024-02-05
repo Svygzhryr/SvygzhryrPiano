@@ -20,19 +20,15 @@ export const App = () => {
   const [instruments, setInstruments] = useState({});
   const [currentSample, setCurrentSample] = useState(null);
 
-  const [adsr, setAdsr] = useState({
-    attack: 0.1,
-    decay: 0.5,
-    sustain: 0.5,
-    release: 0.5,
-  });
-
-  const reverb = new Tone.Reverb(0.1).toDestination();
+  const [attack, setAttack] = useState(0.01);
+  const [decay, setDecay] = useState(0.5);
+  const [sustain, setSustain] = useState(0.5);
+  const [release, setRelease] = useState(0.5);
 
   const [effects, setEffects] = useState({
     fxDetune: 1200,
     fxHold: true,
-    fxReverb: reverb,
+    fxReverb: 0.1,
     samplePitch: 2,
     waveShape: "sine",
   });
@@ -40,28 +36,18 @@ export const App = () => {
   const synthStart = useCallback(() => {
     Tone.context.lookAhead = 0.02;
 
-    const synth = new Tone.PolySynth(Tone.Synth)
-      .connect(reverb)
-      .toDestination();
-    const monosynth = new Tone.PolySynth(Tone.MonoSynth)
-      .connect(reverb)
-      .toDestination();
-    const fmsynth = new Tone.PolySynth(Tone.FMSynth)
-      .connect(reverb)
-      .toDestination();
-    const amsynth = new Tone.PolySynth(Tone.AMSynth)
-      .connect(reverb)
-      .toDestination();
-    const membranesynth = new Tone.PolySynth(Tone.MembraneSynth)
-      .connect(reverb)
-      .toDestination();
+    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+    const monosynth = new Tone.PolySynth(Tone.MonoSynth).toDestination();
+    const fmsynth = new Tone.PolySynth(Tone.FMSynth).toDestination();
+    const amsynth = new Tone.PolySynth(Tone.AMSynth).toDestination();
+    const membranesynth = new Tone.PolySynth(
+      Tone.MembraneSynth
+    ).toDestination();
     const sampler = new Tone.Sampler({
       urls: {
         A3: sample2,
       },
-    })
-      .connect(reverb)
-      .toDestination();
+    }).toDestination();
 
     const initialInstruments = {
       synth,
@@ -145,6 +131,10 @@ export const App = () => {
     isInstrumentActive,
     activeInstrument,
     effects,
+    attack,
+    decay,
+    sustain,
+    release,
   };
 
   const instrumentsProps = {
@@ -161,13 +151,19 @@ export const App = () => {
 
   const envelopeProps = {
     activeInstrument,
-    adsr,
-    setAdsr,
     effects,
     setEffects,
     progressColor,
     trackColor,
     thumbColor,
+    attack,
+    decay,
+    sustain,
+    release,
+    setAttack,
+    setDecay,
+    setSustain,
+    setRelease,
   };
 
   return (

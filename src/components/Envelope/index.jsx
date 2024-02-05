@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CustomKnob } from "../CustomKnob";
 import { TbWaveSawTool, TbWaveSine, TbWaveSquare } from "react-icons/tb";
 import { AiOutlineRight } from "react-icons/ai";
 import { debounce } from "lodash";
+import * as Tone from "tone";
+
 import clsx from "clsx";
 
 import styles from "./Envelope.module.scss";
+
+const reverbInstance = new Tone.Reverb(0.1).toDestination();
 
 export const Envelope = ({
   trackColor,
@@ -19,6 +23,14 @@ export const Envelope = ({
   effects,
   setEffects,
   activeInstrument,
+  attack,
+  sustain,
+  decay,
+  release,
+  setAttack,
+  setSustain,
+  setDecay,
+  setRelease,
 }) => {
   const colors = {
     trackColor,
@@ -30,12 +42,17 @@ export const Envelope = ({
   };
 
   const { fxDetune } = effects;
-  const { attack, decay, sustain, release } = adsr;
   const [localReverbValue, setLocalReverbValue] = useState(0.001);
+  const [isReverbActive, setIsReverbActive] = useState(false);
 
   const debounceReverb = debounce((reverb) => {
-    effects.fxReverb.decay = reverb;
+    reverbInstance.decay = reverb;
+    if (!isReverbActive) {
+      activeInstrument.connect(reverbInstance).toDestination();
+      setIsReverbActive(true);
+    }
   }, 300);
+
   const handleReverb = (e) => {
     setLocalReverbValue(e.target.value);
     debounceReverb(e.target.value);
@@ -67,28 +84,29 @@ export const Envelope = ({
           className={styles.attack}
           enType={"Attack"}
           value={attack}
-          setValue={setAdsr}
+          setValue={setAttack}
+          adsr={adsr}
         />
         <CustomKnob
           {...colors}
           className={styles.decay}
           enType={"Decay"}
           value={decay}
-          setValue={setAdsr}
+          setValue={setDecay}
         />
         <CustomKnob
           {...colors}
           className={styles.sustain}
           enType={"Sustain"}
           value={sustain}
-          setValue={setAdsr}
+          setValue={setSustain}
         />
         <CustomKnob
           {...colors}
           className={styles.release}
           enType={"Release"}
           value={release}
-          setValue={setAdsr}
+          setValue={setRelease}
         />
       </div>
       <div className={styles.controlsFx}>

@@ -18,6 +18,10 @@ export const Keyboard = ({
   setShowText,
   activeInstrument,
   effects,
+  attack,
+  decay,
+  sustain,
+  release,
 }) => {
   const { sampler } = instruments;
   let keyClassName;
@@ -205,12 +209,12 @@ export const Keyboard = ({
         type: effects.waveShape,
       },
 
-      // envelope: {
-      //   attack: attack,
-      //   decay: decay,
-      //   sustain: sustain,
-      //   release: release,
-      // },
+      envelope: {
+        attack: attack,
+        decay: decay,
+        sustain: sustain,
+        release: release,
+      },
     });
 
     return () => {
@@ -243,6 +247,10 @@ export const Keyboard = ({
     upFunc,
     outFunc,
     loading,
+    attack,
+    decay,
+    sustain,
+    release,
   ]);
 
   const upperKeys = UPPER_NOTES.map((note, index) => {
