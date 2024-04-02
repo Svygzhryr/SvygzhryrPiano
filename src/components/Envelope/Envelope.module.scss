@@ -258,6 +258,7 @@ button.holdActive {
 }
 
 .samplerActive {
+  display: none;
   filter: blur(4px);
   pointer-events: none;
 }

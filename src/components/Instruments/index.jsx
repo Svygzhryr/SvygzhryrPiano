@@ -20,11 +20,6 @@ export const Instruments = ({
   let { sampler } = instruments;
   const [activeSample, setActiveSample] = useState(null);
 
-  // const handleInstruments = (i, e) => {
-  //   resetSounds();
-  //   e.classList.add(".instrumentActive");
-  // };
-
   const resetSounds = useCallback(() => {
     const buttons = document.querySelectorAll(`[note]`);
     buttons.forEach((e) => {
