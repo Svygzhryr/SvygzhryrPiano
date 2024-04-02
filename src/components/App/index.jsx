@@ -66,8 +66,6 @@ export const App = () => {
         },
 
         detune: 2400,
-        // portamento: Seconds;
-        // onsilence: onSilenceCallback;
 
         envelope: {
           atatck: 0.01,

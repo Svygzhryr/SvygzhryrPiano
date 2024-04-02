@@ -62,7 +62,7 @@
 
   transition: all 0.7s cubic-bezier(0.26, 1.21, 1, 0.94);
   opacity: 0.5;
-  // transform: translateX(-100%);
+  transform: translateX(-100%);
 
   .showControlsArrow {
     transition: all 0.7s cubic-bezier(0.26, 1.21, 1, 0.94);
