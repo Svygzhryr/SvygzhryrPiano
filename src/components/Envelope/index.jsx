@@ -82,7 +82,7 @@ export const Envelope = ({
     <div className={styles.extraControls}>
       <div
         className={clsx(styles.envelope, {
-          [styles.samplerActive]: activeInstrument.name === "Sampler",
+          [styles.samplerActive]: activeInstrument?.name === "Sampler",
         })}
       >
         <CustomKnob
@@ -129,7 +129,7 @@ export const Envelope = ({
         </div>
         <div
           className={clsx(styles.controlsWaveshape, {
-            [styles.samplerActive]: activeInstrument.name === "Sampler",
+            [styles.samplerActive]: activeInstrument?.name === "Sampler",
           })}
         >
           <button
