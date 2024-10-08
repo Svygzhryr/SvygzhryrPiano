@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Themes.module.scss";
 
 export const Themes = ({ showText, setShowText, envelopeColorChange }) => {
@@ -13,51 +13,35 @@ export const Themes = ({ showText, setShowText, envelopeColorChange }) => {
     envelopeColorChange();
   }, [envelopeColorChange, theme]);
 
-  const setBlackTheme = () => {
-    setTheme("default");
-    localStorage.setItem("theme", "default");
+  const changeTheme = (theme) => {
+    setTheme(theme);
+    localStorage.setItem("theme", theme);
   };
 
-  const setPurpleTheme = () => {
-    setTheme("purple");
-    localStorage.setItem("theme", "purple");
-  };
-
-  const setRedTheme = () => {
-    setTheme("red");
-    localStorage.setItem("theme", "red");
-  };
-
-  const setBlueTheme = () => {
-    setTheme("blue");
-    localStorage.setItem("theme", "blue");
-  };
-
-  const handleShowText = () => {
-    localStorage.setItem("text", !showText);
-    return setShowText(!showText);
+  const changeShowText = () => {
+    setShowText(!showText);
   };
 
   return (
     <div className={styles.themes}>
       <button
-        onClick={setBlackTheme}
+        onClick={() => changeTheme("black")}
         className={`${styles.themeSelector} ${styles.theme1}`}
       ></button>
       <button
-        onClick={setPurpleTheme}
+        onClick={() => changeTheme("purple")}
         className={`${styles.themeSelector} ${styles.theme2}`}
       ></button>
       <button
-        onClick={setRedTheme}
+        onClick={() => changeTheme("red")}
         className={`${styles.themeSelector} ${styles.theme3}`}
       ></button>
       <button
-        onClick={setBlueTheme}
+        onClick={() => changeTheme("blue")}
         className={`${styles.themeSelector} ${styles.theme4}`}
       ></button>
       <button
-        onClick={handleShowText}
+        onClick={changeShowText}
         className={`${styles.themeSelector} ${styles.toggleText} ${
           showText || styles.textActive
         }`}
