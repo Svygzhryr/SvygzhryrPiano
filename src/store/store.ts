@@ -4,6 +4,9 @@ import keyboardSlice from "./keyboardSlice";
 const store = configureStore({
   reducer: {
     keyboard: keyboardSlice,
+    // envelope: envelopeSlice,
+    // theme: themeSlice,
+    // instrument: instrumentSlice,
   },
 });
 
