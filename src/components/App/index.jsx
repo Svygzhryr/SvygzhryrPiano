@@ -42,7 +42,7 @@ export const App = () => {
     const fmsynth = new Tone.PolySynth(Tone.FMSynth).toDestination();
     const amsynth = new Tone.PolySynth(Tone.AMSynth).toDestination();
     const membranesynth = new Tone.PolySynth(
-      Tone.MembraneSynth
+      Tone.MembraneSynth,
     ).toDestination();
     const sampler = new Tone.Sampler({
       urls: {
@@ -88,35 +88,35 @@ export const App = () => {
 
   const [progressColor, setProgressColor] = useState(
     getComputedStyle(document.documentElement).getPropertyValue(
-      "--primary_button_active"
-    )
+      "--primary_button_active",
+    ),
   );
   const [trackColor, setTrackColor] = useState(
     getComputedStyle(document.documentElement).getPropertyValue(
-      "--primary_background"
-    )
+      "--primary_background",
+    ),
   );
   const [thumbColor, setThumbColor] = useState(
     getComputedStyle(document.documentElement).getPropertyValue(
-      "--primary_background"
-    )
+      "--primary_background",
+    ),
   );
 
   const envelopeColorChange = useCallback(() => {
     setProgressColor(
       getComputedStyle(document.documentElement).getPropertyValue(
-        "--primary_button_active"
-      )
+        "--primary_button_active",
+      ),
     );
     setTrackColor(
       getComputedStyle(document.documentElement).getPropertyValue(
-        "--primary_background"
-      )
+        "--primary_background",
+      ),
     );
     setThumbColor(
       getComputedStyle(document.documentElement).getPropertyValue(
-        "--primary_background"
-      )
+        "--primary_background",
+      ),
     );
   }, [setProgressColor, setTrackColor, setThumbColor]);
 

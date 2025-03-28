@@ -8,7 +8,7 @@ export const Themes = ({ showText, setShowText, envelopeColorChange }) => {
   useEffect(() => {
     document.documentElement.setAttribute(
       "color-scheme",
-      localStorage.getItem("theme") ?? "default"
+      localStorage.getItem("theme") ?? "black"
     );
     envelopeColorChange();
   }, [envelopeColorChange, theme]);
