@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-
-import sample2 from "../samples/harp.wav";
 
 import * as Tone from "tone";
+
+import sample2 from "../samples/harp.wav";
 
 export interface ADSR {
   attack: number;
@@ -31,6 +30,8 @@ export interface Instruments {
 
 export interface KeyboardState {
   volume: number;
+  reverb: number;
+  isReverbActive: boolean;
   activeKeys: number[];
   showText: boolean;
   isInstrumentActive: boolean;
@@ -41,6 +42,8 @@ export interface KeyboardState {
 
 const initialState: KeyboardState = {
   volume: +(localStorage.getItem("volume") ?? 0),
+  reverb: 0.1,
+  isReverbActive: false,
   activeKeys: Array(222).fill(true),
   showText: true,
   isInstrumentActive: false,
