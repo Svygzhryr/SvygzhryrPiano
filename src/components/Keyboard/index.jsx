@@ -26,7 +26,7 @@ export const Keyboard = ({
   const { sampler } = instruments;
   let keyClassName;
 
-  const [pressedKeys, setPressedKeys] = useState([]);
+  // локальный лоадер пусть остается
   const [loading, setLoading] = useState(true);
 
   const resetSounds = useCallback(() => {
@@ -73,6 +73,7 @@ export const Keyboard = ({
         } catch {
           return null;
         }
+        2;
         playNote(KEY_TO_NOTE[code]);
       }
     },
@@ -97,7 +98,6 @@ export const Keyboard = ({
         return null;
       }
       activeKeys[e.keyCode] = true;
-      // setActiveKeys([...activeKeys, (activeKeys[e.keycode] = true)]);
     },
     [activeInstrument, effects.fxHold, activeKeys]
   );
@@ -105,6 +105,7 @@ export const Keyboard = ({
   const handleMouseDown = useCallback(
     (e) => {
       let note = e.target.getAttribute("note");
+      // на будущее надо эту либу убрать
       let shittynote = CSS.escape(note);
 
       const button = document.querySelector(`[note=${shittynote}]`);
@@ -269,7 +270,6 @@ export const Keyboard = ({
           key={index}
           note={note}
           className={keyClassName}
-          pressedkeys={pressedKeys}
           volume={volume}
         >
           {generateText(note)}
@@ -293,7 +293,6 @@ export const Keyboard = ({
           key={index}
           note={note}
           className={keyClassName}
-          pressedkey={pressedKeys}
           volume={volume}
         >
           {generateText(note)}
@@ -303,27 +302,29 @@ export const Keyboard = ({
 
   return (
     <div className={styles.piano}>
-      {loading ? (
-        <div className={styles.loader}>
-          <div className={styles.loader_inside}></div>
-        </div>
-      ) : (
-        <div>
-          <div
-            className={`${styles.piano_wrapper} ${styles.active} ${
-              isInstrumentActive ? "" : styles.inactive
-            }`}
-          >
-            <div className={styles.upper_keyboard}>
-              <div className={styles.upper_buttons}>{upperKeys}</div>
+      <div>
+        <div
+          className={`${styles.piano_wrapper} ${styles.active} ${
+            isInstrumentActive ? "" : styles.inactive
+          }`}
+        >
+          {!loading ? (
+            <div className={styles.loader}>
+              <div className={styles.loader_inside}></div>
             </div>
+          ) : (
+            <>
+              <div className={styles.upper_keyboard}>
+                <div className={styles.upper_buttons}>{upperKeys}</div>
+              </div>
 
-            <div className={styles.lower_keyboard}>
-              <div className={styles.lower_buttons}>{lowerKeys}</div>
-            </div>
-          </div>
+              <div className={styles.lower_keyboard}>
+                <div className={styles.lower_buttons}>{lowerKeys}</div>
+              </div>
+            </>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

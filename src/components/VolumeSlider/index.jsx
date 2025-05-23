@@ -15,6 +15,7 @@ export const VolumeSlider = ({ volume, setVolume }) => {
         default:
           return null;
         case 61: {
+          // вынести константы в переменные
           if (+volume < 20) {
             setVolume(+volume + 1);
           }

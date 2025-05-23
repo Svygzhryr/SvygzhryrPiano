@@ -18,6 +18,8 @@ export const Instruments = ({
 }) => {
   const { synth, monosynth, fmsynth, amsynth, membranesynth } = instruments;
   let { sampler } = instruments;
+
+  // можно вынести в стор а можно оставить тут как локальный стейт
   const [activeSample, setActiveSample] = useState(null);
 
   const resetSounds = useCallback(() => {
@@ -45,7 +47,6 @@ export const Instruments = ({
       setActiveInstrument(newSampler);
       resetSounds();
     } else alert("Only files with extentions (.mp3 .ogg .wav) are allowed.");
-    // currentFile = event;
   };
 
   useEffect(() => {
@@ -77,6 +78,7 @@ export const Instruments = ({
         }`}
       >
         <button
+          // здесь и далее инструмент брать со стора
           onClick={() => setActiveInstrument(synth)}
           className={`${styles.instrumentItem} ${
             activeInstrument === synth ? styles.instrumentActive : ""
