@@ -308,7 +308,7 @@ export const Keyboard = ({
             isInstrumentActive ? "" : styles.inactive
           }`}
         >
-          {!loading ? (
+          {loading ? (
             <div className={styles.loader}>
               <div className={styles.loader_inside}></div>
             </div>

@@ -1,10 +1,11 @@
-import styles from "./Knob.module.scss";
 import {
   CircularInput,
   CircularTrack,
   CircularProgress,
   CircularThumb,
 } from "react-circular-input";
+
+import styles from "./Knob.module.scss";
 
 export const CustomKnob = ({
   value,

@@ -1,9 +1,12 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import styles from "./Themes.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { themeSelector } from "../../store/selectors";
+import { switchTheme } from "../../store/themeSlice";
 
 export const Themes = ({ showText, setShowText, envelopeColorChange }) => {
-  const [theme, setTheme] = useState("black");
+  const dispatch = useDispatch();
+  const theme = useSelector(themeSelector);
 
   useEffect(() => {
     document.documentElement.setAttribute(
@@ -14,7 +17,7 @@ export const Themes = ({ showText, setShowText, envelopeColorChange }) => {
   }, [envelopeColorChange, theme]);
 
   const changeTheme = (theme) => {
-    setTheme(theme);
+    dispatch(switchTheme(theme));
     localStorage.setItem("theme", theme);
   };
 

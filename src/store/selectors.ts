@@ -1,5 +1,5 @@
 import { RootState } from "./store";
-
+// keyboard
 export const volumeSelector = (state: RootState) => state.keyboard.volume;
 
 export const reverbSelector = (state: RootState) => state.keyboard.reverb;
@@ -13,7 +13,13 @@ export const isInstrumentActive = (state: RootState) =>
   state.keyboard.isInstrumentActive;
 
 export const effectsSelector = (state: RootState) => state.keyboard.effects;
-
-export const ADSRSelector = (state: RootState) => state.keyboard.ADSR;
-
+// theme
 export const themeSelector = (state: RootState) => state.theme.theme;
+// adsr
+export const attackSelector = (state: RootState) => state.adsr.attack;
+
+export const decaySelector = (state: RootState) => state.adsr.decay;
+
+export const sustainSelector = (state: RootState) => state.adsr.sustain;
+
+export const releaseSelector = (state: RootState) => state.adsr.release;

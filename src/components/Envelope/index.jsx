@@ -7,7 +7,21 @@ import * as Tone from "tone";
 
 import clsx from "clsx";
 
+import { useSelector } from "react-redux";
 import styles from "./Envelope.module.scss";
+import { useDispatch } from "react-redux";
+import {
+  attackSelector,
+  decaySelector,
+  sustainSelector,
+  releaseSelector,
+} from "../../store/selectors";
+import {
+  changeAttack,
+  changeDecay,
+  changeRelease,
+  changeSustain,
+} from "../../store/adsrSlice";
 
 const reverbInstance = new Tone.Reverb(0.1).toDestination();
 
@@ -18,19 +32,9 @@ export const Envelope = ({
   setTrackColor,
   setProgressColor,
   setThumbColor,
-  adsr,
-  setAdsr,
   effects,
   setEffects,
   activeInstrument,
-  attack,
-  sustain,
-  decay,
-  release,
-  setAttack,
-  setSustain,
-  setDecay,
-  setRelease,
   setIsReverbActive,
   isReverbActive,
 }) => {
@@ -45,6 +49,12 @@ export const Envelope = ({
 
   const { fxDetune } = effects;
   const [localReverbValue, setLocalReverbValue] = useState(0.001);
+  const dispatch = useDispatch();
+
+  const attack = useSelector(attackSelector);
+  const decay = useSelector(decaySelector);
+  const sustain = useSelector(sustainSelector);
+  const release = useSelector(releaseSelector);
 
   useEffect(() => {
     setIsReverbActive(false);
@@ -90,29 +100,28 @@ export const Envelope = ({
           className={styles.attack}
           enType={"Attack"}
           value={attack}
-          setValue={setAttack}
-          adsr={adsr}
+          setValue={dispatch(changeAttack)}
         />
         <CustomKnob
           {...colors}
           className={styles.decay}
           enType={"Decay"}
           value={decay}
-          setValue={setDecay}
+          setValue={dispatch(changeDecay)}
         />
         <CustomKnob
           {...colors}
           className={styles.sustain}
           enType={"Sustain"}
           value={sustain}
-          setValue={setSustain}
+          setValue={dispatch(changeSustain)}
         />
         <CustomKnob
           {...colors}
           className={styles.release}
           enType={"Release"}
           value={release}
-          setValue={setRelease}
+          setValue={dispatch(changeRelease)}
         />
       </div>
       <div className={styles.controlsFx}>

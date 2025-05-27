@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 
+import adsrSlice from "./adsrSlice";
 import keyboardSlice from "./keyboardSlice";
 import themeSlice from "./themeSlice";
 
 const store = configureStore({
   reducer: {
     keyboard: keyboardSlice,
-    // envelope: envelopeSlice,
+    adsr: adsrSlice,
     theme: themeSlice,
     // instrument: instrumentSlice,
   },

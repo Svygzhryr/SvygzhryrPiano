@@ -9,16 +9,16 @@ const initialState: ThemeState = {
 };
 
 export const themeSlice = createSlice({
-  name: "keyboard",
+  name: "theme",
   initialState,
   reducers: {
-    setTheme: (state, action) => {
+    switchTheme: (state, action) => {
       state.theme = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setTheme } = themeSlice.actions;
+export const { switchTheme } = themeSlice.actions;
 
 export default themeSlice.reducer;

@@ -37,7 +37,6 @@ export interface KeyboardState {
   isInstrumentActive: boolean;
   instruments: Instruments;
   effects: Effects;
-  ADSR: ADSR;
 }
 
 const initialState: KeyboardState = {
@@ -65,12 +64,6 @@ const initialState: KeyboardState = {
     fxReverb: 0.1,
     samplePitch: 2,
     waveShape: "sine",
-  },
-  ADSR: {
-    attack: 0.01,
-    decay: 0.2,
-    sustain: 0.5,
-    release: 0.5,
   },
 };
 
